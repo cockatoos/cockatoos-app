@@ -6,7 +6,7 @@
         "start": "ng serve",
         "fix": "pretty-quick & ng lint --fix",
         "build": "ng build",
-        "build:prod": "ng build --prod",
+        "build:prod": "ng build --prod --base-href=https://cockatoos.github.io/cockatoos-app/",
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e"
