@@ -9,7 +9,8 @@
         "build:prod": "ng build --prod --base-href=https://cockatoos.github.io/cockatoos-app/",
         "test": "ng test",
         "lint": "ng lint",
-        "e2e": "ng e2e"
+        "e2e": "ng e2e",
+        "storybook": "start-storybook -p 9001"
     },
     "private": true,
     "dependencies": {
@@ -21,6 +22,7 @@
         "@angular/platform-browser": "~11.2.3",
         "@angular/platform-browser-dynamic": "~11.2.3",
         "@angular/router": "~11.2.3",
+        "highcharts-angular": "^2.10.0",
         "rxjs": "~6.6.0",
         "tslib": "^2.0.0",
         "zone.js": "~0.11.3"
@@ -29,6 +31,10 @@
         "@angular-devkit/build-angular": "~0.1102.2",
         "@angular/cli": "~11.2.2",
         "@angular/compiler-cli": "~11.2.3",
+        "@storybook/addon-actions": "^6.1.20",
+        "@storybook/addon-essentials": "^6.1.20",
+        "@storybook/addon-links": "^6.1.20",
+        "@storybook/angular": "^6.1.20",
         "@types/jasmine": "~3.6.0",
         "@types/node": "^12.11.1",
         "codelyzer": "^6.0.0",
