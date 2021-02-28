@@ -16,24 +16,29 @@ describe("ArticleComparisonService", () => {
 
     it("should work for identical phrases", () => {
         const edits = service.compare("hello world", "hello world");
-        expect(edits.filter((edit) => edit.type === "noop").length).toEqual(2);
+        const expectedNoops = ["hello", "world"];
+
+        const noops = edits.filter((edit) => edit.type === "noop");
+        expect(noops.length).toEqual(expectedNoops.length);
     });
 
     it("should be case-insensitve and robust to non-alphanumerics", () => {
         const edits = service.compare("hello world", "(Hello world!)");
+        const expectedNoops = ["hello", "world"];
 
         const noops = edits.filter((edit) => edit.type === "noop");
-        expect(noops.length).toEqual(2);
+        expect(noops.length).toEqual(expectedNoops.length);
     });
 
     it("should work for insertions", () => {
         const edits = service.compare("hello world", "hello small world)");
-
+        const expectedInsertions = ["small"];
+        
         const noops = edits.filter((edit) => edit.type === "noop");
         expect(noops.length).toEqual(2);
 
         const inserts = edits.filter((edit) => edit.type === "insert");
-        expect(inserts.length).toEqual(4);
+        expect(inserts.length).toEqual(expectedInsertions.length);
     });
 
     it("should work for deletions", () => {
