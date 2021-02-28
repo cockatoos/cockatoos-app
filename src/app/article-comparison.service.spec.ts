@@ -33,7 +33,7 @@ describe("ArticleComparisonService", () => {
     it("should work for insertions", () => {
         const edits = service.compare("hello world", "hello small world)");
         const expectedInsertions = ["small"];
-        
+
         const noops = edits.filter((edit) => edit.type === "noop");
         expect(noops.length).toEqual(2);
 
