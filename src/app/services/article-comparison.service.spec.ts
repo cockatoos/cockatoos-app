@@ -59,7 +59,7 @@ describe("ArticleComparisonService", () => {
 
         const noops = edits.filter((edit) => edit.type === "noop");
         expect(noops.length).toEqual(1);
-        expect(noops[0]).toEqual({ type: "noop", word: "hello"});
+        expect(noops[0]).toEqual({ type: "noop", word: "hello" });
 
         const replaces = edits.filter((edit) => edit.type === "replace");
         expect(replaces.length).toEqual(1);
