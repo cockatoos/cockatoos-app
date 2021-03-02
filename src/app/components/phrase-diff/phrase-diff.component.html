@@ -1,0 +1,25 @@
+<p>phrase-diff works!</p>
+<div>
+    <ng-container *ngFor="let edit of edits; index as i">
+        <span *ngIf="edit.type === 'insert'" class="insert">
+            {{ diffService.asInsert(edit).word }}
+        </span>
+        <span *ngIf="edit.type === 'delete'" class="delete">
+            {{ diffService.asDelete(edit).word }}
+        </span>
+        <ng-container *ngIf="edit.type === 'replace'">
+            <span class="delete">
+                {{ diffService.asReplace(edit).from }}
+            </span>
+            <span class="space"> </span>
+            <span class="insert">
+                {{ diffService.asReplace(edit).to }}
+            </span>
+        </ng-container>
+        <span *ngIf="edit.type === 'noop'" class="noop">
+            {{ diffService.asNoop(edit).word }}
+        </span>
+
+        <span *ngIf="i + 1 < edits.length" class="space"> ⎵ </span>
+    </ng-container>
+</div>
