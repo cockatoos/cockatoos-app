@@ -5,7 +5,7 @@
     "baseUrl": "./src",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
-    "strict": true,
+    "strict": false,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
@@ -17,7 +17,9 @@
     "target": "es2015",
     "module": "es2020",
     "paths": {
-      "@components/*": [ "app/components/*" ]
+      "@components/*": [ "app/components/*" ],
+      "@testing/*": [ "testing/*" ],
+      "@services/*": [ "services/*" ]
     },
     "lib": [
       "es2018",

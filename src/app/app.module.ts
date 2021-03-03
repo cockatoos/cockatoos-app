@@ -6,9 +6,19 @@ import { AppComponent } from './app.component';
 import { ScoreChartComponent } from '@components/score-chart/score-chart.component';
 import { HighchartsChartModule } from 'highcharts-angular';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatCardModule } from '@angular/material/card';
+
+
 @NgModule({
-    declarations: [AppComponent, ScoreChartComponent],
-    imports: [BrowserModule, AppRoutingModule, HighchartsChartModule],
+    declarations: [ AppComponent, ScoreChartComponent ],
+    imports: [
+        BrowserModule, 
+        AppRoutingModule, 
+        HighchartsChartModule,
+        BrowserAnimationsModule,
+        MatCardModule
+    ],
     providers: [],
     bootstrap: [AppComponent],
 })
