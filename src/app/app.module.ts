@@ -13,8 +13,8 @@ import { MatCardModule } from '@angular/material/card';
 @NgModule({
     declarations: [ AppComponent, ScoreChartComponent ],
     imports: [
-        BrowserModule, 
-        AppRoutingModule, 
+        BrowserModule,
+        AppRoutingModule,
         HighchartsChartModule,
         BrowserAnimationsModule,
         MatCardModule

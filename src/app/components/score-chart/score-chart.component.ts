@@ -20,9 +20,9 @@ export class ScoreChartComponent implements OnChanges {
   public label: string;
 
   @Input()
-  public currentValue: string = '- -';
+  public currentValue = '- -';
 
-  public averageValue: string = '--';
+  public averageValue = '--';
   public Highcharts: typeof Highcharts = Highcharts;
   public chartOptions: Highcharts.Options = {
     title: {
@@ -58,7 +58,7 @@ export class ScoreChartComponent implements OnChanges {
         name: 'Scores',
         type: "line",
         data: changes.historicalData.currentValue.map(x => [parseISO(x[0]), x[1]])
-      }]
+      }];
     }
   }
 }
