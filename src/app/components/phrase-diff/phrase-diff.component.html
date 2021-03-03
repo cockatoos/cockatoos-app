@@ -1,5 +1,5 @@
 <p>phrase-diff works!</p>
-<div>
+<div class="phrase-diff">
     <ng-container *ngFor="let edit of edits; index as i">
         <span *ngIf="edit.type === 'insert'" class="insert">
             {{ diffService.asInsert(edit).word }}
