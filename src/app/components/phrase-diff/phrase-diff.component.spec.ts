@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { of } from "rxjs";
 
 import { PhraseDiffComponent } from "./phrase-diff.component";
 
@@ -16,7 +15,7 @@ describe("PhraseDiffComponent", () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(PhraseDiffComponent);
         component = fixture.componentInstance;
-        component.recordedPhrase = of("hello world");
+        component.recordedPhrase = "hello world";
         component.groundTruth = "hello world";
         fixture.detectChanges();
     });

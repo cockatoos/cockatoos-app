@@ -1,27 +1,25 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { Observable } from "rxjs";
+import { Component, Input } from "@angular/core";
 import { Edit, ArticleComparisonService } from "../../services/article-comparison.service";
-
-export interface PhraseDiffProps {
-    edits: Edit[];
-}
 
 @Component({
     selector: "app-phrase-diff",
     templateUrl: "./phrase-diff.component.html",
     styleUrls: ["./phrase-diff.component.sass"],
 })
-export class PhraseDiffComponent implements OnInit {
-    @Input() recordedPhrase: Observable<string>;
-    @Input() groundTruth: string;
+export class PhraseDiffComponent {
+    @Input()
+    recordedPhrase: string;
 
-    edits: Edit[] = [];
+    @Input()
+    groundTruth: string;
 
     constructor(public diffService: ArticleComparisonService) {}
 
-    ngOnInit(): void {
-        this.recordedPhrase.subscribe((recordedPhrase) => {
-            this.edits = this.diffService.compare(recordedPhrase, this.groundTruth);
-        });
+    /**
+     * Returns the list of edits required to transform the @input recordedPhrase
+     * into the @input groundTruth.
+     */
+    get edits(): Edit[] {
+        return this.diffService.compare(this.recordedPhrase, this.groundTruth);
     }
 }
