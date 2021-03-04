@@ -7,4 +7,14 @@ import { Component } from "@angular/core";
 })
 export class AppComponent {
     title = "Cockatoos";
+
+    document = {
+        text: 'Hello world',
+        phrases: [
+          {
+            startIndex: 0,
+            endIndex: 10,
+          }
+        ]
+      }
 }
