@@ -9,8 +9,8 @@ const TEST_DOCUMENT = {
         {
             startIndex: 0,
             endIndex: 0,
-        }
-    ]
+        },
+    ],
 };
 
 describe("ArticleComparisonViewComponent", () => {
@@ -18,14 +18,10 @@ describe("ArticleComparisonViewComponent", () => {
     let fixture: ComponentFixture<ArticleComparisonViewComponent>;
     let mockTextToSpeechService: any;
 
-    beforeEach(async () => {    
-        mockTextToSpeechService = jasmine.createSpyObj(
-            "TextToSpeechService",
-            ["speak"],
-            {
-                available: true,
-            }
-        );
+    beforeEach(async () => {
+        mockTextToSpeechService = jasmine.createSpyObj("TextToSpeechService", ["speak"], {
+            available: true,
+        });
         await TestBed.configureTestingModule({
             declarations: [ArticleComparisonViewComponent],
             providers: [

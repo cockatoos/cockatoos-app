@@ -9,12 +9,12 @@ export class AppComponent {
     title = "Cockatoos";
 
     document = {
-        text: 'Hello world',
+        text: "Hello world",
         phrases: [
-          {
-            startIndex: 0,
-            endIndex: 10,
-          }
-        ]
-      }
+            {
+                startIndex: 0,
+                endIndex: 10,
+            },
+        ],
+    };
 }
