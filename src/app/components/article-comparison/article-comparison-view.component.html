@@ -1,0 +1,32 @@
+<section *ngIf="textToSpeech.available">
+    <div class="document-section">
+        {{ document.text }}
+    </div>
+
+    <div class="user-section">
+        <article class="ground-truth-phrase">
+            {{ targetPhrase }}
+        </article>
+
+        <article class="recorded-phrase">
+            Recorded phrase
+        </article>
+
+        <div class="controls">
+            <button
+                id="btnSpeak"
+                (click)="textToSpeech.speak(targetPhrase)"
+                [disabled]="textToSpeech.speaking$ | async">
+                Speak
+            </button>
+
+            <button id="btnNextPhrase">
+                Next Phrase
+            </button>
+        </div>
+    </div>
+</section>
+
+<section *ngIf="!textToSpeech.available">
+    Sorry, your browser does not support Web Speech API.
+</section>
