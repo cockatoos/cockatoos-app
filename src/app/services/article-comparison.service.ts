@@ -182,4 +182,24 @@ export class ArticleComparisonService {
             .filter((char) => char.match(/[a-zA-Z0-9]/))
             .join("");
     }
+
+    //
+    // Explicit type narrowing because Angular directives _still_ do not
+    // support discriminated unions...
+    //
+    asInsert(edit: Edit): Insert {
+        return edit as Insert;
+    }
+
+    asDelete(edit: Edit): Delete {
+        return edit as Delete;
+    }
+
+    asReplace(edit: Edit): Replace {
+        return edit as Replace;
+    }
+
+    asNoop(edit: Edit): Noop {
+        return edit as Noop;
+    }
 }
