@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import more from 'highcharts/highcharts-more';
 import { parseISO } from 'date-fns';
@@ -18,7 +18,7 @@ export interface Score {
   templateUrl: './score-chart.component.html',
   styleUrls: ['./score-chart.component.sass']
 })
-export class ScoreChartComponent {
+export class ScoreChartComponent implements OnChanges {
 
   @Input()
   public historicalData: Score[];
@@ -35,15 +35,15 @@ export class ScoreChartComponent {
     return this.historicalData ? mean(this.historicalData.map((score: Score) => score.score)) : null;
   }
 
-  get chartOptions(): Highcharts.Options {
-    return {
+  public chartOptions: Highcharts.Options = 
+    {
       title: {
         text: 'Track Your Progress'
       },
 
       yAxis: {
           title: {
-              text: `${this.label} Score`
+              text: `Score`
           }
       },
 
@@ -55,11 +55,29 @@ export class ScoreChartComponent {
           }
         }
       },
-      series: [{
-        name: `${this.label} Score`,
+      responsive: {
+        rules: [{
+            condition: {
+                maxWidth: 500
+            },
+            chartOptions: {
+                legend: {
+                    layout: 'horizontal',
+                    align: 'center',
+                    verticalAlign: 'bottom'
+                }
+            }
+        }]
+    },
+      series: []
+  };
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes && changes.historicalData) {
+      this.chartOptions.series = [{
+        name: `${this.label} Scores`,
         type: "line",
-        data: this.historicalData ? this.historicalData.map((score: Score) => [parseISO(score.date).getTime(), score.score]) : [],
-      }]
-    };
-  }
+        data: changes.historicalData.currentValue.map((score: Score) => [parseISO(score.date).getTime, score.score])}];
+    }
+  }  
 }
