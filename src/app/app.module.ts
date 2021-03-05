@@ -9,14 +9,12 @@ import { HighchartsChartModule } from "highcharts-angular";
 import { ArticleComparisonComponent } from "@components/article-comparison/article-comparison.component";
 import { PhraseDiffComponent } from "@components/phrase-diff/phrase-diff.component";
 
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { MatCardModule } from "@angular/material/card";
+
 @NgModule({
-    declarations: [
-        AppComponent,
-        ScoreChartComponent,
-        PhraseDiffComponent,
-        ArticleComparisonComponent,
-    ],
-    imports: [BrowserModule, AppRoutingModule, HighchartsChartModule],
+    declarations: [AppComponent, ScoreChartComponent, PhraseDiffComponent, ArticleComparisonComponent],
+    imports: [BrowserModule, AppRoutingModule, HighchartsChartModule, BrowserAnimationsModule, MatCardModule],
     providers: [],
     bootstrap: [AppComponent],
 })
