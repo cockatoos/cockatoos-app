@@ -17,11 +17,11 @@ interface Document {
 }
 
 @Component({
-    selector: "app-article-comparison-view",
-    templateUrl: "./article-comparison-view.component.html",
-    styleUrls: ["./article-comparison-view.component.sass"],
+    selector: "app-article-comparison",
+    templateUrl: "./article-comparison.component.html",
+    styleUrls: ["./article-comparison.component.sass"],
 })
-export class ArticleComparisonViewComponent implements OnInit {
+export class ArticleComparisonComponent implements OnInit {
     @Input()
     document: Document;
 

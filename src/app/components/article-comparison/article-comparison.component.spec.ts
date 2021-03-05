@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { TextToSpeechService } from "app/services/text-to-speech.service";
 
-import { ArticleComparisonViewComponent } from "./article-comparison-view.component";
+import { ArticleComparisonComponent } from "./article-comparison.component";
 
 const TEST_DOCUMENT = {
     text: "",
@@ -14,8 +14,8 @@ const TEST_DOCUMENT = {
 };
 
 describe("ArticleComparisonViewComponent", () => {
-    let component: ArticleComparisonViewComponent;
-    let fixture: ComponentFixture<ArticleComparisonViewComponent>;
+    let component: ArticleComparisonComponent;
+    let fixture: ComponentFixture<ArticleComparisonComponent>;
     let mockTextToSpeechService: any;
 
     beforeEach(async () => {
@@ -23,9 +23,9 @@ describe("ArticleComparisonViewComponent", () => {
             available: true,
         });
         await TestBed.configureTestingModule({
-            declarations: [ArticleComparisonViewComponent],
+            declarations: [ArticleComparisonComponent],
             providers: [
-                ArticleComparisonViewComponent,
+                ArticleComparisonComponent,
                 {
                     provide: TextToSpeechService,
                     useValue: mockTextToSpeechService,
@@ -35,7 +35,7 @@ describe("ArticleComparisonViewComponent", () => {
     });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(ArticleComparisonViewComponent);
+        fixture = TestBed.createComponent(ArticleComparisonComponent);
         component = fixture.componentInstance;
         component.document = TEST_DOCUMENT;
         fixture.detectChanges();
