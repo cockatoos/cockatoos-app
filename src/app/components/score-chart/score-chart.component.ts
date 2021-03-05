@@ -22,7 +22,7 @@ export class ScoreChartComponent implements OnChanges {
   @Input()
   public currentValue = '- -';
 
-  public averageValue = '--';
+  public averageValue: string | number = '--';
   public Highcharts: typeof Highcharts = Highcharts;
   public chartOptions: Highcharts.Options = {
     title: {
