@@ -35,7 +35,7 @@ export class ScoreChartComponent implements OnChanges {
     return this.historicalData ? mean(this.historicalData.map((score: Score) => score.score)) : null;
   }
 
-  public chartOptions: Highcharts.Options = 
+  public chartOptions: Highcharts.Options =
     {
       title: {
         text: 'Track Your Progress'
@@ -79,5 +79,5 @@ export class ScoreChartComponent implements OnChanges {
         type: "line",
         data: changes.historicalData.currentValue.map((score: Score) => [parseISO(score.date).getTime, score.score])}];
     }
-  }  
+  }
 }
