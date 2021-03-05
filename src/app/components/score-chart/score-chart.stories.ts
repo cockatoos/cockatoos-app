@@ -1,12 +1,16 @@
-import { ScoreChartComponent } from '@components/score-chart/score-chart.component';
+import { Score, ScoreChartComponent } from '@components/score-chart/score-chart.component';
 import { moduleMetadata, Story } from '@storybook/angular';
+import { TestAccentScoreData } from '@testing/testing-historical-score-data';
+import { HighchartsChartComponent } from 'highcharts-angular';
+import { parseISO } from 'date-fns';
+import { mean }from 'lodash';
 
 export default {
     title: 'Score/Score Chart',
     component: ScoreChartComponent,
     decorators: [
         moduleMetadata({
-            declarations: [ScoreChartComponent],
+            declarations: [ ScoreChartComponent, HighchartsChartComponent ],
             imports: []
         })
     ]
@@ -20,4 +24,21 @@ const Template: Story<ScoreChartComponent> = (args: ScoreChartComponent) => ({
     `
 });
 
-export const DefaultScoreChart = Template.bind([]);
+export const WithoutCurrentValue = () => ({
+    component: ScoreChartComponent,
+    props: {
+        currentValue: null,
+        label: 'Accent',
+        historicalData: TestAccentScoreData
+    },
+});
+
+
+export const WithCurrentValue = () => ({
+    component: ScoreChartComponent,
+    props: {
+        currentValue: 77,
+        label: 'Accent',
+        historicalData: TestAccentScoreData,
+    },
+});

@@ -1,4 +1,25 @@
-<p>score-chart works!</p>
+<div class="score-chart-container">
+  <div class="score-chart-number-column">
+    <span class="mat-title">
+      Your {{ label }} Score Today
+    </span>
 
-<!-- Dummy div to render chart -->
-<div id="container"></div>
+    <span class="mat-display-3">
+      {{ currentValue ? currentValue : '--' }}
+    </span>
+
+    <span>
+      Ave. {{ averageValue ? averageValue : '--' }}
+    </span>
+  </div>
+
+  <div class="score-chart-highcharts-column">
+    <highcharts-chart
+    [Highcharts]="Highcharts"
+    [options]="chartOptions"
+  >
+  </highcharts-chart>
+  </div>
+</div>
+
+  
