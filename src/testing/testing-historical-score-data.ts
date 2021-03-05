@@ -3,7 +3,7 @@ import { Score } from "@components/score-chart/score-chart.component";
 /*
 * dummy data to test the scoer chart component
 * the data is an array of {date, accent score, clarity score}
-*/ 
+*/
 export const TestAccentScoreData: Score[] = [
     { date: '2020-01-01', score: 50 },
     { date: '2020-01-02', score: 60},

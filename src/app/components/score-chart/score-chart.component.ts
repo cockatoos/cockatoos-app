@@ -3,14 +3,14 @@ import * as Highcharts from 'highcharts';
 import more from 'highcharts/highcharts-more';
 import { parseISO } from 'date-fns';
 import { mean } from 'lodash';
-import HighchartsBoost  from 'highcharts/modules/boost';
+import HighchartsBoost from 'highcharts/modules/boost';
 
 more(Highcharts);
 HighchartsBoost(Highcharts);
 
 export interface Score {
-  date: string,
-  score: number
+  date: string;
+  score: number;
 }
 
 @Component({
@@ -40,17 +40,17 @@ export class ScoreChartComponent {
       title: {
         text: 'Track Your Progress'
       },
-  
+
       yAxis: {
           title: {
               text: `${this.label} Score`
           }
       },
-  
+
       xAxis: {
         type: "datetime",
         labels: {
-          formatter: function() {
+          formatter(): string {
             return Highcharts.dateFormat('%e/%d/%y', this.value);
           }
         }
