@@ -13,7 +13,7 @@ const TEST_DOCUMENT = {
     ],
 };
 
-describe("ArticleComparisonViewComponent", () => {
+describe("ArticleComparisonComponent", () => {
     let component: ArticleComparisonComponent;
     let fixture: ComponentFixture<ArticleComparisonComponent>;
     let mockTextToSpeechService: any;
