@@ -1,64 +1,65 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import more from 'highcharts/highcharts-more';
 import { parseISO } from 'date-fns';
 import { mean } from 'lodash';
+import HighchartsBoost  from 'highcharts/modules/boost';
 
 more(Highcharts);
+HighchartsBoost(Highcharts);
+
+export interface Score {
+  date: string,
+  score: number
+}
 
 @Component({
   selector: 'app-score-chart',
   templateUrl: './score-chart.component.html',
   styleUrls: ['./score-chart.component.sass']
 })
-export class ScoreChartComponent implements OnChanges {
+export class ScoreChartComponent {
 
   @Input()
-  public historicalData: string[];
+  public historicalData: Score[];
 
   @Input()
   public label: string;
 
   @Input()
-  public currentValue = '- -';
+  public currentValue?: number;
 
-  public averageValue: string | number = '--';
   public Highcharts: typeof Highcharts = Highcharts;
-  public chartOptions: Highcharts.Options = {
-    title: {
-      text: 'Track Your Progress'
-    },
 
-    yAxis: {
-        title: {
-            text: 'Score'
+  get averageValue(): number {
+    return this.historicalData ? mean(this.historicalData.map((score: Score) => score.score)) : null;
+  }
+
+  get chartOptions(): Highcharts.Options {
+    return {
+      title: {
+        text: 'Track Your Progress'
+      },
+  
+      yAxis: {
+          title: {
+              text: `${this.label} Score`
+          }
+      },
+  
+      xAxis: {
+        type: "datetime",
+        labels: {
+          formatter: function() {
+            return Highcharts.dateFormat('%e/%d/%y', this.value);
+          }
         }
-    },
-
-    xAxis: {
-        accessibility: {
-            rangeDescription: 'Date'
-        }
-    },
-
-    plotOptions: {
-        series: {
-            label: {
-                connectorAllowed: false
-            }
-        }
-    },
-    series: [],
-  };
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes && changes.historicalData) {
-      this.averageValue = mean(changes.historicalData.currentValue.map(x => x[1]));
-      this.chartOptions.series = [{
-        name: 'Scores',
+      },
+      series: [{
+        name: `${this.label} Score`,
         type: "line",
-        data: changes.historicalData.currentValue.map(x => [parseISO(x[0]), x[1]])
-      }];
-    }
+        data: this.historicalData ? this.historicalData.map((score: Score) => [parseISO(score.date).getTime(), score.score]) : [],
+      }]
+    };
   }
 }

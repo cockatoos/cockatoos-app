@@ -5,11 +5,11 @@
     </span>
 
     <span class="mat-display-3">
-      {{ currentValue }}
+      {{ currentValue ? currentValue : '--' }}
     </span>
 
     <span>
-      Ave. {{ averageValue }}
+      Ave. {{ averageValue ? averageValue : '--' }}
     </span>
   </div>
 

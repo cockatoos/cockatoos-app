@@ -8,7 +8,11 @@
 
   <!-- Highlight Card -->
   <div class="card highlight-card card-small">
-    <app-score-chart></app-score-chart>
+    <app-score-chart
+      [historicalData]="testHistoricalData"
+      [currentValue]="77"
+      label="Accent"    
+    ></app-score-chart>
   </div>
 
 </div>

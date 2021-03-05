@@ -17,7 +17,8 @@
         "target": "es2015",
         "module": "es2020",
         "paths": {
-            "@components/*": ["app/components/*"]
+            "@components/*": ["app/components/*"],
+            "@testing/*": ["testing/*"]
         },
         "strictPropertyInitialization": false,
         "lib": ["es2018", "dom"]
