@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
-import { ReplaySubject } from "rxjs";
+import { of, ReplaySubject } from "rxjs";
+import { catchError, map } from "rxjs/operators";
 
 @Injectable({
     providedIn: "root",
@@ -33,6 +34,13 @@ export class AudioRecorderService {
         } else {
             this.mediaRecorder$.error("Audio recording not supported on device.");
         }
+    }
+
+    get available$() {
+        return this.mediaRecorder$.pipe(
+            map((val) => true),
+            catchError((error) => of(false))
+        );
     }
 
     start(): void {
