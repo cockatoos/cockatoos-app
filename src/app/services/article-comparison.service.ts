@@ -83,7 +83,7 @@ export class ArticleComparisonService {
         let j = target.length;
         while (i > 0 && j > 0) {
             const possibleEdits: [Edit, number][] = [];
-            const isLastChar = i === 1 && j == 1;
+            const isLastChar = i === 1 && j === 1;
             if (j > 1 || isLastChar) {
                 possibleEdits.push([
                     {
