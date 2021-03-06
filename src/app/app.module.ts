@@ -11,10 +11,23 @@ import { PhraseDiffComponent } from "@components/phrase-diff/phrase-diff.compone
 
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatCardModule } from "@angular/material/card";
+import { MatGridListModule } from "@angular/material/grid-list";
 
 @NgModule({
-    declarations: [AppComponent, ScoreChartComponent, PhraseDiffComponent, ArticleComparisonComponent],
-    imports: [BrowserModule, AppRoutingModule, HighchartsChartModule, BrowserAnimationsModule, MatCardModule],
+    declarations: [
+        AppComponent,
+        ScoreChartComponent,
+        PhraseDiffComponent,
+        ArticleComparisonComponent,
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HighchartsChartModule,
+        BrowserAnimationsModule,
+        MatCardModule,
+        MatGridListModule,
+    ],
     providers: [],
     bootstrap: [AppComponent],
 })

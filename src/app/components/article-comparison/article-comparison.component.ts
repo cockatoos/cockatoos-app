@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from "@angular/core";
-import { TextToSpeechService } from "app/services/text-to-speech.service";
+import { TextToSpeechService } from "@services/text-to-speech.service";
+import { Observable, of } from "rxjs";
 
 //
 // A document is represented by the full document text, along with
@@ -11,7 +12,7 @@ interface Phrase {
     endIndex: number;
 }
 
-interface Document {
+export interface Document {
     text: string;
     phrases: Phrase[];
 }
@@ -27,6 +28,9 @@ export class ArticleComparisonComponent implements OnInit {
 
     // Index of the current phrase.
     currentPhrase: number;
+
+    // TODO: will be obtained from the SpeechToTextService
+    recordedPhrase: Observable<string>;
 
     constructor(public textToSpeech: TextToSpeechService) {}
 

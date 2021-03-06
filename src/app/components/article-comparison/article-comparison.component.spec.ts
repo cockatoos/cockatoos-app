@@ -1,17 +1,7 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { TextToSpeechService } from "app/services/text-to-speech.service";
-
-import { ArticleComparisonComponent } from "./article-comparison.component";
-
-const TEST_DOCUMENT = {
-    text: "",
-    phrases: [
-        {
-            startIndex: 0,
-            endIndex: 0,
-        },
-    ],
-};
+import { TextToSpeechService } from "@services/text-to-speech.service";
+import { ArticleComparisonComponent } from "@components/article-comparison/article-comparison.component";
+import { TEST_DOCUMENT } from "@testing/testing-article-data";
 
 describe("ArticleComparisonComponent", () => {
     let component: ArticleComparisonComponent;
