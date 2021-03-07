@@ -1,5 +1,7 @@
 import { Component } from "@angular/core";
 import { TestAccentScoreData } from "@testing/testing-historical-score-data";
+import { AngularFirestore } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: "app-root",
