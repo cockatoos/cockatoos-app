@@ -2,6 +2,7 @@
     "name": "cockatoos-app",
     "version": "0.0.0",
     "scripts": {
+        "preinstall": "npx npm-force-resolutions",
         "ng": "ng",
         "start": "ng serve",
         "fix": "pretty-quick & ng lint --fix",
@@ -68,5 +69,8 @@
         "hooks": {
             "pre-commit": "pretty-quick --staged & ng lint --fix"
         }
+    },
+    "resolutions": {
+        "tapable": "1.1.3"
     }
 }
