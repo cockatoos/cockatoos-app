@@ -1,6 +1,7 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, ChangeDetectorRef } from "@angular/core";
 import { TextToSpeechService } from "@services/text-to-speech.service";
-import { Observable, of } from "rxjs";
+import { RecordedSpeechToTextService } from "app/services/recorded-speech-to-text.service";
+import { BehaviorSubject, Observable, of } from "rxjs";
 
 //
 // A document is represented by the full document text, along with
@@ -17,6 +18,12 @@ export interface Document {
     phrases: Phrase[];
 }
 
+enum PhraseState {
+    INIT = "INIT",
+    RECORDING = "RECORDING",
+    DONE = "DONE",
+}
+
 @Component({
     selector: "app-article-comparison",
     templateUrl: "./article-comparison.component.html",
@@ -29,13 +36,13 @@ export class ArticleComparisonComponent implements OnInit {
     // Index of the current phrase.
     currentPhrase: number;
 
-    // TODO: will be obtained from the SpeechToTextService
-    recordedPhrase: Observable<string>;
+    phraseState: PhraseState;
 
-    constructor(public textToSpeech: TextToSpeechService) {}
+    constructor(public textToSpeech: TextToSpeechService, public recordedSpeechToText: RecordedSpeechToTextService) {}
 
     ngOnInit(): void {
         this.currentPhrase = 0;
+        this.phraseState = PhraseState.INIT;
     }
 
     /**
@@ -45,5 +52,15 @@ export class ArticleComparisonComponent implements OnInit {
         const { text, phrases } = this.document;
         const { startIndex, endIndex } = phrases[this.currentPhrase];
         return text.slice(startIndex, endIndex);
+    }
+
+    startRecording(): void {
+        this.phraseState = PhraseState.RECORDING;
+        this.recordedSpeechToText.start();
+    }
+
+    stopRecording(): void {
+        this.phraseState = PhraseState.DONE;
+        this.recordedSpeechToText.stop();
     }
 }

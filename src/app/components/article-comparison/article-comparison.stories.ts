@@ -9,20 +9,15 @@ import { TextToSpeechService } from "@services/text-to-speech.service";
 
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
-import { of } from "rxjs";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
 class MockTextToSpeechService {
     available = false;
 }
 
 const modules = {
-    declarations: [
-        PhraseDiffComponent,
-    ],
-    imports: [
-        MatButtonModule,
-        MatCardModule,
-    ],
+    declarations: [PhraseDiffComponent],
+    imports: [MatButtonModule, MatCardModule, MatProgressSpinnerModule],
 };
 
 const disableTextToSpeechMixin = {
@@ -31,7 +26,7 @@ const disableTextToSpeechMixin = {
         {
             provide: TextToSpeechService,
             useClass: MockTextToSpeechService,
-        }
+        },
     ],
 };
 
@@ -40,7 +35,6 @@ storiesApi.add("Beginning", () => ({
     component: ArticleComparisonComponent,
     props: {
         document: TEST_DOCUMENT,
-        recordedPhrase: of("the quick fox"),
     },
     moduleMetadata: modules,
 }));

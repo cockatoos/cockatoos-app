@@ -7,7 +7,7 @@
             </mat-card-header>
             <mat-card-content>
                 <h1>
-                {{ document.text }}
+                    {{ document.text }}
                 </h1>
             </mat-card-content>
         </mat-card>
@@ -20,7 +20,7 @@
             </mat-card-header>
             <mat-card-content>
                 <h1>
-                {{ targetPhrase }}
+                    {{ targetPhrase }}
                 </h1>
             </mat-card-content>
         </mat-card>
@@ -30,17 +30,26 @@
                 <mat-card-subtitle>Recorded Phrase</mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
-                <h1>
-                    <app-phrase-diff
-                    recordedPhrase="{{ recordedPhrase | async }}"
-                    groundTruth="{{ targetPhrase }}"
-                    ></app-phrase-diff>
+                <h1 [ngSwitch]="phraseState">
+                    <ng-container *ngSwitchCase="'RECORDING'">
+                        {{ recordedSpeechToText.transcript$ | async }}
+                        <br />
+                        <br />
+                        <mat-spinner diameter="30"></mat-spinner>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'DONE'">
+                        <app-phrase-diff
+                            recordedPhrase="{{ recordedSpeechToText.transcript$ | async }}"
+                            groundTruth="{{ targetPhrase }}"
+                        ></app-phrase-diff>
+                    </ng-container>
                 </h1>
             </mat-card-content>
         </mat-card>
 
         <div class="controls">
-            <button mat-raised-button
+            <button
+                mat-raised-button
                 color="primary"
                 id="btnSpeak"
                 (click)="textToSpeech.speak(targetPhrase)"
@@ -48,19 +57,21 @@
             >
                 Speak
             </button>
+
+            <button mat-raised-button (click)="startRecording()" [disabled]="phraseState !== 'INIT'">Record</button>
+
+            <button mat-raised-button (click)="stopRecording()" [disabled]="phraseState !== 'RECORDING'">Stop</button>
         </div>
     </div>
 </section>
 
-<section *ngIf="!textToSpeech.available">
+<section *ngIf="!textToSpeech.available || (recordedSpeechToText.available$ | async) === false">
     <mat-card>
         <mat-card-header>
             <mat-card-title>Error</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <h2>
-                Sorry, your browser does not support Web Speech API.
-            </h2>
+            <h2>Sorry, your browser does not support Web Speech API.</h2>
         </mat-card-content>
     </mat-card>
 </section>
