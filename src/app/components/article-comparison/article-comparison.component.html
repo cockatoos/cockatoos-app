@@ -1,0 +1,66 @@
+<section *ngIf="textToSpeech.available" class="article-comparison-view">
+    <div class="document-section">
+        <mat-card class="full-document">
+            <mat-card-header>
+                <mat-card-title>Document</mat-card-title>
+                <mat-card-subtitle>TODO: create HighlightDiff component</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <h1>
+                {{ document.text }}
+                </h1>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <div class="user-section">
+        <mat-card class="ground-truth-phrase">
+            <mat-card-header>
+                <mat-card-subtitle>Target Phrase</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <h1>
+                {{ targetPhrase }}
+                </h1>
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card class="recorded-phrase">
+            <mat-card-header>
+                <mat-card-subtitle>Recorded Phrase</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <h1>
+                    <app-phrase-diff
+                    recordedPhrase="{{ recordedPhrase | async }}"
+                    groundTruth="{{ targetPhrase }}"
+                    ></app-phrase-diff>
+                </h1>
+            </mat-card-content>
+        </mat-card>
+
+        <div class="controls">
+            <button mat-raised-button
+                color="primary"
+                id="btnSpeak"
+                (click)="textToSpeech.speak(targetPhrase)"
+                [disabled]="textToSpeech.speaking$ | async"
+            >
+                Speak
+            </button>
+        </div>
+    </div>
+</section>
+
+<section *ngIf="!textToSpeech.available">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Error</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <h2>
+                Sorry, your browser does not support Web Speech API.
+            </h2>
+        </mat-card-content>
+    </mat-card>
+</section>
