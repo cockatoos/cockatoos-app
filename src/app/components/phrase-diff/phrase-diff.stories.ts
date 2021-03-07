@@ -1,6 +1,5 @@
 import { storiesOf } from "@storybook/angular";
 import { PhraseDiffComponent } from "@components/phrase-diff/phrase-diff.component";
-import { of } from "rxjs";
 
 const testCases = [
     {
@@ -30,7 +29,7 @@ testCases.forEach(({ name, recorded, groundTruth }) =>
     storiesApi.add(name, () => ({
         component: PhraseDiffComponent,
         props: {
-            recordedPhrase: of(recorded),
+            recordedPhrase: recorded,
             groundTruth: groundTruth,
         },
     }))
