@@ -1,7 +1,8 @@
-import { Injectable } from "@angular/core";
-import { of, ReplaySubject } from "rxjs";
-import { catchError, map } from "rxjs/operators";
+///<reference path="../../../node_modules/@types/dom-mediacapture-record/index.d.ts"/>
 
+import { Injectable } from "@angular/core";
+import { Observable, of, ReplaySubject } from "rxjs";
+import { catchError, map } from "rxjs/operators";
 @Injectable({
     providedIn: "root",
 })
@@ -22,10 +23,20 @@ export class AudioRecorderService {
                     audio: true,
                 })
                 .then((stream) => {
-                    const mediaRecorder = new MediaRecorder(stream);
-                    mediaRecorder.ondataavailable = (ev) => {
-                        this.chunks.push(ev.data);
-                    };
+                    const mediaRecorder = new MediaRecorder(stream, {
+                        mimeType: "audio/webm;codecs=opus",
+                    });
+                    mediaRecorder.addEventListener("dataavailable", ({ data }) => {
+                        this.chunks.push(data);
+                    });
+                    mediaRecorder.addEventListener("stop", () => {
+                        this.handleBlob(
+                            new Blob(this.chunks, {
+                                type: "audio/ogg; codecs=opus",
+                            })
+                        );
+                    });
+
                     this.mediaRecorder$.next(mediaRecorder);
                 })
                 .catch((error) => {
@@ -36,9 +47,9 @@ export class AudioRecorderService {
         }
     }
 
-    get available$() {
+    get available$(): Observable<boolean> {
         return this.mediaRecorder$.pipe(
-            map((val) => true),
+            map((recorder) => true),
             catchError((error) => of(false))
         );
     }
@@ -52,7 +63,6 @@ export class AudioRecorderService {
     stop(): void {
         this.mediaRecorder$.subscribe((mediaRecorder) => {
             mediaRecorder.stop();
-            this.processChunks();
         });
     }
 
@@ -60,17 +70,14 @@ export class AudioRecorderService {
         this.chunks = [];
     }
 
-    private processChunks(): void {
-        const blob = new Blob(this.chunks, {
-            type: "audio/ogg; codecs=opus",
-        });
+    private handleBlob(blob: Blob): void {
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.setAttribute("style", "display: none;");
-        a.href = url;
-        a.download = "test.wbm";
+        a.setAttribute("href", url);
+        a.setAttribute("download", "test.wbm");
         document.body.appendChild(a);
         a.click();
-        URL.revokeObjectURL(url);
+        // URL.revokeObjectURL(url);
     }
 }
