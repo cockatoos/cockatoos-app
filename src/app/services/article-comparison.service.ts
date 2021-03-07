@@ -81,10 +81,9 @@ export class ArticleComparisonService {
         const edits: Edit[] = [];
         let i = input.length;
         let j = target.length;
-        while (i > 0 && j > 0) {
+        while (i > 0 || j > 0) {
             const possibleEdits: [Edit, number][] = [];
-            const isLastChar = i === 1 && j === 1;
-            if (j > 1 || isLastChar) {
+            if (j > 0) {
                 possibleEdits.push([
                     {
                         type: "insert",
@@ -93,7 +92,7 @@ export class ArticleComparisonService {
                     distance[i][j - 1],
                 ]);
             }
-            if (i > 1 || isLastChar) {
+            if (i > 0) {
                 possibleEdits.push([
                     {
                         type: "delete",
@@ -102,7 +101,7 @@ export class ArticleComparisonService {
                     distance[i - 1][j],
                 ]);
             }
-            if ((i > 1 && j > 1) || isLastChar) {
+            if (i > 0 && j > 0) {
                 if (input[i - 1] === target[j - 1]) {
                     possibleEdits.push([
                         {
@@ -141,7 +140,7 @@ export class ArticleComparisonService {
                 });
 
             const optimalEdit = optimalEdits[0];
-            edits.push(optimalEdits[0]);
+            edits.push(optimalEdit);
 
             switch (optimalEdit.type) {
                 case "insert":
