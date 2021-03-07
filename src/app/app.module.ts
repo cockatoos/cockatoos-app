@@ -5,24 +5,28 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { ScoreChartComponent } from "@components/score-chart/score-chart.component";
 import { HighchartsChartModule } from "highcharts-angular";
+
+import { ArticleComparisonComponent } from "@components/article-comparison/article-comparison.component";
 import { PhraseDiffComponent } from "@components/phrase-diff/phrase-diff.component";
 
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatCardModule } from '@angular/material/card';
-
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { MatCardModule } from "@angular/material/card";
+import { MatGridListModule } from "@angular/material/grid-list";
 
 @NgModule({
     declarations: [
         AppComponent,
         ScoreChartComponent,
         PhraseDiffComponent,
-     ],
+        ArticleComparisonComponent,
+    ],
     imports: [
         BrowserModule,
         AppRoutingModule,
         HighchartsChartModule,
         BrowserAnimationsModule,
         MatCardModule,
+        MatGridListModule,
     ],
     providers: [],
     bootstrap: [AppComponent],
