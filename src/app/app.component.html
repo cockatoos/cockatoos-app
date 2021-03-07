@@ -6,14 +6,30 @@
 
 <div class="content" role="main">
 
-  <!-- Highlight Card -->
-  <div class="card highlight-card card-small">
-    <app-score-chart
-      [historicalData]="testHistoricalData"
-      [currentValue]="77"
-      label="Accent"    
+  <div class="info-container">
+    <mat-card>
+      <app-score-chart
+        [historicalData]="testAccentData"
+        [currentValue]="77"
+        label="Accent"    
+      ></app-score-chart>
+    </mat-card>
+    <mat-card style="margin-left: 20px">
+      <app-score-chart
+        [historicalData]="testClarityData"
+        [currentValue]="67"
+        label="Clarity"    
     ></app-score-chart>
+    </mat-card>
   </div>
+
+
+  <div class="practice-container">
+    The speaking practice part
+  </div>
+
+  <div>buton on analysing</div>
+
 
 </div>
 

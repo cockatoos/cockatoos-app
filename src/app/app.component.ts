@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { TestAccentScoreData } from "@testing/testing-historical-score-data";
+import { TestAccentScoreData, TestClarityScoreData } from "@testing/testing-historical-score-data";
 
 @Component({
     selector: "app-root",
@@ -9,5 +9,6 @@ import { TestAccentScoreData } from "@testing/testing-historical-score-data";
 export class AppComponent {
     title = "Cockatoos";
 
-    public testHistoricalData = TestAccentScoreData;
+    public testAccentData = TestAccentScoreData;
+    public testClarityData = TestClarityScoreData;
 }
