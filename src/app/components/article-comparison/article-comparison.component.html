@@ -1,4 +1,4 @@
-<section *ngIf="(articleLevelStatus$ | async) !== 'UNSUPPORTED'" class="article-comparison-view">
+<section *ngIf="(articleLevelStatus$ | async) === 'READY'" class="article-comparison-view">
     <div class="document-section">
         <mat-card class="full-document">
             <mat-card-header>

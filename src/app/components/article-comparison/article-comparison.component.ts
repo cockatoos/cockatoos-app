@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, ChangeDetectorRef } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { TextToSpeechService } from "@services/text-to-speech.service";
 import { RecordedSpeechToTextService } from "app/services/recorded-speech-to-text.service";
-import { BehaviorSubject, Observable, of } from "rxjs";
+import { Observable } from "rxjs";
 
 import { Article } from "@models/article.model";
 import { Store } from "@ngrx/store";
