@@ -19,7 +19,9 @@
         "paths": {
             "@components/*": ["app/components/*"],
             "@services/*": ["app/services/*"],
-            "@testing/*": ["testing/*"]
+            "@testing/*": ["testing/*"],
+            "@models/*": ["app/models/*"],
+            "@state/*": ["app/state/*"]
         },
         "strictPropertyInitialization": false,
         "lib": ["es2018", "dom"]
