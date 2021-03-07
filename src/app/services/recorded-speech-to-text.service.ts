@@ -36,4 +36,13 @@ export class RecordedSpeechToTextService {
         this.audioRecorder.stop();
         this.speechToText.stop();
     }
+
+    get blob$(): Observable<Blob> {
+        return this.audioRecorder.blob$;
+    }
+
+    reset(): void {
+        this.audioRecorder.reset();
+        this.speechToText.reset();
+    }
 }

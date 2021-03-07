@@ -1,4 +1,4 @@
-<section *ngIf="textToSpeech.available" class="article-comparison-view">
+<section *ngIf="(articleLevelStatus$ | async) !== 'UNSUPPORTED'" class="article-comparison-view">
     <div class="document-section">
         <mat-card class="full-document">
             <mat-card-header>
@@ -7,7 +7,7 @@
             </mat-card-header>
             <mat-card-content>
                 <h1>
-                    {{ document.text }}
+                    {{ article.text }}
                 </h1>
             </mat-card-content>
         </mat-card>
@@ -20,7 +20,7 @@
             </mat-card-header>
             <mat-card-content>
                 <h1>
-                    {{ targetPhrase }}
+                    {{ targetPhrase$ | async }}
                 </h1>
             </mat-card-content>
         </mat-card>
@@ -30,17 +30,18 @@
                 <mat-card-subtitle>Recorded Phrase</mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
-                <h1 [ngSwitch]="phraseState">
+                <h1 [ngSwitch]="phraseLevelStatus$ | async">
+                    <ng-container *ngSwitchCase="'READY'"> Press record to begin </ng-container>
                     <ng-container *ngSwitchCase="'RECORDING'">
-                        {{ recordedSpeechToText.transcript$ | async }}
+                        {{ transcript$ | async }}
                         <br />
                         <br />
                         <mat-spinner diameter="30"></mat-spinner>
                     </ng-container>
                     <ng-container *ngSwitchCase="'DONE'">
                         <app-phrase-diff
-                            recordedPhrase="{{ recordedSpeechToText.transcript$ | async }}"
-                            groundTruth="{{ targetPhrase }}"
+                            recordedPhrase="{{ transcript$ | async }}"
+                            groundTruth="{{ targetPhrase$ | async }}"
                         ></app-phrase-diff>
                     </ng-container>
                 </h1>
@@ -52,20 +53,36 @@
                 mat-raised-button
                 color="primary"
                 id="btnSpeak"
-                (click)="textToSpeech.speak(targetPhrase)"
+                (click)="speak()"
                 [disabled]="textToSpeech.speaking$ | async"
             >
                 Speak
             </button>
 
-            <button mat-raised-button (click)="startRecording()" [disabled]="phraseState !== 'INIT'">Record</button>
+            <button mat-raised-button (click)="startRecording()" [disabled]="(phraseLevelStatus$ | async) !== 'READY'">
+                Record
+            </button>
 
-            <button mat-raised-button (click)="stopRecording()" [disabled]="phraseState !== 'RECORDING'">Stop</button>
+            <button
+                mat-raised-button
+                (click)="stopRecording()"
+                [disabled]="(phraseLevelStatus$ | async) !== 'RECORDING'"
+            >
+                Stop
+            </button>
+
+            <button
+                mat-raised-button
+                (click)="nextPhrase()"
+                [disabled]="(phraseLevelStatus$ | async) !== 'DONE' || (articleLevelStatus$ | async) === 'DONE'"
+            >
+                Next Phrase
+            </button>
         </div>
     </div>
 </section>
 
-<section *ngIf="!textToSpeech.available || (recordedSpeechToText.available$ | async) === false">
+<section *ngIf="(articleLevelStatus$ | async) === 'UNSUPPORTED'">
     <mat-card>
         <mat-card-header>
             <mat-card-title>Error</mat-card-title>

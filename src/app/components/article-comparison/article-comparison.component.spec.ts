@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { TextToSpeechService } from "@services/text-to-speech.service";
 import { ArticleComparisonComponent } from "@components/article-comparison/article-comparison.component";
 import { TEST_DOCUMENT } from "@testing/testing-article-data";
+import { of } from "rxjs";
 
 describe("ArticleComparisonComponent", () => {
     let component: ArticleComparisonComponent;
@@ -27,7 +28,7 @@ describe("ArticleComparisonComponent", () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(ArticleComparisonComponent);
         component = fixture.componentInstance;
-        component.document = TEST_DOCUMENT;
+        component.article = TEST_DOCUMENT;
         fixture.detectChanges();
     });
 
@@ -38,7 +39,7 @@ describe("ArticleComparisonComponent", () => {
     it("should run text-to-speech on target phrase", () => {
         // GIVEN
         const targetPhrase = "hello world";
-        spyOnProperty(component, "targetPhrase", "get").and.returnValue(targetPhrase);
+        spyOnProperty(component, "targetPhrase$", "get").and.returnValue(of(targetPhrase));
 
         const element: HTMLElement = fixture.nativeElement;
         const speakButton = element.querySelector("#btnSpeak") as HTMLButtonElement;

@@ -1,7 +1,7 @@
 ///<reference path="../../../node_modules/@types/dom-mediacapture-record/index.d.ts"/>
 
 import { Injectable } from "@angular/core";
-import { Observable, of, ReplaySubject } from "rxjs";
+import { BehaviorSubject, Observable, of, ReplaySubject } from "rxjs";
 import { catchError, map } from "rxjs/operators";
 @Injectable({
     providedIn: "root",
@@ -10,10 +10,13 @@ export class AudioRecorderService {
     private mediaRecorder$: ReplaySubject<MediaRecorder>;
     private chunks: Blob[];
 
+    blob$: ReplaySubject<Blob>;
+
     constructor() {
         this.chunks = [];
         this.mediaRecorder$ = new ReplaySubject();
         this.initialiseMediaRecorder();
+        this.blob$ = new ReplaySubject();
     }
 
     private initialiseMediaRecorder(): void {
@@ -68,16 +71,20 @@ export class AudioRecorderService {
 
     reset(): void {
         this.chunks = [];
+        this.blob$ = new ReplaySubject();
     }
 
     private handleBlob(blob: Blob): void {
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.setAttribute("style", "display: none;");
-        a.setAttribute("href", url);
-        a.setAttribute("download", "test.wbm");
-        document.body.appendChild(a);
-        a.click();
+        console.log(blob, blob.type);
+        this.blob$.next(blob);
+
+        // const url = URL.createObjectURL(blob);
+        // const a = document.createElement("a");
+        // a.setAttribute("style", "display: none;");
+        // a.setAttribute("href", url);
+        // a.setAttribute("download", "test.wbm");
+        // document.body.appendChild(a);
+        // a.click();
         // URL.revokeObjectURL(url);
     }
 }

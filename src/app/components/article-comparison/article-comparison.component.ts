@@ -3,26 +3,14 @@ import { TextToSpeechService } from "@services/text-to-speech.service";
 import { RecordedSpeechToTextService } from "app/services/recorded-speech-to-text.service";
 import { BehaviorSubject, Observable, of } from "rxjs";
 
-//
-// A document is represented by the full document text, along with
-// the list of phrase indexes. Each phrase is represented by a start- and
-// end-index. The index refers to the _character_ index, __not the word__.
-//
-interface Phrase {
-    startIndex: number;
-    endIndex: number;
-}
-
-export interface Document {
-    text: string;
-    phrases: Phrase[];
-}
-
-enum PhraseState {
-    INIT = "INIT",
-    RECORDING = "RECORDING",
-    DONE = "DONE",
-}
+import { Article } from "@models/article.model";
+import { Store } from "@ngrx/store";
+import { AppState } from "@state/app.state";
+import { initialise, nextPhrase } from "@state/actions/article-level.actions";
+import { first, map } from "rxjs/operators";
+import { startRecording, stopRecording } from "@state/actions/phrase-level.actions";
+import { Status as ArticleLevelStatus } from "@state/reducers/article-level.reducer";
+import { Status as PhraseLevelStatus } from "@state/reducers/phrase-level.reducer";
 
 @Component({
     selector: "app-article-comparison",
@@ -31,36 +19,56 @@ enum PhraseState {
 })
 export class ArticleComparisonComponent implements OnInit {
     @Input()
-    document: Document;
+    article: Article;
 
-    // Index of the current phrase.
-    currentPhrase: number;
+    articleLevelStatus$: Observable<ArticleLevelStatus>;
+    phraseLevelStatus$: Observable<PhraseLevelStatus>;
+    phraseNum$: Observable<number>;
+    transcript$: Observable<string>;
 
-    phraseState: PhraseState;
-
-    constructor(public textToSpeech: TextToSpeechService, public recordedSpeechToText: RecordedSpeechToTextService) {}
+    constructor(
+        public textToSpeech: TextToSpeechService,
+        public recordedSpeechToText: RecordedSpeechToTextService,
+        private store: Store<AppState>
+    ) {
+        this.phraseNum$ = store.select(({ articleLevel }) => articleLevel.phraseNum);
+        this.transcript$ = store.select(({ phraseLevel }) => phraseLevel.transcript);
+        this.articleLevelStatus$ = store.select(({ articleLevel }) => articleLevel.status);
+        this.phraseLevelStatus$ = store.select(({ phraseLevel }) => phraseLevel.status);
+    }
 
     ngOnInit(): void {
-        this.currentPhrase = 0;
-        this.phraseState = PhraseState.INIT;
+        this.store.dispatch(initialise({ article: this.article }));
     }
 
     /**
      * Returns the target phrase in this article.
      */
-    get targetPhrase(): string {
-        const { text, phrases } = this.document;
-        const { startIndex, endIndex } = phrases[this.currentPhrase];
-        return text.slice(startIndex, endIndex);
+    get targetPhrase$(): Observable<string> {
+        const { text, phrases } = this.article;
+        return this.phraseNum$.pipe(
+            map((phraseNum) => {
+                const { startIndex, endIndex } = phrases[phraseNum];
+                return text.slice(startIndex, endIndex);
+            })
+        );
+    }
+
+    speak(): void {
+        this.targetPhrase$.pipe(first()).subscribe((targetPhrase) => {
+            this.textToSpeech.speak(targetPhrase);
+        });
     }
 
     startRecording(): void {
-        this.phraseState = PhraseState.RECORDING;
-        this.recordedSpeechToText.start();
+        this.store.dispatch(startRecording());
     }
 
     stopRecording(): void {
-        this.phraseState = PhraseState.DONE;
-        this.recordedSpeechToText.stop();
+        this.store.dispatch(stopRecording());
+    }
+
+    nextPhrase(): void {
+        this.store.dispatch(nextPhrase());
     }
 }
