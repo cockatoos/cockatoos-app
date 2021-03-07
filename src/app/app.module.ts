@@ -20,6 +20,12 @@ import { MatSidenavModule } from "@angular/material/sidenav";
 import { ScoreChartsContainerComponent } from './components/score-charts-container/score-charts-container.component';
 import { PracticeContainerComponent } from './components/practice-container/practice-container.component';
 import { AnalyseDialogComponent } from './components/analyse-dialog/analyse-dialog.component';
+import { DataConnectorComponent } from './components/data-connector/data-connector.component';
+
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { environment } from '../environments/environment';
 
 @NgModule({
     declarations: [
@@ -30,6 +36,7 @@ import { AnalyseDialogComponent } from './components/analyse-dialog/analyse-dial
         ScoreChartsContainerComponent,
         PracticeContainerComponent,
         AnalyseDialogComponent,
+        DataConnectorComponent,
     ],
     imports: [
         BrowserModule,
@@ -43,7 +50,9 @@ import { AnalyseDialogComponent } from './components/analyse-dialog/analyse-dial
         MatIconModule,
         MatDialogModule,
         MatSidenavModule,
-
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFireAnalyticsModule,
+        AngularFirestoreModule
     ],
     providers: [],
     bootstrap: [AppComponent],
