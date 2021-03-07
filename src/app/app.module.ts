@@ -13,6 +13,12 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatCardModule } from "@angular/material/card";
 import { MatGridListModule } from "@angular/material/grid-list";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { StoreModule } from "@ngrx/store";
+import { EffectsModule } from "@ngrx/effects";
+import { articleLevelReducer } from "@state/reducers/article-level.reducer";
+import { phraseLevelReducer } from "@state/reducers/phrase-level.reducer";
+import { ArticleLevelEffects } from "@state/effects/article-level.effects";
+import { PhraseLevelEffects } from "@state/effects/phrase-level.effects";
 
 @NgModule({
     declarations: [AppComponent, ScoreChartComponent, PhraseDiffComponent, ArticleComparisonComponent],
@@ -24,6 +30,11 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
         MatCardModule,
         MatGridListModule,
         MatProgressSpinnerModule,
+        StoreModule.forRoot({
+            articleLevel: articleLevelReducer,
+            phraseLevel: phraseLevelReducer,
+        }),
+        EffectsModule.forRoot([ArticleLevelEffects, PhraseLevelEffects]),
     ],
     providers: [],
     bootstrap: [AppComponent],
