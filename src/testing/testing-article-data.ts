@@ -1,6 +1,6 @@
-import { Document } from "@components/article-comparison/article-comparison.component";
+import { Article } from "@models/article.model";
 
-export const TEST_DOCUMENT: Document = {
+export const TEST_DOCUMENT: Article = {
     text: "The quick brown fox jumps over the lazy dog.",
     phrases: [
         {
