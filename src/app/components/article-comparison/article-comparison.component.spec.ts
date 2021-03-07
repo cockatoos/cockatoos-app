@@ -12,7 +12,7 @@ describe("ArticleComparisonComponent", () => {
 
     const initialState = {
         articleLevel: {
-            status: "UNINITIALISED",   
+            status: "UNINITIALISED"
         }
     };
 
