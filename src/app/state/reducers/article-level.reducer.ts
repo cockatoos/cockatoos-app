@@ -4,9 +4,14 @@ import * as ArticleLevelActions from "@state/actions/article-level.actions";
 
 export enum Status {
     UNINITIALISED = "UNINITIALISED",
-    CHECK_SUPPORT = "CHECK_SUPPORT",
+
+    // Ready for user to record.
     READY = "READY",
+
+    // User is on the last phrase.
     DONE = "DONE",
+
+    // Web Speech API is unsupported by the browser.
     UNSUPPORTED = "UNSUPPORTED",
 }
 
@@ -19,6 +24,7 @@ export const initialState = {
     status: Status.UNINITIALISED,
     article: emptyArticle,
     phraseNum: 0,
+    isSpeaking: false,
 };
 
 export type State = typeof initialState;
@@ -27,13 +33,11 @@ export const articleLevelReducer = createReducer(
     initialState,
     on(ArticleLevelActions.initialise, (state, { article }) => ({
         ...state,
-        status: Status.CHECK_SUPPORT,
         article,
     })),
     on(ArticleLevelActions.nextPhrase, (state) => {
         const phraseNum = state.phraseNum + 1;
-        const status = phraseNum === state.article.phrases.length ? Status.DONE : state.status;
-        console.log(phraseNum, "vs", state.article.phrases.length);
+        const status = phraseNum + 1 === state.article.phrases.length ? Status.DONE : state.status;
         return {
             ...state,
             status,
@@ -47,5 +51,9 @@ export const articleLevelReducer = createReducer(
     on(ArticleLevelActions.notSupported, (state) => ({
         ...state,
         status: Status.UNSUPPORTED,
+    })),
+    on(ArticleLevelActions.speakingStateChange, (state, { isSpeaking }) => ({
+        ...state,
+        isSpeaking,
     }))
 );

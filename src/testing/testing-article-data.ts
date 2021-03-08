@@ -1,6 +1,6 @@
 import { Article } from "@models/article.model";
 
-export const TEST_DOCUMENT: Article = {
+export const TEST_ARTICLE: Article = {
     text: "The quick brown fox jumps over the lazy dog.",
     phrases: [
         {

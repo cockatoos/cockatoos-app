@@ -53,7 +53,10 @@ export class AudioRecorderService {
     get available$(): Observable<boolean> {
         return this.mediaRecorder$.pipe(
             map((recorder) => true),
-            catchError((error) => of(false))
+            catchError((error) => {
+                console.error(error);
+                return of(false);
+            })
         );
     }
 

@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { TextToSpeechService } from "@services/text-to-speech.service";
 import { ArticleComparisonComponent } from "@components/article-comparison/article-comparison.component";
-import { TEST_DOCUMENT } from "@testing/testing-article-data";
-import { provideMockStore, MockStore } from '@ngrx/store/testing';
+import { TEST_ARTICLE } from "@testing/testing-article-data";
+import { provideMockStore, MockStore } from "@ngrx/store/testing";
 
 describe("ArticleComparisonComponent", () => {
     let component: ArticleComparisonComponent;
@@ -12,8 +12,8 @@ describe("ArticleComparisonComponent", () => {
 
     const initialState = {
         articleLevel: {
-            status: "UNINITIALISED"
-        }
+            status: "UNINITIALISED",
+        },
     };
 
     beforeEach(async () => {
@@ -28,7 +28,7 @@ describe("ArticleComparisonComponent", () => {
                     provide: TextToSpeechService,
                     useValue: mockTextToSpeechService,
                 },
-                provideMockStore({ initialState })
+                provideMockStore({ initialState }),
             ],
         }).compileComponents();
 
@@ -38,7 +38,7 @@ describe("ArticleComparisonComponent", () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(ArticleComparisonComponent);
         component = fixture.componentInstance;
-        component.article = TEST_DOCUMENT;
+        component.article = TEST_ARTICLE;
         fixture.detectChanges();
     });
 

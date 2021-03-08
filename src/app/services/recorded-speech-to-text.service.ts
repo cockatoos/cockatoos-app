@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, merge, Observable, of } from "rxjs";
-import { reduce } from "rxjs/operators";
+import { BehaviorSubject, Observable } from "rxjs";
+import { map } from "rxjs/operators";
 import { AudioRecorderService } from "./audio-recorder.service";
 import { SpeechToTextService } from "./speech-to-text.service";
 
@@ -18,8 +18,8 @@ export class RecordedSpeechToTextService {
     }
 
     get available$(): Observable<boolean> {
-        return merge(this.audioRecorder.available$, of(this.speechToText.available)).pipe(
-            reduce((acc, val) => acc && val, true)
+        return this.audioRecorder.available$.pipe(
+            map((audioRecorderAvailable) => audioRecorderAvailable && this.speechToText.available)
         );
     }
 

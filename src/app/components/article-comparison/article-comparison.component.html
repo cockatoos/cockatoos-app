@@ -1,94 +1,104 @@
-<section *ngIf="(articleLevelStatus$ | async) === 'READY'" class="article-comparison-view">
-    <div class="document-section">
-        <mat-card class="full-document">
+<ng-container [ngSwitch]="articleLevelStatus$ | async">
+    <section *ngSwitchCase="'UNINITIALISED'">
+        <mat-spinner></mat-spinner>
+    </section>
+
+    <section *ngSwitchCase="'UNSUPPORTED'">
+        <mat-card>
             <mat-card-header>
-                <mat-card-title>Document</mat-card-title>
-                <mat-card-subtitle>TODO: create HighlightDiff component</mat-card-subtitle>
+                <mat-card-title>Error</mat-card-title>
             </mat-card-header>
             <mat-card-content>
-                <h1>
-                    {{ article.text }}
-                </h1>
+                <h2>Sorry, your browser does not support Web Speech API.</h2>
             </mat-card-content>
         </mat-card>
-    </div>
+    </section>
 
-    <div class="user-section">
-        <mat-card class="ground-truth-phrase">
-            <mat-card-header>
-                <mat-card-subtitle>Target Phrase</mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-content>
-                <h1>
-                    {{ targetPhrase$ | async }}
-                </h1>
-            </mat-card-content>
-        </mat-card>
-
-        <mat-card class="recorded-phrase">
-            <mat-card-header>
-                <mat-card-subtitle>Recorded Phrase</mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-content>
-                <h1 [ngSwitch]="phraseLevelStatus$ | async">
-                    <ng-container *ngSwitchCase="'READY'"> Press record to begin </ng-container>
-                    <ng-container *ngSwitchCase="'RECORDING'">
-                        {{ transcript$ | async }}
-                        <br />
-                        <br />
-                        <mat-spinner diameter="30"></mat-spinner>
-                    </ng-container>
-                    <ng-container *ngSwitchCase="'DONE'">
-                        <app-phrase-diff
-                            recordedPhrase="{{ transcript$ | async }}"
-                            groundTruth="{{ targetPhrase$ | async }}"
-                        ></app-phrase-diff>
-                    </ng-container>
-                </h1>
-            </mat-card-content>
-        </mat-card>
-
-        <div class="controls">
-            <button
-                mat-raised-button
-                color="primary"
-                id="btnSpeak"
-                (click)="speak()"
-                [disabled]="textToSpeech.speaking$ | async"
-            >
-                Speak
-            </button>
-
-            <button mat-raised-button (click)="startRecording()" [disabled]="(phraseLevelStatus$ | async) !== 'READY'">
-                Record
-            </button>
-
-            <button
-                mat-raised-button
-                (click)="stopRecording()"
-                [disabled]="(phraseLevelStatus$ | async) !== 'RECORDING'"
-            >
-                Stop
-            </button>
-
-            <button
-                mat-raised-button
-                (click)="nextPhrase()"
-                [disabled]="(phraseLevelStatus$ | async) !== 'DONE' || (articleLevelStatus$ | async) === 'DONE'"
-            >
-                Next Phrase
-            </button>
+    <section *ngSwitchDefault class="article-comparison-view">
+        <div class="document-section">
+            <mat-card class="full-document">
+                <mat-card-header>
+                    <mat-card-title>Document</mat-card-title>
+                    <mat-card-subtitle>TODO: create HighlightDiff component</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                    <h1>
+                        {{ article.text }}
+                    </h1>
+                </mat-card-content>
+            </mat-card>
         </div>
-    </div>
-</section>
 
-<section *ngIf="(articleLevelStatus$ | async) === 'UNSUPPORTED'">
-    <mat-card>
-        <mat-card-header>
-            <mat-card-title>Error</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-            <h2>Sorry, your browser does not support Web Speech API.</h2>
-        </mat-card-content>
-    </mat-card>
-</section>
+        <div class="user-section">
+            <mat-card class="ground-truth-phrase">
+                <mat-card-header>
+                    <mat-card-subtitle>Target Phrase</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                    <h1>
+                        {{ targetPhrase$ | async }}
+                    </h1>
+                </mat-card-content>
+            </mat-card>
+
+            <mat-card class="recorded-phrase">
+                <mat-card-header>
+                    <mat-card-subtitle>Recorded Phrase</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                    <h1 [ngSwitch]="phraseLevelStatus$ | async">
+                        <ng-container *ngSwitchCase="'READY'"> Press record to begin </ng-container>
+                        <ng-container *ngSwitchCase="'RECORDING'">
+                            {{ transcript$ | async }}
+                            <br />
+                            <br />
+                            <mat-spinner diameter="30"></mat-spinner>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'DONE'">
+                            <app-phrase-diff
+                                recordedPhrase="{{ transcript$ | async }}"
+                                groundTruth="{{ targetPhrase$ | async }}"
+                            ></app-phrase-diff>
+                        </ng-container>
+                    </h1>
+                </mat-card-content>
+            </mat-card>
+
+            <div class="controls">
+                <button
+                    mat-raised-button
+                    color="primary"
+                    id="btnSpeak"
+                    (click)="speak()"
+                    [disabled]="isSpeaking$ | async"
+                >
+                    Speak
+                </button>
+
+                <button
+                    mat-raised-button
+                    (click)="startRecording()"
+                    [disabled]="(phraseLevelStatus$ | async) !== 'READY'"
+                >
+                    Record
+                </button>
+
+                <button
+                    mat-raised-button
+                    (click)="stopRecording()"
+                    [disabled]="(phraseLevelStatus$ | async) !== 'RECORDING'"
+                >
+                    Stop
+                </button>
+
+                <button
+                    mat-raised-button
+                    (click)="nextPhrase()"
+                    [disabled]="(phraseLevelStatus$ | async) !== 'DONE' || (articleLevelStatus$ | async) === 'DONE'"
+                >
+                    Next Phrase
+                </button>
+            </div>
+        </div>
+    </section>
+</ng-container>

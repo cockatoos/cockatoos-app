@@ -1,12 +1,10 @@
 import { Component, OnInit, Input } from "@angular/core";
-import { TextToSpeechService } from "@services/text-to-speech.service";
-import { RecordedSpeechToTextService } from "app/services/recorded-speech-to-text.service";
 import { Observable } from "rxjs";
 
 import { Article } from "@models/article.model";
 import { Store } from "@ngrx/store";
 import { AppState } from "@state/app.state";
-import { initialise, nextPhrase } from "@state/actions/article-level.actions";
+import { initialise, nextPhrase, startSpeaking } from "@state/actions/article-level.actions";
 import { first, map } from "rxjs/operators";
 import { startRecording, stopRecording } from "@state/actions/phrase-level.actions";
 import { Status as ArticleLevelStatus } from "@state/reducers/article-level.reducer";
@@ -25,16 +23,14 @@ export class ArticleComparisonComponent implements OnInit {
     phraseLevelStatus$: Observable<PhraseLevelStatus>;
     phraseNum$: Observable<number>;
     transcript$: Observable<string>;
+    isSpeaking$: Observable<boolean>;
 
-    constructor(
-        public textToSpeech: TextToSpeechService,
-        public recordedSpeechToText: RecordedSpeechToTextService,
-        private store: Store<AppState>
-    ) {
+    constructor(private store: Store<AppState>) {
         this.phraseNum$ = store.select(({ articleLevel }) => articleLevel.phraseNum);
         this.transcript$ = store.select(({ phraseLevel }) => phraseLevel.transcript);
         this.articleLevelStatus$ = store.select(({ articleLevel }) => articleLevel.status);
         this.phraseLevelStatus$ = store.select(({ phraseLevel }) => phraseLevel.status);
+        this.isSpeaking$ = store.select(({ articleLevel }) => articleLevel.isSpeaking);
     }
 
     ngOnInit(): void {
@@ -56,7 +52,7 @@ export class ArticleComparisonComponent implements OnInit {
 
     speak(): void {
         this.targetPhrase$.pipe(first()).subscribe((targetPhrase) => {
-            this.textToSpeech.speak(targetPhrase);
+            this.store.dispatch(startSpeaking({ text: targetPhrase }));
         });
     }
 

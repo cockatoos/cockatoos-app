@@ -40,7 +40,8 @@ export class PhraseLevelEffects {
             map(() => {
                 this.recordedSpeechToTextService.reset();
                 return PhraseLevelActions.reset();
-            })
+            }),
+            catchError(() => EMPTY)
         )
     );
 
