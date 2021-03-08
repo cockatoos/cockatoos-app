@@ -12,6 +12,14 @@ import { PhraseDiffComponent } from "@components/phrase-diff/phrase-diff.compone
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatCardModule } from "@angular/material/card";
 import { MatGridListModule } from "@angular/material/grid-list";
+import { MatButtonModule } from "@angular/material/button";
+import { MatToolbarModule } from "@angular/material/toolbar";
+import { MatIconModule } from "@angular/material/icon";
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSidenavModule } from "@angular/material/sidenav";
+import { ScoreChartsContainerComponent } from './components/score-charts-container/score-charts-container.component';
+import { PracticeContainerComponent } from './components/practice-container/practice-container.component';
+import { AnalyseDialogComponent } from './components/analyse-dialog/analyse-dialog.component';
 
 @NgModule({
     declarations: [
@@ -19,6 +27,9 @@ import { MatGridListModule } from "@angular/material/grid-list";
         ScoreChartComponent,
         PhraseDiffComponent,
         ArticleComparisonComponent,
+        ScoreChartsContainerComponent,
+        PracticeContainerComponent,
+        AnalyseDialogComponent,
     ],
     imports: [
         BrowserModule,
@@ -27,6 +38,12 @@ import { MatGridListModule } from "@angular/material/grid-list";
         BrowserAnimationsModule,
         MatCardModule,
         MatGridListModule,
+        MatButtonModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatDialogModule,
+        MatSidenavModule,
+
     ],
     providers: [],
     bootstrap: [AppComponent],
