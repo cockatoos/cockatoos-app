@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatDialogModule } from '@angular/material/dialog';
+import { AnalyseDialogComponent } from '@components/analyse-dialog/analyse-dialog.component';
 
 import { PracticeContainerComponent } from './practice-container.component';
 
@@ -8,7 +10,8 @@ describe('PracticeContainerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PracticeContainerComponent ]
+      declarations: [ PracticeContainerComponent,  AnalyseDialogComponent ],
+      imports: [ MatDialogModule ]
     })
     .compileComponents();
   });
