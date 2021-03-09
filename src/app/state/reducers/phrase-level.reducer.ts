@@ -31,6 +31,22 @@ export const phraseLevelReducer = createReducer(
             transcript,
         };
     }),
+    on(PhraseLevelActions.blobAvailable, (state, { blob }) => {
+        // For debugging purposes
+        console.log(blob, blob.type);
+
+        ////Uncomment to download the audio file...
+        // const url = URL.createObjectURL(blob);
+        // const a = document.createElement("a");
+        // a.setAttribute("style", "display: none;");
+        // a.setAttribute("href", url);
+        // a.setAttribute("download", "test.wbm");
+        // document.body.appendChild(a);
+        // a.click();
+        // URL.revokeObjectURL(url);
+
+        return state;
+    }),
     on(PhraseLevelActions.reset, (state) => ({
         ...state,
         status: Status.READY,

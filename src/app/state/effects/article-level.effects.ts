@@ -11,7 +11,7 @@ import { TextToSpeechService } from "@services/text-to-speech.service";
 export class ArticleLevelEffects {
     initialise$ = createEffect(() =>
         this.actions$.pipe(
-            ofType("Initialise Article"),
+            ofType("[Article] Initialise"),
             mergeMap(() => {
                 const textToSpeechIsAvailable = this.textToSpeechService.available;
                 return this.recordedSpeechToTextService.available$.pipe(
@@ -30,7 +30,7 @@ export class ArticleLevelEffects {
 
     startSpeaking$ = createEffect(() =>
         this.actions$.pipe(
-            ofType("Start Speaking"),
+            ofType("[Article] Start Speaking"),
             switchMap(({ text }) => {
                 this.textToSpeechService.speak(text);
                 return this.textToSpeechService.speaking$.pipe(

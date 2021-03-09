@@ -4,6 +4,12 @@ import { map } from "rxjs/operators";
 import { AudioRecorderService } from "./audio-recorder.service";
 import { SpeechToTextService } from "./speech-to-text.service";
 
+//
+// Wrapper service around the AudioRecorder and SpeechToText,
+// in order to synchronise the speech-to-text recognition and the
+// audio recording for the accent score prediction.
+//
+
 @Injectable({
     providedIn: "root",
 })
@@ -23,22 +29,22 @@ export class RecordedSpeechToTextService {
         );
     }
 
+    get recording$(): BehaviorSubject<boolean> {
+        return this.speechToText.recording$;
+    }
+
+    get blob$(): Observable<Blob> {
+        return this.audioRecorder.blob$;
+    }
+
     start(): void {
         this.audioRecorder.start();
         this.speechToText.start();
     }
 
-    get recording$(): BehaviorSubject<boolean> {
-        return this.speechToText.recording$;
-    }
-
     stop(): void {
         this.audioRecorder.stop();
         this.speechToText.stop();
-    }
-
-    get blob$(): Observable<Blob> {
-        return this.audioRecorder.blob$;
     }
 
     reset(): void {
