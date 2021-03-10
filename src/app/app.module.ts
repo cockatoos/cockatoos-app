@@ -2,13 +2,13 @@ import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
-///routing
+/// routing
 import { AppRoutingModule } from "./app-routing.module";
 
-///charts
+/// charts
 import { HighchartsChartModule } from "highcharts-angular";
 
-///components
+/// components
 import { AppComponent } from "./app.component";
 import { ScoreChartComponent } from "@components/score-chart/score-chart.component";
 import { ArticleComparisonComponent } from "@components/article-comparison/article-comparison.component";
@@ -17,7 +17,7 @@ import { ScoreChartsContainerComponent } from './components/score-charts-contain
 import { PracticeContainerComponent } from './components/practice-container/practice-container.component';
 import { AnalyseDialogComponent } from './components/analyse-dialog/analyse-dialog.component';
 
-///material
+/// material
 import { MatCardModule } from "@angular/material/card";
 import { MatGridListModule } from "@angular/material/grid-list";
 import { MatButtonModule } from "@angular/material/button";
@@ -27,7 +27,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
-///ngrx
+/// ngrx
 import { StoreModule } from "@ngrx/store";
 import { EffectsModule } from "@ngrx/effects";
 import { articleLevelReducer } from "@state/reducers/article-level.reducer";

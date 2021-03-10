@@ -10,7 +10,7 @@ import { TEST_ARTICLE } from '@testing/testing-article-data';
 })
 export class PracticeContainerComponent implements OnInit {
 
-  article= TEST_ARTICLE
+  article = TEST_ARTICLE;
 
 
   constructor(public dialog: MatDialog) { }
