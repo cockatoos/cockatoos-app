@@ -5,10 +5,10 @@
   <mat-card-content class="score-card-content">
     <div class="score-chart-number-column">
       <span class="mat-display-3">
-        {{ currentValue ? currentValue : '--' }}
+        {{ currentValue !== null ? currentValue : '--' }}
       </span>
       <span>
-        Ave. {{ averageValue ? averageValue : '--' }}
+        Ave. {{ averageValue !== null ? averageValue : '--' }}
       </span>
     </div>
 

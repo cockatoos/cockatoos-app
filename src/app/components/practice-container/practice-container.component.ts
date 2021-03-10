@@ -27,9 +27,9 @@ export class PracticeContainerComponent implements OnInit {
 
   public openDialog(): void {
     const dialogRef = this.dialog.open(AnalyseDialogComponent);
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
+    // dialogRef.afterClosed().subscribe(result => {
+    //   console.log(`Dialog result: ${result}`);
+    // });
   }
 
 }
