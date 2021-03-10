@@ -1,5 +1,4 @@
 import { Component } from "@angular/core";
-import { TestAccentScoreData } from "@testing/testing-historical-score-data";
 
 @Component({
     selector: "app-root",
@@ -8,15 +7,4 @@ import { TestAccentScoreData } from "@testing/testing-historical-score-data";
 })
 export class AppComponent {
     title = "Cockatoos";
-
-    document = {
-        text: "Hello world",
-        phrases: [
-            {
-                startIndex: 0,
-                endIndex: 10,
-            },
-        ],
-    };
-    public testHistoricalData = TestAccentScoreData;
 }

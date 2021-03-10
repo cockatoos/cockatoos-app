@@ -1,25 +1,24 @@
-<div class="score-chart-container">
-  <div class="score-chart-number-column">
-    <span class="mat-title">
-      Your {{ label }} Score Today
-    </span>
+<mat-card>
+  <mat-card-title>
+    {{ label }} Score
+  </mat-card-title>
+  <mat-card-content class="score-card-content">
+    <div class="score-chart-number-column">
+      <span class="mat-display-3">
+        {{ currentValue !== null ? currentValue : '--' }}
+      </span>
+      <span>
+        Ave. {{ averageValue !== null ? averageValue : '--' }}
+      </span>
+    </div>
 
-    <span class="mat-display-3">
-      {{ currentValue ? currentValue : '--' }}
-    </span>
-
-    <span>
-      Ave. {{ averageValue ? averageValue : '--' }}
-    </span>
-  </div>
-
-  <div class="score-chart-highcharts-column">
-    <highcharts-chart
-    [Highcharts]="Highcharts"
-    [options]="chartOptions"
-  >
-  </highcharts-chart>
-  </div>
-</div>
-
+    <div class="score-chart-highcharts-column">
+      <highcharts-chart
+        [Highcharts]="Highcharts"
+        [options]="chartOptions"
+      >
+      </highcharts-chart>
+    </div>
+  </mat-card-content>
+</mat-card>
   

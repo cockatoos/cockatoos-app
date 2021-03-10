@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import more from 'highcharts/highcharts-more';
 import { parseISO } from 'date-fns';
@@ -18,7 +18,7 @@ export interface Score {
   templateUrl: './score-chart.component.html',
   styleUrls: ['./score-chart.component.sass']
 })
-export class ScoreChartComponent implements OnChanges {
+export class ScoreChartComponent implements OnChanges, OnInit {
 
   @Input()
   public historicalData: Score[];
@@ -30,6 +30,8 @@ export class ScoreChartComponent implements OnChanges {
   public currentValue?: number;
 
   public Highcharts: typeof Highcharts = Highcharts;
+  public height: number;
+  public width: number;
 
   get averageValue(): number {
     return this.historicalData ? mean(this.historicalData.map((score: Score) => score.score)) : null;
@@ -38,7 +40,7 @@ export class ScoreChartComponent implements OnChanges {
   public chartOptions: Highcharts.Options =
     {
       title: {
-        text: 'Track Your Progress'
+        text: ''
       },
 
       yAxis: {
@@ -69,8 +71,19 @@ export class ScoreChartComponent implements OnChanges {
             }
         }]
     },
-      series: []
+    series: [],
+    chart: {
+      reflow: true,
+      width: 350,
+      height: 300
+
+    }
   };
+
+  ngOnInit(): void {
+    this.height = 20;
+    this.width = 20;
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes && changes.historicalData) {
