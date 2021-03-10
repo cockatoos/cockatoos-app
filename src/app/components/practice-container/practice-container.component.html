@@ -1,0 +1,26 @@
+<div class="practice-container">
+    <mat-card>
+        <div class="recording-container">
+            <app-article-comparison
+                [article]="article"
+            ></app-article-comparison>
+        </div>
+    </mat-card>
+
+    
+    <div class="button-container">
+        <button mat-raised-button 
+        color="primary"
+        (click)="openDialog()">Analyse</button>
+        
+        <button 
+        mat-raised-button 
+        color="secondary"
+        style="margin: 16px;"
+        (click)="openDialog()">Practice More</button>
+    </div>
+</div>
+
+
+
+
