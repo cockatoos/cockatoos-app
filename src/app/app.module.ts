@@ -20,6 +20,7 @@ import { MatSidenavModule } from "@angular/material/sidenav";
 import { ScoreChartsContainerComponent } from './components/score-charts-container/score-charts-container.component';
 import { PracticeContainerComponent } from './components/practice-container/practice-container.component';
 import { AnalyseDialogComponent } from './components/analyse-dialog/analyse-dialog.component';
+import { HighlightPhraseComponent } from './highlight-phrase/highlight-phrase.component';
 
 @NgModule({
     declarations: [
@@ -30,6 +31,7 @@ import { AnalyseDialogComponent } from './components/analyse-dialog/analyse-dial
         ScoreChartsContainerComponent,
         PracticeContainerComponent,
         AnalyseDialogComponent,
+        HighlightPhraseComponent,
     ],
     imports: [
         BrowserModule,
