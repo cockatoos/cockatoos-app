@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { AngularFirestoreModule } from "@angular/fire/firestore";
 
 import { DataConnectorComponent } from "./data-connector.component";
 
@@ -9,6 +10,7 @@ describe("DataConnectorComponent", () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             declarations: [DataConnectorComponent],
+            providers: [AngularFirestoreModule],
         }).compileComponents();
     });
 
