@@ -2,6 +2,7 @@
     "name": "cockatoos-app",
     "version": "0.0.0",
     "scripts": {
+        "preinstall": "npx npm-force-resolutions",
         "ng": "ng",
         "start": "ng serve",
         "fix": "pretty-quick & ng lint --fix",
@@ -27,6 +28,8 @@
         "@angular/platform-browser-dynamic": "~11.2.3",
         "@angular/router": "~11.2.3",
         "@ng-web-apis/common": "^1.9.0",
+        "@ngrx/effects": "^11.0.1",
+        "@ngrx/store": "^11.0.1",
         "date-fns": "^2.18.0",
         "highcharts": "^9.0.1",
         "highcharts-angular": "^2.10.0",
@@ -45,6 +48,7 @@
         "@storybook/addon-essentials": "^6.1.20",
         "@storybook/addon-links": "^6.1.20",
         "@storybook/angular": "^6.1.20",
+        "@types/dom-mediacapture-record": "^1.0.7",
         "@types/jasmine": "~3.6.0",
         "@types/lodash": "^4.14.168",
         "@types/node": "^12.11.1",
@@ -63,5 +67,8 @@
         "ts-node": "~8.3.0",
         "tslint": "~6.1.0",
         "typescript": "~4.1.2"
+    },
+    "resolutions": {
+        "tapable": "1.1.3"
     }
 }

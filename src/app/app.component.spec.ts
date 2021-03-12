@@ -1,12 +1,14 @@
 import { TestBed } from "@angular/core/testing";
+import { MatCardModule } from "@angular/material/card";
 import { RouterTestingModule } from "@angular/router/testing";
 import { ScoreChartComponent } from "@components/score-chart/score-chart.component";
+import { HighchartsChartModule } from "highcharts-angular";
 import { AppComponent } from "./app.component";
 
 describe("AppComponent", () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [RouterTestingModule],
+            imports: [RouterTestingModule, MatCardModule, HighchartsChartModule],
             declarations: [
                 AppComponent,
                 ScoreChartComponent,
