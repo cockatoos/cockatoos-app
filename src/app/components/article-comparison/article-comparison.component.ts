@@ -1,21 +1,18 @@
 import { Component, OnInit, Input } from "@angular/core";
-import { TextToSpeechService } from "@services/text-to-speech.service";
-import { Observable, of } from "rxjs";
+import { Observable } from "rxjs";
+import { first, map } from "rxjs/operators";
 
-//
-// A document is represented by the full document text, along with
-// the list of phrase indexes. Each phrase is represented by a start- and
-// end-index. The index refers to the _character_ index, __not the word__.
-//
-interface Phrase {
-    startIndex: number;
-    endIndex: number;
-}
+import { Article } from "@models/article.model";
 
-export interface Document {
-    text: string;
-    phrases: Phrase[];
-}
+import { Store } from "@ngrx/store";
+import { AppState } from "@state/app.state";
+import { initialise, nextPhrase, startSpeaking } from "@state/actions/article-level.actions";
+import { startRecording, stopRecording } from "@state/actions/phrase-level.actions";
+import { Status as ArticleLevelStatus } from "@state/reducers/article-level.reducer";
+import { Status as PhraseLevelStatus } from "@state/reducers/phrase-level.reducer";
+import { selectArticleLevelStatus, selectIsSpeaking, selectPhraseNum } from "@state/selectors/article-level.selectors";
+import { selectPhraseLevelStatus, selectTranscript } from "@state/selectors/phrase-level.selectors";
+
 
 @Component({
     selector: "app-article-comparison",
@@ -24,26 +21,64 @@ export interface Document {
 })
 export class ArticleComparisonComponent implements OnInit {
     @Input()
-    document: Document;
+    article: Article;
 
-    // Index of the current phrase.
-    currentPhrase: number;
+    // Status of ArticleLevel ("outer") component, e.g. ready to use? on last phrase?
+    articleLevelStatus$: Observable<ArticleLevelStatus>;
 
-    // TODO: will be obtained from the SpeechToTextService
-    recordedPhrase: Observable<string>;
+    // _Index_ of the current phrase/
+    phraseNum$: Observable<number>;
 
-    constructor(public textToSpeech: TextToSpeechService) {}
+    // Status of PhraseLevel ("inner") component, e.g. is it recording?
+    phraseLevelStatus$: Observable<PhraseLevelStatus>;
+
+    // Transcript of the _active_ phrase.
+    transcript$: Observable<string>;
+
+    // Flag to signal if the text-to-speech service is speaking.
+    isSpeaking$: Observable<boolean>;
+
+    constructor(private store: Store<AppState>) {
+        this.articleLevelStatus$ = store.select(selectArticleLevelStatus);
+        this.phraseNum$ = store.select(selectPhraseNum);
+        this.phraseLevelStatus$ = store.select(selectPhraseLevelStatus);
+        this.transcript$ = store.select(selectTranscript);
+        this.isSpeaking$ = store.select(selectIsSpeaking);
+    }
 
     ngOnInit(): void {
-        this.currentPhrase = 0;
+        // Initialise state with the current article.
+        this.store.dispatch(initialise({ article: this.article }));
     }
 
     /**
      * Returns the target phrase in this article.
      */
-    get targetPhrase(): string {
-        const { text, phrases } = this.document;
-        const { startIndex, endIndex } = phrases[this.currentPhrase];
-        return text.slice(startIndex, endIndex);
+    get targetPhrase$(): Observable<string> {
+        const { text, phrases } = this.article;
+        return this.phraseNum$.pipe(
+            map((phraseNum) => {
+                const { startIndex, endIndex } = phrases[phraseNum];
+                return text.slice(startIndex, endIndex);
+            })
+        );
+    }
+
+    speak(): void {
+        this.targetPhrase$.pipe(first()).subscribe((targetPhrase) => {
+            this.store.dispatch(startSpeaking({ text: targetPhrase }));
+        });
+    }
+
+    startRecording(): void {
+        this.store.dispatch(startRecording());
+    }
+
+    stopRecording(): void {
+        this.store.dispatch(stopRecording());
+    }
+
+    nextPhrase(): void {
+        this.store.dispatch(nextPhrase());
     }
 }

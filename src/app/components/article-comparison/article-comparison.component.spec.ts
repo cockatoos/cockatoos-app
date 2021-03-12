@@ -1,12 +1,20 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { TextToSpeechService } from "@services/text-to-speech.service";
 import { ArticleComparisonComponent } from "@components/article-comparison/article-comparison.component";
-import { TEST_DOCUMENT } from "@testing/testing-article-data";
+import { TEST_ARTICLE } from "@testing/testing-article-data";
+import { provideMockStore, MockStore } from "@ngrx/store/testing";
 
 describe("ArticleComparisonComponent", () => {
     let component: ArticleComparisonComponent;
     let fixture: ComponentFixture<ArticleComparisonComponent>;
+    let store: MockStore;
     let mockTextToSpeechService: any;
+
+    const initialState = {
+        articleLevel: {
+            status: "UNINITIALISED",
+        },
+    };
 
     beforeEach(async () => {
         mockTextToSpeechService = jasmine.createSpyObj("TextToSpeechService", ["speak"], {
@@ -20,34 +28,21 @@ describe("ArticleComparisonComponent", () => {
                     provide: TextToSpeechService,
                     useValue: mockTextToSpeechService,
                 },
+                provideMockStore({ initialState }),
             ],
         }).compileComponents();
+
+        store = TestBed.inject(MockStore);
     });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(ArticleComparisonComponent);
         component = fixture.componentInstance;
-        component.document = TEST_DOCUMENT;
+        component.article = TEST_ARTICLE;
         fixture.detectChanges();
     });
 
     it("should create", () => {
         expect(component).toBeTruthy();
-    });
-
-    it("should run text-to-speech on target phrase", () => {
-        // GIVEN
-        const targetPhrase = "hello world";
-        spyOnProperty(component, "targetPhrase", "get").and.returnValue(targetPhrase);
-
-        const element: HTMLElement = fixture.nativeElement;
-        const speakButton = element.querySelector("#btnSpeak") as HTMLButtonElement;
-
-        // WHEN
-        speakButton.click();
-
-        // THEN
-        expect(mockTextToSpeechService.speak.calls.count()).toBe(1);
-        expect(mockTextToSpeechService.speak).toHaveBeenCalledWith(targetPhrase);
     });
 });

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AnalyseDialogComponent } from '@components/analyse-dialog/analyse-dialog.component';
+import { TEST_ARTICLE } from '@testing/testing-article-data';
 
 @Component({
   selector: 'app-practice-container',
@@ -9,15 +10,7 @@ import { AnalyseDialogComponent } from '@components/analyse-dialog/analyse-dialo
 })
 export class PracticeContainerComponent implements OnInit {
 
-  document = {
-    text: "Hello world",
-    phrases: [
-        {
-            startIndex: 0,
-            endIndex: 10,
-        },
-    ],
-  };
+  article = TEST_ARTICLE;
 
 
   constructor(public dialog: MatDialog) { }
