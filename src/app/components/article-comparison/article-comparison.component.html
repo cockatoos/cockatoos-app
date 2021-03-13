@@ -23,7 +23,12 @@
                 </mat-card-header>
                 <mat-card-content>
                     <h1>
-                        {{ article.text }}
+                        <app-highlight-phrase
+                            [text]="article.text"
+                            [startIndex]="(targetPhraseIndex$ | async).startIndex"
+                            [endIndex]="(targetPhraseIndex$ | async).endIndex"
+                        >
+                        </app-highlight-phrase>
                     </h1>
                 </mat-card-content>
             </mat-card>
@@ -56,8 +61,8 @@
                         </ng-container>
                         <ng-container *ngSwitchCase="'DONE'">
                             <app-phrase-diff
-                                recordedPhrase="{{ transcript$ | async }}"
-                                groundTruth="{{ targetPhrase$ | async }}"
+                                [recordedPhrase]="transcript$ | async"
+                                [groundTruth]="targetPhrase$ | async"
                             ></app-phrase-diff>
                         </ng-container>
                     </h1>
