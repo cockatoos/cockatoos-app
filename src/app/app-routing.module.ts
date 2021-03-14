@@ -20,7 +20,7 @@ const routes: Routes = [
             {
                 path: '', redirectTo: '/app/scores', pathMatch: 'full'
             }
-        ],},
+        ], },
     { path: '', redirectTo: '/home', pathMatch: 'full' },
 ];
 
