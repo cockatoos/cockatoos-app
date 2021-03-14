@@ -14,7 +14,7 @@ describe("ArticleComparisonComponent", () => {
         articleLevel: {
             status: "UNINITIALISED",
         },
-        phraseLevel: {  
+        phraseLevel: {
         },
     };
 
