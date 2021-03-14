@@ -38,8 +38,10 @@ export const phraseLevelReducer = createReducer(
         const reader = new FileReader();
         reader.readAsDataURL(blob);
         reader.onloadend = (): void => {
-            const base64 = reader.result as string;
-            console.log(base64.split(",")[1]);
+            const base64 = (reader.result as string).split(",")[1];
+
+            // TODO: send this Base64-encoded string to Azure
+            console.log(base64);
         };
 
         //// Uncomment to download the audio file...
