@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from "@angular/core";
 import { Observable } from "rxjs";
 import { first, map } from "rxjs/operators";
 
@@ -19,7 +19,7 @@ import { selectPhraseLevelStatus, selectTranscript } from "@state/selectors/phra
     templateUrl: "./article-comparison.component.html",
     styleUrls: ["./article-comparison.component.sass"],
 })
-export class ArticleComparisonComponent implements OnInit {
+export class ArticleComparisonComponent implements OnInit, OnChanges {
     @Input()
     article: Article;
 
@@ -48,7 +48,12 @@ export class ArticleComparisonComponent implements OnInit {
 
     ngOnInit(): void {
         // Initialise state with the current article.
+        console.log(this.article);
         this.store.dispatch(initialise({ article: this.article }));
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        console.log(changes);
     }
 
     /**
@@ -59,7 +64,7 @@ export class ArticleComparisonComponent implements OnInit {
         return this.phraseNum$.pipe(
             map((phraseNum) => {
                 const { startIndex, endIndex } = phrases[phraseNum];
-                return text.slice(startIndex, endIndex);
+                return text.slice(startIndex, endIndex).trim();
             })
         );
     }
