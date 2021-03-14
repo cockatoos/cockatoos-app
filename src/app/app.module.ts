@@ -16,6 +16,7 @@ import { PhraseDiffComponent } from "@components/phrase-diff/phrase-diff.compone
 import { ScoreChartsContainerComponent } from './components/score-charts-container/score-charts-container.component';
 import { PracticeContainerComponent } from './components/practice-container/practice-container.component';
 import { AnalyseDialogComponent } from './components/analyse-dialog/analyse-dialog.component';
+import { DataConnectorComponent } from './components/data-connector/data-connector.component';
 
 /// material
 import { MatCardModule } from "@angular/material/card";
@@ -26,6 +27,12 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+
+/// firestore
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { environment } from '../environments/environment';
 
 /// ngrx
 import { StoreModule } from "@ngrx/store";
@@ -48,7 +55,8 @@ import { MainAppContainerComponent } from './components/main-app-container/main-
         PracticeContainerComponent,
         AnalyseDialogComponent,
         HomePageContainerComponent,
-        MainAppContainerComponent
+        MainAppContainerComponent,
+        DataConnectorComponent
     ],
     imports: [
         BrowserModule,
@@ -68,6 +76,9 @@ import { MainAppContainerComponent } from './components/main-app-container/main-
         MatIconModule,
         MatDialogModule,
         MatSidenavModule,
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFireAnalyticsModule,
+        AngularFirestoreModule
     ],
     providers: [],
     bootstrap: [AppComponent],

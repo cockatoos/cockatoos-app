@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "cockatoos-5a170": {
+      "hosting": {
+        "cockatoos-app": [
+          "cockatoos-5a170"
+        ]
+      }
+    }
+  }
+}

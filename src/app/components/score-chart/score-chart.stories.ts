@@ -1,9 +1,8 @@
-import { Score, ScoreChartComponent } from '@components/score-chart/score-chart.component';
+import { ScoreChartComponent } from '@components/score-chart/score-chart.component';
 import { moduleMetadata, Story } from '@storybook/angular';
 import { TestAccentScoreData } from '@testing/testing-historical-score-data';
 import { HighchartsChartComponent } from 'highcharts-angular';
-import { parseISO } from 'date-fns';
-import { mean }from 'lodash';
+import { MatCardModule } from '@angular/material/card';
 
 export default {
     title: 'Score/Score Chart',
@@ -11,18 +10,10 @@ export default {
     decorators: [
         moduleMetadata({
             declarations: [ ScoreChartComponent, HighchartsChartComponent ],
-            imports: []
+            imports: [MatCardModule]
         })
     ]
 }
-
-const Template: Story<ScoreChartComponent> = (args: ScoreChartComponent) => ({
-    component: ScoreChartComponent,
-    props: args,
-    template:`
-        <app-score-chart></app-score-chart>
-    `
-});
 
 export const WithoutCurrentValue = () => ({
     component: ScoreChartComponent,

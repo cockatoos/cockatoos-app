@@ -35,6 +35,13 @@ export const phraseLevelReducer = createReducer(
         // For debugging purposes
         console.log(blob, blob.type);
 
+        const reader = new FileReader();
+        reader.readAsDataURL(blob);
+        reader.onloadend = (): void => {
+            const base64 = reader.result as string;
+            console.log(base64.split(",")[1]);
+        };
+
         //// Uncomment to download the audio file...
         // const url = URL.createObjectURL(blob);
         // const a = document.createElement("a");
