@@ -76,11 +76,6 @@
         "inquirer-autocomplete-prompt": "^1.0.1",
         "open": "^7.0.3"
     },
-    "husky": {
-        "hooks": {
-            "pre-commit": "pretty-quick --staged & ng lint --fix"
-        }
-    },
     "resolutions": {
         "tapable": "1.1.3"
     }
