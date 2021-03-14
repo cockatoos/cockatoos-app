@@ -1,14 +1,24 @@
 ///<reference path="../../../node_modules/@types/dom-mediacapture-record/index.d.ts"/>
 
+import { Mp3MediaRecorder } from "mp3-mediarecorder";
 import { Injectable } from "@angular/core";
 import { Observable, of, ReplaySubject } from "rxjs";
 import { catchError, map } from "rxjs/operators";
+
+
+const worker = (typeof Worker !== 'undefined')
+    ? new Worker('../app.worker', { type: 'module' })
+    : undefined;
+
 @Injectable({
     providedIn: "root",
 })
 export class AudioRecorderService {
-    private mediaRecorder$: ReplaySubject<MediaRecorder>;
+    private mediaRecorder$: ReplaySubject<Mp3MediaRecorder>;
     private chunks: Blob[];
+
+    // WebWorker that prepares MediaRecorder to encode in MPEG.
+    private worker?: Worker;
 
     blob$: ReplaySubject<Blob>;
 
@@ -16,6 +26,10 @@ export class AudioRecorderService {
         this.chunks = [];
         this.mediaRecorder$ = new ReplaySubject();
         this.blob$ = new ReplaySubject();
+        this.worker = (typeof Worker !== 'undefined')
+            ? new Worker('../app.worker', { type: 'module' })
+            : undefined;
+
         this.initialiseMediaRecorder();
     }
 
@@ -70,25 +84,25 @@ export class AudioRecorderService {
      * MediaRecorder object.
      */
     private initialiseMediaRecorder(): void {
-        if (navigator?.mediaDevices?.getUserMedia) {
+        if (navigator?.mediaDevices?.getUserMedia && this.worker) {
             // Get access to audio stream.
             navigator.mediaDevices
                 .getUserMedia({ audio: true })
                 .then((stream) => {
-                    const mediaRecorder = new MediaRecorder(stream, {
-                        mimeType: "audio/webm;codecs=opus",
+                    const mediaRecorder = new Mp3MediaRecorder(stream, {
+                        worker: this.worker,
                     });
 
                     // Listen to data updates and keep track of audio blob.
-                    mediaRecorder.addEventListener("dataavailable", ({ data }) => {
-                        this.chunks.push(data);
+                    mediaRecorder.addEventListener("dataavailable", (event: any) => {
+                        this.chunks.push(event.data);
                     });
 
                     // Create and emit file blob on completion.
                     mediaRecorder.addEventListener("stop", () => {
                         this.handleBlob(
                             new Blob(this.chunks, {
-                                type: "audio/ogg; codecs=opus",
+                                type: "audio/mpeg"
                             })
                         );
                     });
