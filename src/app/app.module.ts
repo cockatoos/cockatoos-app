@@ -34,6 +34,8 @@ import { articleLevelReducer } from "@state/reducers/article-level.reducer";
 import { phraseLevelReducer } from "@state/reducers/phrase-level.reducer";
 import { ArticleLevelEffects } from "@state/effects/article-level.effects";
 import { PhraseLevelEffects } from "@state/effects/phrase-level.effects";
+import { HomePageContainerComponent } from "@components/home-page-container/home-page-container.component";
+import { MainAppContainerComponent } from './components/main-app-container/main-app-container.component';
 
 
 @NgModule({
@@ -45,6 +47,8 @@ import { PhraseLevelEffects } from "@state/effects/phrase-level.effects";
         ScoreChartsContainerComponent,
         PracticeContainerComponent,
         AnalyseDialogComponent,
+        HomePageContainerComponent,
+        MainAppContainerComponent
     ],
     imports: [
         BrowserModule,
@@ -64,7 +68,6 @@ import { PhraseLevelEffects } from "@state/effects/phrase-level.effects";
         MatIconModule,
         MatDialogModule,
         MatSidenavModule,
-
     ],
     providers: [],
     bootstrap: [AppComponent],
