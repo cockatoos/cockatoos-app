@@ -1,39 +1,86 @@
+$section-left-margin: 10%
+$mashyellow: #EDDBB2
+$deep-purple:#392E45
+$button-color: #d14419 
+    
 .home-page-container
-    background-color: #392E45
+    background-color: $deep-purple
+
+.yellow-bg
+    background-color: $mashyellow
   
 .app-button
-    background-color:#D9AD2B    
-    border-radius: 30px
+    background-color: $button-color
+    border-radius: 10px
     color: #ffffff
 
 .slogan
     position: relative
     top: 45%
-    left: 5%
+    left: $section-left-margin
 
-.header
+.header-white
     font-size: 60px
     color: white
+    font-weight: 400
 
-.sub-header
+.sub-header-white
     font-size: 30px
     color: white
     font-weight: 300
 
-.sector-container
-    height: 80vh
-    margin: auto
+.header-purple
+    font-size: 60px
+    color: $deep-purple
+    font-weight: 400
 
-.yellow-bg
-    background-color: #D9AD2B
+.sub-header-purple
+    font-size: 30px
+    color: $deep-purple
+    font-weight: 300
+
+.section-container
+    height: 80vh
 
 .landing-page-cover
     position: absolute
-    bottom: 160vh
+    top: 0
     right: 0
-    max-height: 70vh
+    max-height: 80vh
 
 .section-header
     position: relative
-    top: 10%
-    left: 5%
+    top: 15%
+    left: $section-left-margin
+
+.second-section-img
+    max-height: 40vh
+
+.footer
+    display: flex
+    flex-direction: column
+    background-color: $mashyellow
+    justify-content: center
+    align-items: center
+    height: 40vh
+
+    .footer-title
+        font-size: 40px
+        color: $deep-purple
+
+    .app-button
+        margin-top: 32px
+
+.section-paragraph
+    display: flex
+    flex-direction: row
+    margin-left: $section-left-margin
+    margin-top: 120px
+    a
+        color: $mashyellow
+
+.section-article
+    font-size: 30px
+    color: $deep-purple
+    margin-left: 32px
+
