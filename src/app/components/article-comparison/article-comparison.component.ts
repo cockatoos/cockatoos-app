@@ -11,7 +11,7 @@ import { startRecording, stopRecording } from "@state/actions/phrase-level.actio
 import { Status as ArticleLevelStatus } from "@state/reducers/article-level.reducer";
 import { Status as PhraseLevelStatus } from "@state/reducers/phrase-level.reducer";
 import { selectArticleLevelStatus, selectIsSpeaking, selectPhraseNum } from "@state/selectors/article-level.selectors";
-import { selectPhraseLevelStatus, selectTranscript } from "@state/selectors/phrase-level.selectors";
+import { selectPhraseLevelStatus, selectRecordingEncoding, selectTranscript } from "@state/selectors/phrase-level.selectors";
 
 
 @Component({
@@ -38,12 +38,25 @@ export class ArticleComparisonComponent implements OnInit {
     // Flag to signal if the text-to-speech service is speaking.
     isSpeaking$: Observable<boolean>;
 
+    // Base64 encoding of the user's recording.
+    recordingEncoding$: Observable<string>;
+
     constructor(private store: Store<AppState>) {
         this.articleLevelStatus$ = store.select(selectArticleLevelStatus);
         this.phraseNum$ = store.select(selectPhraseNum);
         this.phraseLevelStatus$ = store.select(selectPhraseLevelStatus);
         this.transcript$ = store.select(selectTranscript);
         this.isSpeaking$ = store.select(selectIsSpeaking);
+        this.recordingEncoding$ = store.select(selectRecordingEncoding);
+
+        this.recordingEncoding$.subscribe(base64Encoding => {
+            if (base64Encoding === undefined) {
+                return;
+            }
+
+            // TODO: send base64 encoding to Azure :)
+            console.log(base64Encoding);
+        });
     }
 
     ngOnInit(): void {

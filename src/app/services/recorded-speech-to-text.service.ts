@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { map } from "rxjs/operators";
 import { AudioRecorderService } from "./audio-recorder.service";
 import { SpeechToTextService } from "./speech-to-text.service";
@@ -50,5 +50,16 @@ export class RecordedSpeechToTextService {
     reset(): void {
         this.audioRecorder.reset();
         this.speechToText.reset();
+    }
+
+    encodeBlob(blob: Blob): Observable<string> {
+        const encoding$ = new Subject<string>();
+        const reader = new FileReader();
+        reader.readAsDataURL(blob);
+        reader.onloadend = (): void => {
+            const base64 = (reader.result as string).split(",")[1];
+            encoding$.next(base64);
+        }
+        return encoding$;
     }
 }

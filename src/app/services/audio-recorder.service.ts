@@ -6,15 +6,17 @@ import { Observable, of, ReplaySubject } from "rxjs";
 import { catchError, map } from "rxjs/operators";
 
 
-const worker = (typeof Worker !== 'undefined')
-    ? new Worker('../app.worker', { type: 'module' })
-    : undefined;
-
 @Injectable({
     providedIn: "root",
 })
 export class AudioRecorderService {
-    private mediaRecorder$: ReplaySubject<Mp3MediaRecorder>;
+    // Store factory to generate a MediaRecorder, because we need a fresh instance for each phrase.
+    private mediaRecorderFactory$: ReplaySubject<() => Mp3MediaRecorder>;
+
+    // Keep a reference of the current media recorder so we can stop it.
+    private mediaRecorder: Mp3MediaRecorder;
+
+    // Keep track of the audio chunks for the current phrase.
     private chunks: Blob[];
 
     // WebWorker that prepares MediaRecorder to encode in MPEG.
@@ -24,7 +26,7 @@ export class AudioRecorderService {
 
     constructor() {
         this.chunks = [];
-        this.mediaRecorder$ = new ReplaySubject();
+        this.mediaRecorderFactory$ = new ReplaySubject();
         this.blob$ = new ReplaySubject();
         this.worker = (typeof Worker !== 'undefined')
             ? new Worker('../app.worker', { type: 'module' })
@@ -37,7 +39,7 @@ export class AudioRecorderService {
      * Returns true iff the user gives permission for audio recording.
      */
      get available$(): Observable<boolean> {
-        return this.mediaRecorder$.pipe(
+        return this.mediaRecorderFactory$.pipe(
             map((recorder) => true),
             catchError((error) => {
                 console.error(error);
@@ -50,8 +52,9 @@ export class AudioRecorderService {
      * Signals the media recorder to begin recording.
      */
     start(): void {
-        this.mediaRecorder$.subscribe((mediaRecorder) => {
-            mediaRecorder.start();
+        this.mediaRecorderFactory$.subscribe((mediaRecorderFactory) => {
+            this.mediaRecorder = mediaRecorderFactory();
+            this.mediaRecorder.start();
         });
     }
 
@@ -59,9 +62,7 @@ export class AudioRecorderService {
      * Signals the media recorder to stop recording.
      */
     stop(): void {
-        this.mediaRecorder$.subscribe((mediaRecorder) => {
-            mediaRecorder.stop();
-        });
+        this.mediaRecorder.stop();
     }
 
     /**
@@ -89,32 +90,37 @@ export class AudioRecorderService {
             navigator.mediaDevices
                 .getUserMedia({ audio: true })
                 .then((stream) => {
-                    const mediaRecorder = new Mp3MediaRecorder(stream, {
-                        worker: this.worker,
-                    });
 
-                    // Listen to data updates and keep track of audio blob.
-                    mediaRecorder.addEventListener("dataavailable", (event: any) => {
-                        this.chunks.push(event.data);
-                    });
+                    const factory = () => {
+                        const mediaRecorder = new Mp3MediaRecorder(stream, {
+                            worker: this.worker,
+                        });
+    
+                        // Listen to data updates and keep track of audio blob.
+                        mediaRecorder.addEventListener("dataavailable", (event: any) => {
+                            this.chunks.push(event.data);
+                        });
+    
+                        // Create and emit file blob on completion.
+                        mediaRecorder.addEventListener("stop", () => {
+                            this.handleBlob(
+                                new Blob(this.chunks, {
+                                    type: "audio/mpeg"
+                                })
+                            );
+                        });
 
-                    // Create and emit file blob on completion.
-                    mediaRecorder.addEventListener("stop", () => {
-                        this.handleBlob(
-                            new Blob(this.chunks, {
-                                type: "audio/mpeg"
-                            })
-                        );
-                    });
+                        return mediaRecorder;
+                    };
 
                     // Emit the initialised media recorder.
-                    this.mediaRecorder$.next(mediaRecorder);
+                    this.mediaRecorderFactory$.next(factory);
                 })
                 .catch((error) => {
-                    this.mediaRecorder$.error(error);
+                    this.mediaRecorderFactory$.error(error);
                 });
         } else {
-            this.mediaRecorder$.error("Audio recording not supported on device.");
+            this.mediaRecorderFactory$.error("Audio recording not supported on device.");
         }
     }
 }

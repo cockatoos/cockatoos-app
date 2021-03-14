@@ -7,12 +7,16 @@ export enum Status {
     DONE = "DONE",
 }
 
-export const initialState = {
+export interface State {
+    status: Status,
+    transcript: string,
+    recordingEncoding?: string
+}
+
+export const initialState: State = {
     status: Status.READY,
     transcript: "",
 };
-
-export type State = typeof initialState;
 
 export const phraseLevelReducer = createReducer(
     initialState,
@@ -31,30 +35,11 @@ export const phraseLevelReducer = createReducer(
             transcript,
         };
     }),
-    on(PhraseLevelActions.blobAvailable, (state, { blob }) => {
-        // For debugging purposes
-        console.log(blob, blob.type);
-
-        const reader = new FileReader();
-        reader.readAsDataURL(blob);
-        reader.onloadend = (): void => {
-            const base64 = (reader.result as string).split(",")[1];
-
-            // TODO: send this Base64-encoded string to Azure
-            console.log(base64);
+    on(PhraseLevelActions.encodingAvailable, (state, { encoding }) => {
+        return {
+            ...state,
+            recordingEncoding: encoding,
         };
-
-        //// Uncomment to download the audio file...
-        // const url = URL.createObjectURL(blob);
-        // const a = document.createElement("a");
-        // a.setAttribute("style", "display: none;");
-        // a.setAttribute("href", url);
-        // a.setAttribute("download", "test.wbm");
-        // document.body.appendChild(a);
-        // a.click();
-        // URL.revokeObjectURL(url);
-
-        return state;
     }),
     on(PhraseLevelActions.reset, (state) => ({
         ...state,
