@@ -14,6 +14,8 @@ describe("ArticleComparisonComponent", () => {
         articleLevel: {
             status: "UNINITIALISED",
         },
+        phraseLevel: {  
+        },
     };
 
     beforeEach(async () => {
