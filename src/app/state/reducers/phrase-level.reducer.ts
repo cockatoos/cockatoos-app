@@ -8,9 +8,9 @@ export enum Status {
 }
 
 export interface State {
-    status: Status,
-    transcript: string,
-    recordingEncoding?: string
+    status: Status;
+    transcript: string;
+    recordingEncoding?: string;
 }
 
 export const initialState: State = {

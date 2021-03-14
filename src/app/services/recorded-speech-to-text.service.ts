@@ -59,7 +59,7 @@ export class RecordedSpeechToTextService {
         reader.onloadend = (): void => {
             const base64 = (reader.result as string).split(",")[1];
             encoding$.next(base64);
-        }
+        };
         return encoding$;
     }
 }

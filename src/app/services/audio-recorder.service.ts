@@ -95,12 +95,12 @@ export class AudioRecorderService {
                         const mediaRecorder = new Mp3MediaRecorder(stream, {
                             worker: this.worker,
                         });
-    
+
                         // Listen to data updates and keep track of audio blob.
                         mediaRecorder.addEventListener("dataavailable", (event: any) => {
                             this.chunks.push(event.data);
                         });
-    
+
                         // Create and emit file blob on completion.
                         mediaRecorder.addEventListener("stop", () => {
                             this.handleBlob(
