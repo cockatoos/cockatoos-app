@@ -9,7 +9,7 @@ export interface ClarityScore {
 export const clarityScoreFromEdits = (edits: Edit[]): ClarityScore => ({
     numCorrectWords: edits.filter(edit => edit.type === "noop").length,
     numTotalWords: edits.length,
-}); 
+});
 
 export const computeClarityScore = (...clarityScores: ClarityScore[]): number => {
     const totalCorrectWords = sum(clarityScores.map(({ numCorrectWords }) => numCorrectWords));

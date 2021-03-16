@@ -83,7 +83,7 @@ export class ArticleComparisonComponent implements OnInit, OnChanges {
 
     stopRecording(): void {
         this.store.dispatch(stopRecording());
-        
+
         this.transcript$.pipe(first()).subscribe(transcript => {
             if (transcript.trim().length === 0) {
                 return;
