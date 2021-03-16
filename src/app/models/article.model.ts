@@ -3,7 +3,7 @@
 // the list of phrase indexes. Each phrase is represented by a start- and
 // end-index. The index refers to the _character_ index, __not the word__.
 //
-interface Phrase {
+export interface Phrase {
     startIndex: number;
     endIndex: number;
 }
