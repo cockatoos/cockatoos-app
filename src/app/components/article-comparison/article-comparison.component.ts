@@ -12,6 +12,8 @@ import { Status as ArticleLevelStatus } from "@state/reducers/article-level.redu
 import { Status as PhraseLevelStatus } from "@state/reducers/phrase-level.reducer";
 import { selectArticleLevelStatus, selectIsSpeaking, selectPhraseNum } from "@state/selectors/article-level.selectors";
 import { selectPhraseLevelStatus, selectTranscript } from "@state/selectors/phrase-level.selectors";
+import { ArticleComparisonService } from "@services/article-comparison.service";
+import { clarityScoreFromEdits } from "@models/clarity-score.model";
 
 
 @Component({
@@ -38,7 +40,7 @@ export class ArticleComparisonComponent implements OnInit, OnChanges {
     // Flag to signal if the text-to-speech service is speaking.
     isSpeaking$: Observable<boolean>;
 
-    constructor(private store: Store<AppState>) {
+    constructor(private store: Store<AppState>, private articleComparisonService: ArticleComparisonService) {
         this.articleLevelStatus$ = store.select(selectArticleLevelStatus);
         this.phraseNum$ = store.select(selectPhraseNum);
         this.phraseLevelStatus$ = store.select(selectPhraseLevelStatus);
@@ -81,6 +83,18 @@ export class ArticleComparisonComponent implements OnInit, OnChanges {
 
     stopRecording(): void {
         this.store.dispatch(stopRecording());
+        
+        this.transcript$.pipe(first()).subscribe(transcript => {
+            if (transcript.trim().length === 0) {
+                return;
+            }
+
+            this.targetPhrase$.pipe(first()).subscribe(targetPhrase => {
+                const edits = this.articleComparisonService.compare(transcript, targetPhrase);
+                const clarityScore = clarityScoreFromEdits(edits);
+                console.log(clarityScore);
+            });
+        });
     }
 
     nextPhrase(): void {
