@@ -1,4 +1,5 @@
 import { Article } from "@models/article.model";
+import { ClarityScore } from "@models/clarity-score.model";
 import { createAction, props } from "@ngrx/store";
 
 // Initialise the component with the article.
@@ -18,3 +19,6 @@ export const startSpeaking = createAction("[Article] Start Speaking", props<{ te
 
 // Signal that the Web Speech API has changed its speaking state.
 export const speakingStateChange = createAction("[Article] Speaking State Changed", props<{ isSpeaking: boolean }>());
+
+// Accumulate the clarity score for a phrase in this article.
+export const addClarityScore = createAction("[Article] Add Clarity Score", props<{ clarityScore: ClarityScore }>());

@@ -6,15 +6,20 @@ import { Article } from "@models/article.model";
 
 import { Store } from "@ngrx/store";
 import { AppState } from "@state/app.state";
-import { initialise, nextPhrase, startSpeaking } from "@state/actions/article-level.actions";
+import { initialise, nextPhrase, startSpeaking, addClarityScore } from "@state/actions/article-level.actions";
 import { startRecording, stopRecording } from "@state/actions/phrase-level.actions";
 import { Status as ArticleLevelStatus } from "@state/reducers/article-level.reducer";
 import { Status as PhraseLevelStatus } from "@state/reducers/phrase-level.reducer";
-import { selectArticleLevelStatus, selectIsSpeaking, selectPhraseNum } from "@state/selectors/article-level.selectors";
+import {
+    selectArticleLevelStatus,
+    selectClarityScores,
+    selectIsSpeaking,
+    selectPhraseNum,
+} from "@state/selectors/article-level.selectors";
 import { selectPhraseLevelStatus, selectTranscript } from "@state/selectors/phrase-level.selectors";
 import { ArticleComparisonService } from "@services/article-comparison.service";
-import { clarityScoreFromEdits } from "@models/clarity-score.model";
-
+import { ClarityScore, clarityScoreFromEdits } from "@models/clarity-score.model";
+import { sumBy } from "lodash";
 
 @Component({
     selector: "app-article-comparison",
@@ -40,12 +45,30 @@ export class ArticleComparisonComponent implements OnInit, OnChanges {
     // Flag to signal if the text-to-speech service is speaking.
     isSpeaking$: Observable<boolean>;
 
+    clarityScores$: Observable<ClarityScore[]>;
+
     constructor(private store: Store<AppState>, private articleComparisonService: ArticleComparisonService) {
         this.articleLevelStatus$ = store.select(selectArticleLevelStatus);
         this.phraseNum$ = store.select(selectPhraseNum);
         this.phraseLevelStatus$ = store.select(selectPhraseLevelStatus);
         this.transcript$ = store.select(selectTranscript);
         this.isSpeaking$ = store.select(selectIsSpeaking);
+        this.clarityScores$ = store.select(selectClarityScores);
+
+        this.clarityScores$.subscribe((clarityScores) => {
+            if (clarityScores.length === 0) {
+                return;
+            }
+
+            const correctWords = sumBy(clarityScores, ({ numCorrectWords }) => numCorrectWords);
+            const totalWords = sumBy(clarityScores, ({ numTotalWords }) => numTotalWords);
+            const average = correctWords / totalWords;
+
+            console.log(`After phrase ${clarityScores.length}:
+                correct = ${correctWords},
+                total = ${totalWords},
+                average = ${average}`);
+        });
     }
 
     ngOnInit(): void {
@@ -84,15 +107,16 @@ export class ArticleComparisonComponent implements OnInit, OnChanges {
     stopRecording(): void {
         this.store.dispatch(stopRecording());
 
-        this.transcript$.pipe(first()).subscribe(transcript => {
+        this.transcript$.pipe(first()).subscribe((transcript) => {
             if (transcript.trim().length === 0) {
                 return;
             }
 
-            this.targetPhrase$.pipe(first()).subscribe(targetPhrase => {
+            this.targetPhrase$.pipe(first()).subscribe((targetPhrase) => {
                 const edits = this.articleComparisonService.compare(transcript, targetPhrase);
                 const clarityScore = clarityScoreFromEdits(edits);
-                console.log(clarityScore);
+
+                this.store.dispatch(addClarityScore({ clarityScore }));
             });
         });
     }

@@ -1,6 +1,7 @@
 import { createReducer, on } from "@ngrx/store";
 import { Article } from "@models/article.model";
 import * as ArticleLevelActions from "@state/actions/article-level.actions";
+import { ClarityScore } from "@models/clarity-score.model";
 
 export enum Status {
     UNINITIALISED = "UNINITIALISED",
@@ -20,20 +21,31 @@ const emptyArticle: Article = {
     phrases: [],
 };
 
-export const initialState = {
+export interface State {
+    status: Status;
+    article: Article;
+    phraseNum: number;
+    isSpeaking: boolean;
+    clarityScores: ClarityScore[];
+}
+
+export const initialState: State = {
     status: Status.UNINITIALISED,
     article: emptyArticle,
     phraseNum: 0,
     isSpeaking: false,
+    clarityScores: [],
 };
-
-export type State = typeof initialState;
 
 export const articleLevelReducer = createReducer(
     initialState,
     on(ArticleLevelActions.initialise, (state, { article }) => ({
         ...state,
         article,
+    })),
+    on(ArticleLevelActions.addClarityScore, (state, { clarityScore }) => ({
+        ...state,
+        clarityScores: [...state.clarityScores, clarityScore],
     })),
     on(ArticleLevelActions.nextPhrase, (state) => {
         const phraseNum = state.phraseNum + 1;
