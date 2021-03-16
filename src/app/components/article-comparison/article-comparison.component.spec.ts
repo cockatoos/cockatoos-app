@@ -18,7 +18,7 @@ describe("ArticleComparisonComponent", () => {
     };
 
     beforeEach(async () => {
-        mockArticleComparisonService ={
+        mockArticleComparisonService = {
             compare: jasmine.createSpy("compare").and.returnValue(true),
         };
         await TestBed.configureTestingModule({
