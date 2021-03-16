@@ -16,6 +16,7 @@ import { PhraseDiffComponent } from "@components/phrase-diff/phrase-diff.compone
 import { ScoreChartsContainerComponent } from './components/score-charts-container/score-charts-container.component';
 import { PracticeContainerComponent } from './components/practice-container/practice-container.component';
 import { AnalyseDialogComponent } from './components/analyse-dialog/analyse-dialog.component';
+import { HighlightPhraseComponent } from '@components/highlight-phrase/highlight-phrase.component';
 import { DataConnectorComponent } from './components/data-connector/data-connector.component';
 
 /// material
@@ -52,6 +53,7 @@ import { PhraseLevelEffects } from "@state/effects/phrase-level.effects";
         ScoreChartsContainerComponent,
         PracticeContainerComponent,
         AnalyseDialogComponent,
+        HighlightPhraseComponent,
         DataConnectorComponent,
     ],
     imports: [

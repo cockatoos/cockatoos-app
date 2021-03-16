@@ -14,6 +14,7 @@ describe("ArticleComparisonComponent", () => {
     const initialState = {
         articleLevel: {
             status: "UNINITIALISED",
+            clarityScores: [],
         },
     };
 

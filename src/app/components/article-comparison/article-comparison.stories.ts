@@ -15,12 +15,13 @@ import { EffectsModule } from "@ngrx/effects";
 import { ArticleLevelEffects } from "@state/effects/article-level.effects";
 import { PhraseLevelEffects } from "@state/effects/phrase-level.effects";
 import { ArticleComparisonService } from "@services/article-comparison.service";
+import { HighlightPhraseComponent } from "@components/highlight-phrase/highlight-phrase.component";
 
 const mockArticleComparisonService = {
     compare: () => false,
 };
 
-const declarations = [PhraseDiffComponent];
+const declarations = [PhraseDiffComponent, HighlightPhraseComponent];
 
 const materialImportsMixin = [MatButtonModule, MatCardModule, MatProgressSpinnerModule];
 

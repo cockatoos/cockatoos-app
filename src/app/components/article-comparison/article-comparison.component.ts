@@ -2,7 +2,7 @@ import { Component, OnInit, Input, OnChanges, SimpleChanges } from "@angular/cor
 import { Observable } from "rxjs";
 import { first, map } from "rxjs/operators";
 
-import { Article } from "@models/article.model";
+import { Article, Phrase } from "@models/article.model";
 
 import { Store } from "@ngrx/store";
 import { AppState } from "@state/app.state";
@@ -85,12 +85,16 @@ export class ArticleComparisonComponent implements OnInit, OnChanges {
      * Returns the target phrase in this article.
      */
     get targetPhrase$(): Observable<string> {
-        const { text, phrases } = this.article;
+        const { text } = this.article;
+        return this.targetPhraseIndex$.pipe(
+            map(({ startIndex, endIndex }) => text.slice(startIndex, endIndex).trim())
+        );
+    }
+
+    get targetPhraseIndex$(): Observable<Phrase> {
+        const { phrases } = this.article;
         return this.phraseNum$.pipe(
-            map((phraseNum) => {
-                const { startIndex, endIndex } = phrases[phraseNum];
-                return text.slice(startIndex, endIndex).trim();
-            })
+            map((phraseNum) => phrases[phraseNum])
         );
     }
 
