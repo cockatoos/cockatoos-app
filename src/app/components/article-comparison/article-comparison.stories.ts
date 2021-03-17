@@ -16,12 +16,13 @@ import { phraseLevelReducer } from "@state/reducers/phrase-level.reducer";
 import { EffectsModule } from "@ngrx/effects";
 import { ArticleLevelEffects } from "@state/effects/article-level.effects";
 import { PhraseLevelEffects } from "@state/effects/phrase-level.effects";
+import { HighlightPhraseComponent } from "@components/highlight-phrase/highlight-phrase.component";
 
 class MockTextToSpeechService {
     available = false;
 }
 
-const declarations = [PhraseDiffComponent];
+const declarations = [PhraseDiffComponent, HighlightPhraseComponent];
 
 const materialImportsMixin = [MatButtonModule, MatCardModule, MatProgressSpinnerModule];
 
