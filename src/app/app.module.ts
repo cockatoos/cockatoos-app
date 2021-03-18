@@ -42,6 +42,9 @@ import { phraseLevelReducer } from "@state/reducers/phrase-level.reducer";
 import { ArticleLevelEffects } from "@state/effects/article-level.effects";
 import { PhraseLevelEffects } from "@state/effects/phrase-level.effects";
 
+// HTTP
+import { HttpClientModule } from "@angular/common/http";
+
 
 @NgModule({
     declarations: [
@@ -74,9 +77,10 @@ import { PhraseLevelEffects } from "@state/effects/phrase-level.effects";
         MatSidenavModule,
         AngularFireModule.initializeApp(environment.firebase),
         AngularFireAnalyticsModule,
-        AngularFirestoreModule
+        AngularFirestoreModule,
+        HttpClientModule,
     ],
-    providers: [],
+    providers: [HttpClientModule],
     bootstrap: [AppComponent],
 })
 export class AppModule {}

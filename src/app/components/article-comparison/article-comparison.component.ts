@@ -13,6 +13,7 @@ import { Status as PhraseLevelStatus } from "@state/reducers/phrase-level.reduce
 import { selectArticleLevelStatus, selectIsSpeaking, selectPhraseNum } from "@state/selectors/article-level.selectors";
 import { selectPhraseLevelStatus, selectRecordingEncoding, selectTranscript } from "@state/selectors/phrase-level.selectors";
 
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
     selector: "app-article-comparison",
@@ -41,20 +42,28 @@ export class ArticleComparisonComponent implements OnInit {
     // Base64 encoding of the user's recording.
     recordingEncoding$: Observable<string>;
 
-    constructor(private store: Store<AppState>) {
+    // Web server/Azure function endpoint for converting recording.
+    // TODO: Any better place for this to live?
+    convertApiUrl: any;
+
+    constructor(private store: Store<AppState>, private http: HttpClient) {
         this.articleLevelStatus$ = store.select(selectArticleLevelStatus);
         this.phraseNum$ = store.select(selectPhraseNum);
         this.phraseLevelStatus$ = store.select(selectPhraseLevelStatus);
         this.transcript$ = store.select(selectTranscript);
         this.isSpeaking$ = store.select(selectIsSpeaking);
         this.recordingEncoding$ = store.select(selectRecordingEncoding);
-
+        // this.convertApiUrl = "http://127.0.0.1:5000/blob2mp3";
+        this.convertApiUrl = "https://conversiontest.azurewebsites.net/api/httptrigger1";
         this.recordingEncoding$.subscribe(base64Encoding => {
             if (base64Encoding === undefined) {
                 return;
             }
 
             // TODO: send base64 encoding to Azure :)
+            this.http.post(this.convertApiUrl, {'blob': base64Encoding}, {responseType: 'text'}).subscribe(res => {
+                console.log(res);
+            })
             console.log(base64Encoding);
         });
     }
