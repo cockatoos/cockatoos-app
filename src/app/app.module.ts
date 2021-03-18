@@ -42,6 +42,8 @@ import { articleLevelReducer } from "@state/reducers/article-level.reducer";
 import { phraseLevelReducer } from "@state/reducers/phrase-level.reducer";
 import { ArticleLevelEffects } from "@state/effects/article-level.effects";
 import { PhraseLevelEffects } from "@state/effects/phrase-level.effects";
+import { practiceContainerLevelReducer } from "@state/reducers/practice-container-level.reducer";
+import { PracticeContainerLevelEffects } from "@state/effects/practice-container-level.effects";
 
 
 @NgModule({
@@ -67,8 +69,9 @@ import { PhraseLevelEffects } from "@state/effects/phrase-level.effects";
         StoreModule.forRoot({
             articleLevel: articleLevelReducer,
             phraseLevel: phraseLevelReducer,
+            practiceContainerLevel: practiceContainerLevelReducer,
         }),
-        EffectsModule.forRoot([ArticleLevelEffects, PhraseLevelEffects]),
+        EffectsModule.forRoot([ArticleLevelEffects, PhraseLevelEffects, PracticeContainerLevelEffects]),
         MatButtonModule,
         MatToolbarModule,
         MatIconModule,

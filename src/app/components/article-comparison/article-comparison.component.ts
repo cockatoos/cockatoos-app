@@ -92,7 +92,11 @@ export class ArticleComparisonComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        console.log(changes);
+        if (changes.article) {
+            // TODO: need new action for switching articles
+            console.log(changes.article);
+            this.store.dispatch(initialise({ article: changes.article.currentValue }));
+        }
     }
 
     /**
