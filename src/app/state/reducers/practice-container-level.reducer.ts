@@ -9,9 +9,9 @@ export enum Status {
 }
 
 export interface State {
-    status: Status,
-    articles: Article[],
-    currentArticleIdx: number,
+    status: Status;
+    articles: Article[];
+    currentArticleIdx: number;
 }
 
 export const initialState: State = {
@@ -30,5 +30,5 @@ export const practiceContainerLevelReducer = createReducer(
     on(PracticeContainerLevelActions.nextArticle, (state) => ({
         ...state,
         currentArticleIdx: state.currentArticleIdx + 1,
-    })),
+    }))
 );

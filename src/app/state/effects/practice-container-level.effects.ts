@@ -16,7 +16,7 @@ export class PracticeContainerLevelEffects {
                 return this.articlesService.articles$.pipe(
                     map((articles) => PracticeContainerLevelActions.ready({ articles })),
                     catchError(() => EMPTY)
-                )
+                );
             })
         )
     );

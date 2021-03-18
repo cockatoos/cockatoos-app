@@ -6,7 +6,11 @@ import { ArticlesService } from "@services/articles.service";
 import { initialise, nextArticle } from "@state/actions/practice-container-level.actions";
 import { AppState } from "@state/app.state";
 import { Status } from "@state/reducers/practice-container-level.reducer";
-import { noMoreArticles, selectArticle, selectPracticeContainerLevelStatus } from "@state/selectors/practice-container-level.selectors";
+import {
+    noMoreArticles,
+    selectArticle,
+    selectPracticeContainerLevelStatus,
+} from "@state/selectors/practice-container-level.selectors";
 import { Article } from "app/models/article.model";
 import { Observable } from "rxjs";
 
@@ -20,17 +24,13 @@ export class PracticeContainerComponent implements OnInit {
     article$: Observable<Article>;
     noMoreArticles$: Observable<boolean>;
 
-    constructor(
-        public dialog: MatDialog, 
-        public articlesService: ArticlesService,
-        private store: Store<AppState>,
-    ) {
+    constructor(public dialog: MatDialog, public articlesService: ArticlesService, private store: Store<AppState>) {
         this.status$ = store.select(selectPracticeContainerLevelStatus);
         this.article$ = store.select(selectArticle);
         this.noMoreArticles$ = store.select(noMoreArticles);
     }
 
-    nextArticle() {
+    nextArticle(): void {
         this.store.dispatch(nextArticle());
     }
 
