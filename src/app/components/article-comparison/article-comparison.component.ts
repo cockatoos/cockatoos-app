@@ -20,6 +20,7 @@ import { selectPhraseLevelStatus, selectTranscript } from "@state/selectors/phra
 import { ArticleComparisonService } from "@services/article-comparison.service";
 import { ClarityScore, clarityScoreFromEdits } from "@models/clarity-score.model";
 import { sumBy } from "lodash";
+import { UserInformationService } from "@services/user-information.service";
 
 @Component({
     selector: "app-article-comparison",
@@ -47,7 +48,11 @@ export class ArticleComparisonComponent implements OnInit, OnChanges {
 
     clarityScores$: Observable<ClarityScore[]>;
 
-    constructor(private store: Store<AppState>, private articleComparisonService: ArticleComparisonService) {
+    constructor(
+        private store: Store<AppState>,
+        private articleComparisonService: ArticleComparisonService,
+        private userInformationService: UserInformationService,
+    ) {
         this.articleLevelStatus$ = store.select(selectArticleLevelStatus);
         this.phraseNum$ = store.select(selectPhraseNum);
         this.phraseLevelStatus$ = store.select(selectPhraseLevelStatus);
@@ -68,6 +73,15 @@ export class ArticleComparisonComponent implements OnInit, OnChanges {
                 correct = ${correctWords},
                 total = ${totalWords},
                 average = ${average}`);
+
+            if (clarityScores.length === this.article.phrases.length) {
+                this.userInformationService.saveClarityScore({
+                    numCorrectWords: correctWords,
+                    numTotalWords: totalWords
+                }).then(() => {
+                    console.log("Saved!");
+                }).catch(console.error);
+            }
         });
     }
 

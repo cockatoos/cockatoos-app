@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { TextToSpeechService } from "@services/text-to-speech.service";
 import { ArticleComparisonComponent } from "@components/article-comparison/article-comparison.component";
 import { TEST_ARTICLE } from "@testing/testing-article-data";
 import { provideMockStore, MockStore } from "@ngrx/store/testing";
 import { ArticleComparisonService } from "@services/article-comparison.service";
+import { UserInformationService } from "@services/user-information.service";
 
 describe("ArticleComparisonComponent", () => {
     let component: ArticleComparisonComponent;
@@ -30,6 +30,7 @@ describe("ArticleComparisonComponent", () => {
                     provide: ArticleComparisonService,
                     useValue: mockArticleComparisonService,
                 },
+                UserInformationService,
                 provideMockStore({ initialState }),
             ],
         }).compileComponents();
