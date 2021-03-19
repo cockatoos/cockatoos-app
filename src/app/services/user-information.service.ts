@@ -28,7 +28,12 @@ export class UserInformationService {
             userId: this.userId,
         };
 
-        await this.afs.collection("clarity_scores").add(payload);
+        try {
+            await this.afs.collection("clarity_scores").add(payload);
+        } catch (error) {
+            console.error(error);
+            return Promise.reject(error);
+        }
     }
 
     public getHistoricalData(): Observable<string> {
