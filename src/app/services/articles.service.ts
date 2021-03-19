@@ -6,7 +6,7 @@ import { identity, Observable } from "rxjs";
 import { first, map, mergeMap } from "rxjs/operators";
 
 interface FirestoreArticle {
-    name: string,
+    name: string;
     text: string;
     phrases: number[];
 }
