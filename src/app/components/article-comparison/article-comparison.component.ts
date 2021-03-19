@@ -1,12 +1,12 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from "@angular/core";
-import { Observable } from "rxjs";
+import { Component, OnInit, Input, OnChanges, SimpleChanges, OnDestroy } from "@angular/core";
+import { Observable, Subscription } from "rxjs";
 import { first, map } from "rxjs/operators";
 
 import { Article, Phrase } from "@models/article.model";
 
 import { Store } from "@ngrx/store";
 import { AppState } from "@state/app.state";
-import { initialise, nextPhrase, startSpeaking, addClarityScore } from "@state/actions/article-level.actions";
+import { initialise, nextPhrase, startSpeaking, addClarityScore, changeArticle } from "@state/actions/article-level.actions";
 import { startRecording, stopRecording } from "@state/actions/phrase-level.actions";
 import { Status as ArticleLevelStatus } from "@state/reducers/article-level.reducer";
 import { Status as PhraseLevelStatus } from "@state/reducers/phrase-level.reducer";
@@ -27,7 +27,7 @@ import { UserInformationService } from "@services/user-information.service";
     templateUrl: "./article-comparison.component.html",
     styleUrls: ["./article-comparison.component.sass"],
 })
-export class ArticleComparisonComponent implements OnInit, OnChanges {
+export class ArticleComparisonComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     article: Article;
 
@@ -48,6 +48,8 @@ export class ArticleComparisonComponent implements OnInit, OnChanges {
 
     clarityScores$: Observable<ClarityScore[]>;
 
+    private subscription: Subscription;
+
     constructor(
         private store: Store<AppState>,
         private articleComparisonService: ArticleComparisonService,
@@ -60,7 +62,7 @@ export class ArticleComparisonComponent implements OnInit, OnChanges {
         this.isSpeaking$ = store.select(selectIsSpeaking);
         this.clarityScores$ = store.select(selectClarityScores);
 
-        this.clarityScores$.subscribe((clarityScores) => {
+        this.subscription = this.clarityScores$.subscribe((clarityScores) => {
             if (clarityScores.length === 0) {
                 return;
             }
@@ -87,16 +89,17 @@ export class ArticleComparisonComponent implements OnInit, OnChanges {
 
     ngOnInit(): void {
         // Initialise state with the current article.
-        console.log(this.article);
-        this.store.dispatch(initialise({ article: this.article }));
+        this.store.dispatch(initialise());
     }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.article) {
-            // TODO: need new action for switching articles
-            console.log(changes.article);
-            this.store.dispatch(initialise({ article: changes.article.currentValue }));
+            this.store.dispatch(changeArticle({ article: changes.article.currentValue }));
         }
+    }
+
+    ngOnDestroy(): void {
+        this.subscription.unsubscribe();
     }
 
     /**
@@ -130,10 +133,6 @@ export class ArticleComparisonComponent implements OnInit, OnChanges {
         this.store.dispatch(stopRecording());
 
         this.transcript$.pipe(first()).subscribe((transcript) => {
-            if (transcript.trim().length === 0) {
-                return;
-            }
-
             this.targetPhrase$.pipe(first()).subscribe((targetPhrase) => {
                 const edits = this.articleComparisonService.compare(transcript, targetPhrase);
                 const clarityScore = clarityScoreFromEdits(edits);

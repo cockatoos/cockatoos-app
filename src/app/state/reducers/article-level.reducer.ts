@@ -16,11 +16,6 @@ export enum Status {
     UNSUPPORTED = "UNSUPPORTED",
 }
 
-const emptyArticle: Article = {
-    text: "",
-    phrases: [],
-};
-
 export interface State {
     status: Status;
     article: Article;
@@ -31,7 +26,7 @@ export interface State {
 
 export const initialState: State = {
     status: Status.UNINITIALISED,
-    article: emptyArticle,
+    article: undefined,
     phraseNum: 0,
     isSpeaking: false,
     clarityScores: [],
@@ -39,9 +34,10 @@ export const initialState: State = {
 
 export const articleLevelReducer = createReducer(
     initialState,
-    on(ArticleLevelActions.initialise, (state, { article }) => ({
+    on(ArticleLevelActions.changeArticle, (state, { article }) => ({
         ...state,
         article,
+        phraseNum: 0,
     })),
     on(ArticleLevelActions.addClarityScore, (state, { clarityScore }) => ({
         ...state,
