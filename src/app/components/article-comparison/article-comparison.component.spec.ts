@@ -30,7 +30,10 @@ describe("ArticleComparisonComponent", () => {
                     provide: ArticleComparisonService,
                     useValue: mockArticleComparisonService,
                 },
-                UserInformationService,
+                {
+                    provide: UserInformationService,
+                    useValue: {},
+                },
                 provideMockStore({ initialState }),
             ],
         }).compileComponents();
