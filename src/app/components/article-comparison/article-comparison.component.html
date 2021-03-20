@@ -22,11 +22,11 @@
                     <mat-card-subtitle>{{ article.name }}</mat-card-subtitle>
                 </mat-card-header>
                 <mat-card-content>
-                    <h1>
+                    <h1 *ngIf="targetPhraseIndex$ | async; let targetPhraseIndex">
                         <app-highlight-phrase
                             [text]="article.text"
-                            [startIndex]="(targetPhraseIndex$ | async).startIndex"
-                            [endIndex]="(targetPhraseIndex$ | async).endIndex"
+                            [startIndex]="targetPhraseIndex.startIndex"
+                            [endIndex]="targetPhraseIndex.endIndex"
                         >
                         </app-highlight-phrase>
                     </h1>
@@ -99,11 +99,25 @@
                 <button
                     mat-raised-button
                     (click)="nextPhrase()"
-                    [disabled]="(phraseLevelStatus$ | async) !== 'DONE' || (articleLevelStatus$ | async) === 'DONE'"
+                    [disabled]="(phraseLevelStatus$ | async) !== 'DONE' || (articleLevelStatus$ | async) !== 'READY'"
                 >
                     Next Phrase
                 </button>
             </div>
+
+            <div *ngIf="articleClarityScore$ | async; let articleClarityScore">
+                Score: {{ articleClarityScore.numCorrectWords }} of {{ articleClarityScore.numTotalWords }}
+            </div>
+
+            <div *ngIf="(articleLevelStatus$ | async) == 'SAVING'">
+                <mat-spinner diameter="20"></mat-spinner> Saving...
+            </div>
+
+            <div *ngIf="(articleLevelStatus$ | async) == 'SCORES_SAVED'">
+                Saved!
+            </div>
+
+            <div *ngIf="(articleLevelStatus$ | async) == 'ERROR'">Error!</div>
         </div>
     </section>
 </ng-container>

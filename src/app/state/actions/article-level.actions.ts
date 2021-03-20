@@ -25,3 +25,18 @@ export const speakingStateChange = createAction("[Article] Speaking State Change
 
 // Accumulate the clarity score for a phrase in this article.
 export const addClarityScore = createAction("[Article] Add Clarity Score", props<{ clarityScore: ClarityScore }>());
+
+// Save score to database.
+export const saveClarityScore = createAction(
+    "[Article] Save Clarity Score",
+    props<{ correctWords: number; totalWords: number }>()
+);
+
+// Signal that the scores have been saved onto the database.
+export const scoresSaved = createAction("[Article] Scores Saved");
+
+// Error case.
+export const error = createAction(
+    "[Article] Error",
+    props<{ errorMessage: string }>()
+);

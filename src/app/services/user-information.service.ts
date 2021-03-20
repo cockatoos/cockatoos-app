@@ -30,31 +30,34 @@ export class UserInformationService {
     private userId = "testUser";
 
     constructor(private afs: AngularFirestore) {
-        this.getClarityScores().subscribe((clarityScores) => {
-            console.log("Clarity Scores");
-            console.log(clarityScores);
-        });
-
-        this.getAccentScores().subscribe((accentScores) => {
-            console.log("Accent Scores");
-            console.log(accentScores);
-        });
+        // this.getClarityScores().subscribe((clarityScores) => {
+        //     console.log("Clarity Scores");
+        //     console.log(clarityScores);
+        // });
+        // this.getAccentScores().subscribe((accentScores) => {
+        //     console.log("Accent Scores");
+        //     console.log(accentScores);
+        // });
     }
 
-    async saveClarityScore(clarityScore: ClarityScore): Promise<void> {
+    saveClarityScore(clarityScore: ClarityScore): Observable<boolean> {
         const payload: AFSClarityScore = {
-            date: firebase.default.firestore.FieldValue.serverTimestamp() as AFSTimestamp,
+            date: firebase.default.firestore.Timestamp.fromDate(new Date()),
             numCorrect: clarityScore.numCorrectWords,
             numTotal: clarityScore.numTotalWords,
             userId: this.userId,
         };
 
-        try {
-            await this.afs.collection<AFSClarityScore>("clarity_scores").add(payload);
-        } catch (error) {
-            console.error(error);
-            return Promise.reject(error);
-        }
+        return new Observable((subscriber) => {
+            this.afs
+                .collection<AFSClarityScore>("clarity_scores")
+                .add(payload)
+                .then(() => subscriber.next(true))
+                .catch((error) => {
+                    console.error(error);
+                    subscriber.next(false);
+                });
+        });
     }
 
     private aggregateClarityScores(clarityScores: AFSClarityScore[]): Score[] {
@@ -79,7 +82,7 @@ export class UserInformationService {
         return Array.from(aggregatedEntries.entries())
             .sort(([date1, scores1], [date2, scores2]) => date1 - date2)
             .map(([date, { correct, total }]) => ({
-                date: new Date(date).toDateString(),
+                date: new Date(date),
                 score: correct / total,
             }));
     }
@@ -102,7 +105,7 @@ export class UserInformationService {
         return Array.from(aggregatedEntries.entries())
             .sort(([date1, scores1], [date2, scores2]) => date1 - date2)
             .map(([date, scores]) => ({
-                date: new Date(date).toDateString(),
+                date: new Date(date),
                 score: sum(scores) / scores.length,
             }));
     }
@@ -110,7 +113,7 @@ export class UserInformationService {
     getClarityScores(): Observable<Score[]> {
         return this.afs
             .collection<AFSClarityScore>("clarity_scores", (ref) => ref.where("userId", "==", this.userId))
-            .valueChanges()
+            .valueChanges({ idField: "id" })
             .pipe(map(this.aggregateClarityScores));
     }
 
@@ -119,9 +122,5 @@ export class UserInformationService {
             .collection<AFSAccentScore>("accent_scores", (ref) => ref.where("userId", "==", this.userId))
             .valueChanges()
             .pipe(map(this.aggregateAccentScores));
-    }
-
-    public getHistoricalData(): Observable<string> {
-        return of();
     }
 }

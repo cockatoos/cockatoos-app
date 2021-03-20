@@ -1,19 +1,9 @@
 <div class="info-container">
-  <div class="info-column">
-    <app-score-chart
-      [historicalData]="testAccentData"
-      [currentValue]="77"
-      label="Accent"    
-    ></app-score-chart>
-  </div>
+    <div class="info-column" *ngIf="accentData$ | async; let accentData">
+        <app-score-chart [historicalData]="accentData" label="Accent"></app-score-chart>
+    </div>
 
-
-  <div class="info-column">
-    <app-score-chart
-    [historicalData]="testClarityData"
-    [currentValue]="67"
-    label="Clarity"    
-  ></app-score-chart>
-  </div>
-
+    <div class="info-column" *ngIf="clarityData$ | async; let clarityData">
+        <app-score-chart [historicalData]="clarityData" label="Clarity"></app-score-chart>
+    </div>
 </div>

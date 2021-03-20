@@ -9,11 +9,17 @@ export enum Status {
     // Ready for user to record.
     READY = "READY",
 
-    // User is on the last phrase.
-    DONE = "DONE",
-
     // Web Speech API is unsupported by the browser.
     UNSUPPORTED = "UNSUPPORTED",
+
+    // In the process of saving the clarity score.
+    SAVING_SCORES = "SAVING",
+
+    // Successfully saved clarity score.
+    SCORES_SAVED = "SCORES_SAVED",
+
+    // Error case.
+    ERROR = "ERROR",
 }
 
 export interface State {
@@ -22,6 +28,8 @@ export interface State {
     phraseNum: number;
     isSpeaking: boolean;
     clarityScores: ClarityScore[];
+    errorMessage?: string;
+    articleClarityScore?: ClarityScore;
 }
 
 export const initialState: State = {
@@ -38,6 +46,8 @@ export const articleLevelReducer = createReducer(
         ...state,
         article,
         phraseNum: 0,
+        clarityScores: [],
+        articleClarityScore: undefined,
     })),
     on(ArticleLevelActions.addClarityScore, (state, { clarityScore }) => ({
         ...state,
@@ -45,10 +55,8 @@ export const articleLevelReducer = createReducer(
     })),
     on(ArticleLevelActions.nextPhrase, (state) => {
         const phraseNum = state.phraseNum + 1;
-        const status = phraseNum + 1 === state.article.phrases.length ? Status.DONE : state.status;
         return {
             ...state,
-            status,
             phraseNum,
         };
     }),
@@ -63,5 +71,22 @@ export const articleLevelReducer = createReducer(
     on(ArticleLevelActions.speakingStateChange, (state, { isSpeaking }) => ({
         ...state,
         isSpeaking,
-    }))
+    })),
+    on(ArticleLevelActions.saveClarityScore, (state, { correctWords, totalWords }) => ({
+        ...state,
+        status: Status.SAVING_SCORES,
+        articleClarityScore: {
+            numCorrectWords: correctWords,
+            numTotalWords: totalWords,
+        }
+    })),
+    on(ArticleLevelActions.scoresSaved, (state) => ({
+        ...state,
+        status: Status.SCORES_SAVED,
+    })),
+    on(ArticleLevelActions.error, (state, { errorMessage }) => ({
+        ...state,
+        status: Status.ERROR,
+        errorMessage,
+    })),
 );

@@ -10,3 +10,5 @@ export const selectIsSpeaking = createSelector(selectArticleLevel, ({ isSpeaking
 export const selectArticleLevelStatus = createSelector(selectArticleLevel, ({ status }) => status);
 
 export const selectClarityScores = createSelector(selectArticleLevel, ({ clarityScores }) => clarityScores);
+
+export const selectArticleClarityScore = createSelector(selectArticleLevel, ({ articleClarityScore }) => articleClarityScore);

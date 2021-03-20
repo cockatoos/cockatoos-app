@@ -6,11 +6,19 @@ import { Article, Phrase } from "@models/article.model";
 
 import { Store } from "@ngrx/store";
 import { AppState } from "@state/app.state";
-import { initialise, nextPhrase, startSpeaking, addClarityScore, changeArticle } from "@state/actions/article-level.actions";
+import {
+    initialise,
+    nextPhrase,
+    startSpeaking,
+    addClarityScore,
+    changeArticle,
+    saveClarityScore,
+} from "@state/actions/article-level.actions";
 import { startRecording, stopRecording } from "@state/actions/phrase-level.actions";
 import { Status as ArticleLevelStatus } from "@state/reducers/article-level.reducer";
 import { Status as PhraseLevelStatus } from "@state/reducers/phrase-level.reducer";
 import {
+    selectArticleClarityScore,
     selectArticleLevelStatus,
     selectClarityScores,
     selectIsSpeaking,
@@ -20,7 +28,6 @@ import { selectPhraseLevelStatus, selectTranscript } from "@state/selectors/phra
 import { ArticleComparisonService } from "@services/article-comparison.service";
 import { ClarityScore, clarityScoreFromEdits } from "@models/clarity-score.model";
 import { sumBy } from "lodash";
-import { UserInformationService } from "@services/user-information.service";
 
 @Component({
     selector: "app-article-comparison",
@@ -46,21 +53,19 @@ export class ArticleComparisonComponent implements OnInit, OnChanges, OnDestroy 
     // Flag to signal if the text-to-speech service is speaking.
     isSpeaking$: Observable<boolean>;
 
-    clarityScores$: Observable<ClarityScore[]>;
+    private clarityScores$: Observable<ClarityScore[]>;
+    articleClarityScore$: Observable<ClarityScore>;
 
     private subscription: Subscription;
 
-    constructor(
-        private store: Store<AppState>,
-        private articleComparisonService: ArticleComparisonService,
-        private userInformationService: UserInformationService,
-    ) {
+    constructor(private store: Store<AppState>, private articleComparisonService: ArticleComparisonService) {
         this.articleLevelStatus$ = store.select(selectArticleLevelStatus);
         this.phraseNum$ = store.select(selectPhraseNum);
         this.phraseLevelStatus$ = store.select(selectPhraseLevelStatus);
         this.transcript$ = store.select(selectTranscript);
         this.isSpeaking$ = store.select(selectIsSpeaking);
         this.clarityScores$ = store.select(selectClarityScores);
+        this.articleClarityScore$ = store.select(selectArticleClarityScore);
 
         this.subscription = this.clarityScores$.subscribe((clarityScores) => {
             if (clarityScores.length === 0) {
@@ -77,12 +82,12 @@ export class ArticleComparisonComponent implements OnInit, OnChanges, OnDestroy 
                 average = ${average}`);
 
             if (clarityScores.length === this.article.phrases.length) {
-                this.userInformationService.saveClarityScore({
-                    numCorrectWords: correctWords,
-                    numTotalWords: totalWords
-                }).then(() => {
-                    console.log("Saved!");
-                }).catch(console.error);
+                this.store.dispatch(
+                    saveClarityScore({
+                        correctWords,
+                        totalWords,
+                    })
+                );
             }
         });
     }
@@ -107,16 +112,12 @@ export class ArticleComparisonComponent implements OnInit, OnChanges, OnDestroy 
      */
     get targetPhrase$(): Observable<string> {
         const { text } = this.article;
-        return this.targetPhraseIndex$.pipe(
-            map(({ startIndex, endIndex }) => text.slice(startIndex, endIndex).trim())
-        );
+        return this.targetPhraseIndex$.pipe(map(({ startIndex, endIndex }) => text.slice(startIndex, endIndex).trim()));
     }
 
     get targetPhraseIndex$(): Observable<Phrase> {
         const { phrases } = this.article;
-        return this.phraseNum$.pipe(
-            map((phraseNum) => phrases[phraseNum])
-        );
+        return this.phraseNum$.pipe(map((phraseNum) => phrases[phraseNum]));
     }
 
     speak(): void {
