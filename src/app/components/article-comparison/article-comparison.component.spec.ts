@@ -3,6 +3,7 @@ import { TextToSpeechService } from "@services/text-to-speech.service";
 import { ArticleComparisonComponent } from "@components/article-comparison/article-comparison.component";
 import { TEST_ARTICLE } from "@testing/testing-article-data";
 import { provideMockStore, MockStore } from "@ngrx/store/testing";
+import { HttpClient } from "@angular/common/http";
 
 describe("ArticleComparisonComponent", () => {
     let component: ArticleComparisonComponent;
@@ -14,8 +15,7 @@ describe("ArticleComparisonComponent", () => {
         articleLevel: {
             status: "UNINITIALISED",
         },
-        phraseLevel: {
-        },
+        phraseLevel: {},
     };
 
     beforeEach(async () => {
@@ -29,6 +29,10 @@ describe("ArticleComparisonComponent", () => {
                 {
                     provide: TextToSpeechService,
                     useValue: mockTextToSpeechService,
+                },
+                {
+                    provide: HttpClient,
+                    useValue: {},
                 },
                 provideMockStore({ initialState }),
             ],

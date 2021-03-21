@@ -11,9 +11,13 @@ import { startRecording, stopRecording } from "@state/actions/phrase-level.actio
 import { Status as ArticleLevelStatus } from "@state/reducers/article-level.reducer";
 import { Status as PhraseLevelStatus } from "@state/reducers/phrase-level.reducer";
 import { selectArticleLevelStatus, selectIsSpeaking, selectPhraseNum } from "@state/selectors/article-level.selectors";
-import { selectPhraseLevelStatus, selectRecordingEncoding, selectTranscript } from "@state/selectors/phrase-level.selectors";
+import {
+    selectPhraseLevelStatus,
+    selectRecordingEncoding,
+    selectTranscript,
+} from "@state/selectors/phrase-level.selectors";
 
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 @Component({
     selector: "app-article-comparison",
@@ -55,15 +59,15 @@ export class ArticleComparisonComponent implements OnInit {
         this.recordingEncoding$ = store.select(selectRecordingEncoding);
         // this.convertApiUrl = "http://127.0.0.1:5000/blob2mp3";
         this.convertApiUrl = "https://conversiontest.azurewebsites.net/api/httptrigger1";
-        this.recordingEncoding$.subscribe(base64Encoding => {
+        this.recordingEncoding$.subscribe((base64Encoding) => {
             if (base64Encoding === undefined) {
                 return;
             }
 
             // TODO: send base64 encoding to Azure :)
-            this.http.post(this.convertApiUrl, {'blob': base64Encoding}, {responseType: 'text'}).subscribe(res => {
+            this.http.post(this.convertApiUrl, { blob: base64Encoding }, { responseType: "text" }).subscribe((res) => {
                 console.log(res);
-            })
+            });
             console.log(base64Encoding);
         });
     }
