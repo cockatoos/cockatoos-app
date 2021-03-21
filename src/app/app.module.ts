@@ -47,7 +47,7 @@ import { PhraseLevelEffects } from "@state/effects/phrase-level.effects";
 import { HttpClientModule } from "@angular/common/http";
 
 import { RouterModule } from "@angular/router";
-import { TourMatMenuModule } from "ngx-tour-md-menu"
+import { TourMatMenuModule } from "ngx-tour-md-menu";
 import { TourService } from "ngx-tour-core";
 
 

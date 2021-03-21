@@ -9,12 +9,19 @@ import { Component } from "@angular/core";
 export class AppComponent {
     constructor(public tourService: TourService) {
         this.tourService.initialize([{
-            anchorId: 'accent-chart',
-            content: 'Accent chart shows you your accent over time!',
-            // placement: 'below',
-            enableBackdrop: true,
-            route: '/home',
-            title: 'Welcome to Cockatoos!',
+        anchorId: 'tour-start',
+        content: 'Let\'s get started!',
+        // placement: 'below',
+        enableBackdrop: true,
+        route: '/home',
+        title: 'Welcome to Cockatoos',
+        }, {
+        anchorId: 'practice',
+        content: 'Practice your speech here',
+        // placement: 'below',
+        enableBackdrop: true,
+        route: '/practice',
+        title: 'Step X: Practice',
         }]);
         this.tourService.start();
     }
