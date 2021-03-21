@@ -45,6 +45,8 @@ import { PhraseLevelEffects } from "@state/effects/phrase-level.effects";
 import { HomePageContainerComponent } from "@components/home-page-container/home-page-container.component";
 import { MainAppContainerComponent } from './components/main-app-container/main-app-container.component';
 
+// full page
+import { AngularFullpageModule } from '@fullpage/angular-fullpage';
 
 @NgModule({
     declarations: [
@@ -81,7 +83,8 @@ import { MainAppContainerComponent } from './components/main-app-container/main-
         MatSidenavModule,
         AngularFireModule.initializeApp(environment.firebase),
         AngularFireAnalyticsModule,
-        AngularFirestoreModule
+        AngularFirestoreModule,
+        AngularFullpageModule
     ],
     providers: [],
     bootstrap: [AppComponent],
