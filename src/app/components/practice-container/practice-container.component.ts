@@ -15,8 +15,8 @@ export class PracticeContainerComponent implements OnInit {
     article$: Observable<Article>;
 
     constructor(public dialog: MatDialog, public articlesService: ArticlesService) {
-        // this.article$ = articlesService.getDocument();
-        this.article$ = of(TEST_ARTICLE);
+        this.article$ = articlesService.getDocument();
+        // this.article$ = of(TEST_ARTICLE);
     }
 
     ngOnInit(): void {}

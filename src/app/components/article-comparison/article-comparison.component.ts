@@ -18,6 +18,7 @@ import {
 } from "@state/selectors/phrase-level.selectors";
 
 import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { environment } from "environments/environment";
 
 @Component({
     selector: "app-article-comparison",
@@ -57,17 +58,15 @@ export class ArticleComparisonComponent implements OnInit {
         this.transcript$ = store.select(selectTranscript);
         this.isSpeaking$ = store.select(selectIsSpeaking);
         this.recordingEncoding$ = store.select(selectRecordingEncoding);
-        // this.convertApiUrl = "http://127.0.0.1:5000/blob2mp3";
-        this.convertApiUrl = "https://conversiontest.azurewebsites.net/api/httptrigger1";
         this.recordingEncoding$.subscribe((base64Encoding) => {
             if (base64Encoding === undefined) {
                 return;
             }
 
-            // TODO: send base64 encoding to Azure :)
-            this.http.post(this.convertApiUrl, { blob: base64Encoding }, { responseType: "text" }).subscribe((res) => {
+            this.http.post(environment.convertApiUrl, { blob: base64Encoding }, { responseType: "text" }).subscribe((res) => {
                 console.log(res);
             });
+            // TODO: clean-up
             console.log(base64Encoding);
         });
     }
