@@ -1,8 +1,22 @@
-.info-container
+.container
+    display: flex
+    width: 90%
+    margin: auto
+    height: 100%
+    padding-top:32px
+
+.badges-container
+    flex: 1
+    padding-right: 10px
+.details-container
+    flex: 3
+    padding-left: 30px
+
+.charts-container
     height: 100%
     width: 100%
     display: flex
-    justify-content: center
+    padding-top:32px
 
 .info-column
     flex: 1
@@ -11,6 +25,19 @@
     margin-top: 32px
 
     
+.label-text
+    font-size: 30px
+    color: var(--primary-lighter-color)
 
+.small-spacer
+    flex: 1
 
-    
+#daily-progress
+    padding-top: 12px
+    border-radius: 15px/30px
+    max-width: 100%
+
+#badges
+    padding-top: 12px
+    border-radius: 30px
+    max-width: 100%
