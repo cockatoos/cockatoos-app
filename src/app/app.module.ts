@@ -43,8 +43,12 @@ import { phraseLevelReducer } from "@state/reducers/phrase-level.reducer";
 import { ArticleLevelEffects } from "@state/effects/article-level.effects";
 import { PhraseLevelEffects } from "@state/effects/phrase-level.effects";
 
-// HTTP
+/// HTTP
 import { HttpClientModule } from "@angular/common/http";
+
+import { RouterModule } from "@angular/router";
+import { TourMatMenuModule } from "ngx-tour-md-menu"
+import { TourService } from "ngx-tour-core";
 
 
 @NgModule({
@@ -81,8 +85,13 @@ import { HttpClientModule } from "@angular/common/http";
         AngularFireAnalyticsModule,
         AngularFirestoreModule,
         HttpClientModule,
+        RouterModule.forRoot([]),
+        TourMatMenuModule.forRoot()
     ],
-    providers: [HttpClientModule],
+    providers: [
+        HttpClientModule,
+        TourService
+    ],
     bootstrap: [AppComponent],
 })
 export class AppModule {}

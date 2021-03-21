@@ -1,19 +1,22 @@
 <div class="info-container">
   <div class="info-column">
+    <!-- <div tourAnchor="accent-chart">abc</div> -->
     <app-score-chart
       [historicalData]="testAccentData"
       [currentValue]="77"
       label="Accent"    
     ></app-score-chart>
-  </div>
-
 
   <div class="info-column">
+    <!-- <div tourAnchor="clarity-chart"></div> -->
     <app-score-chart
     [historicalData]="testClarityData"
     [currentValue]="67"
     label="Clarity"    
-  ></app-score-chart>
+    ></app-score-chart>
   </div>
 
+  <div class="centered-tour-element" tourAnchor="accent-chart"></div>
+
 </div>
+<tour-step-template></tour-step-template>
