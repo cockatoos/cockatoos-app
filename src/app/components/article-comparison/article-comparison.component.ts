@@ -14,7 +14,7 @@ import {
     changeArticle,
     saveClarityScore,
 } from "@state/actions/article-level.actions";
-import { startRecording, stopRecording } from "@state/actions/phrase-level.actions";
+import { reset, startRecording, stopRecording } from "@state/actions/phrase-level.actions";
 import { Status as ArticleLevelStatus } from "@state/reducers/article-level.reducer";
 import { Status as PhraseLevelStatus } from "@state/reducers/phrase-level.reducer";
 import {
@@ -100,6 +100,7 @@ export class ArticleComparisonComponent implements OnInit, OnChanges, OnDestroy 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.article) {
             this.store.dispatch(changeArticle({ article: changes.article.currentValue }));
+            this.store.dispatch(reset());
         }
     }
 

@@ -57,5 +57,6 @@ export const phraseLevelReducer = createReducer(
     on(PhraseLevelActions.reset, (state) => ({
         ...state,
         status: Status.READY,
+        transcript: "",
     }))
 );
