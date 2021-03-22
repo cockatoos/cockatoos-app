@@ -13,11 +13,11 @@ import { AppComponent } from "./app.component";
 import { ScoreChartComponent } from "@components/score-chart/score-chart.component";
 import { ArticleComparisonComponent } from "@components/article-comparison/article-comparison.component";
 import { PhraseDiffComponent } from "@components/phrase-diff/phrase-diff.component";
-import { ScoreChartsContainerComponent } from './components/score-charts-container/score-charts-container.component';
-import { PracticeContainerComponent } from './components/practice-container/practice-container.component';
-import { AnalyseDialogComponent } from './components/analyse-dialog/analyse-dialog.component';
-import { HighlightPhraseComponent } from '@components/highlight-phrase/highlight-phrase.component';
-import { DataConnectorComponent } from './components/data-connector/data-connector.component';
+import { ScoreChartsContainerComponent } from "./components/score-charts-container/score-charts-container.component";
+import { PracticeContainerComponent } from "./components/practice-container/practice-container.component";
+import { AnalyseDialogComponent } from "./components/analyse-dialog/analyse-dialog.component";
+import { HighlightPhraseComponent } from "@components/highlight-phrase/highlight-phrase.component";
+import { DataConnectorComponent } from "./components/data-connector/data-connector.component";
 
 /// material
 import { MatCardModule } from "@angular/material/card";
@@ -25,15 +25,15 @@ import { MatGridListModule } from "@angular/material/grid-list";
 import { MatButtonModule } from "@angular/material/button";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatIconModule } from "@angular/material/icon";
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule } from "@angular/material/dialog";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
 /// firestore
-import { AngularFireModule } from '@angular/fire';
-import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { environment } from '../environments/environment';
+import { AngularFireModule } from "@angular/fire";
+import { AngularFireAnalyticsModule } from "@angular/fire/analytics";
+import { AngularFirestoreModule } from "@angular/fire/firestore";
+import { environment } from "../environments/environment";
 
 /// ngrx
 import { StoreModule } from "@ngrx/store";
@@ -43,10 +43,13 @@ import { phraseLevelReducer } from "@state/reducers/phrase-level.reducer";
 import { ArticleLevelEffects } from "@state/effects/article-level.effects";
 import { PhraseLevelEffects } from "@state/effects/phrase-level.effects";
 import { HomePageContainerComponent } from "@components/home-page-container/home-page-container.component";
-import { MainAppContainerComponent } from './components/main-app-container/main-app-container.component';
+import { MainAppContainerComponent } from "./components/main-app-container/main-app-container.component";
 
 // full page
-import { AngularFullpageModule } from '@fullpage/angular-fullpage';
+import { AngularFullpageModule } from "@fullpage/angular-fullpage";
+
+// HTTP
+import { HttpClientModule } from "@angular/common/http";
 
 @NgModule({
     declarations: [
@@ -84,9 +87,10 @@ import { AngularFullpageModule } from '@fullpage/angular-fullpage';
         AngularFireModule.initializeApp(environment.firebase),
         AngularFireAnalyticsModule,
         AngularFirestoreModule,
-        AngularFullpageModule
+        AngularFullpageModule,
+        HttpClientModule,
     ],
-    providers: [],
+    providers: [HttpClientModule],
     bootstrap: [AppComponent],
 })
 export class AppModule {}

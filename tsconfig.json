@@ -24,7 +24,8 @@
             "@state/*": ["app/state/*"]
         },
         "strictPropertyInitialization": false,
-        "lib": ["es2018", "dom"]
+        "lib": ["es2018", "dom"],
+        "skipLibCheck": true
     },
     "angularCompilerOptions": {
         "enableI18nLegacyMessageIdFormat": false,

@@ -9,6 +9,7 @@ export const environment = {
     storageBucket: "cockatoos-5a170.appspot.com",
     messagingSenderId: "876828085281",
     appId: "1:876828085281:web:cdc06b092da6441a606760",
-    measurementId: "G-36KJQ3V7EG"
-  }
+    measurementId: "G-36KJQ3V7EG",
+  },
+  convertApiUrl: "https://conversiontest.azurewebsites.net/api/httptrigger1"
 };

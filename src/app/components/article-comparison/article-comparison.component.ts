@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { Observable } from "rxjs";
 import { first, map } from "rxjs/operators";
 
@@ -11,15 +11,21 @@ import { startRecording, stopRecording } from "@state/actions/phrase-level.actio
 import { Status as ArticleLevelStatus } from "@state/reducers/article-level.reducer";
 import { Status as PhraseLevelStatus } from "@state/reducers/phrase-level.reducer";
 import { selectArticleLevelStatus, selectIsSpeaking, selectPhraseNum } from "@state/selectors/article-level.selectors";
-import { selectPhraseLevelStatus, selectTranscript } from "@state/selectors/phrase-level.selectors";
+import {
+    selectPhraseLevelStatus,
+    selectRecordingEncoding,
+    selectTranscript,
+} from "@state/selectors/phrase-level.selectors";
 
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { environment } from "environments/environment";
 
 @Component({
     selector: "app-article-comparison",
     templateUrl: "./article-comparison.component.html",
     styleUrls: ["./article-comparison.component.sass"],
 })
-export class ArticleComparisonComponent implements OnInit, OnChanges {
+export class ArticleComparisonComponent implements OnInit {
     @Input()
     article: Article;
 
@@ -38,22 +44,36 @@ export class ArticleComparisonComponent implements OnInit, OnChanges {
     // Flag to signal if the text-to-speech service is speaking.
     isSpeaking$: Observable<boolean>;
 
-    constructor(private store: Store<AppState>) {
+    // Base64 encoding of the user's recording.
+    recordingEncoding$: Observable<string>;
+
+    // Web server/Azure function endpoint for converting recording.
+    // TODO: Any better place for this to live?
+    convertApiUrl: any;
+
+    constructor(private store: Store<AppState>, private http: HttpClient) {
         this.articleLevelStatus$ = store.select(selectArticleLevelStatus);
         this.phraseNum$ = store.select(selectPhraseNum);
         this.phraseLevelStatus$ = store.select(selectPhraseLevelStatus);
         this.transcript$ = store.select(selectTranscript);
         this.isSpeaking$ = store.select(selectIsSpeaking);
+        this.recordingEncoding$ = store.select(selectRecordingEncoding);
+        this.recordingEncoding$.subscribe((base64Encoding) => {
+            if (base64Encoding === undefined) {
+                return;
+            }
+
+            this.http.post(environment.convertApiUrl, { blob: base64Encoding }, { responseType: "text" }).subscribe((res) => {
+                console.log(res);
+            });
+            // TODO: clean-up
+            console.log(base64Encoding);
+        });
     }
 
     ngOnInit(): void {
         // Initialise state with the current article.
-        console.log(this.article);
         this.store.dispatch(initialise({ article: this.article }));
-    }
-
-    ngOnChanges(changes: SimpleChanges): void {
-        console.log(changes);
     }
 
     /**

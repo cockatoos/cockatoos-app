@@ -12,3 +12,8 @@ export const selectPhraseLevelStatus = createSelector(
     selectPhraseLevel,
     ({ status }) => status,
 );
+
+export const selectRecordingEncoding = createSelector(
+    selectPhraseLevel,
+    ({ recordingEncoding }) => recordingEncoding,
+);
