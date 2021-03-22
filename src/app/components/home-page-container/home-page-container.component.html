@@ -6,97 +6,97 @@
                 <div class="subheader">Your 24/7 Speech Coach.</div>
                 <a class="button" mat-button [routerLink]="'/app'"> Get Started </a>
             </div>
-            <img src="../../../assets/cockatoos.png" style="position: absolute; right: 0; bottom: 0; height: 70%;">
-
+            <img src="../../../assets/cockatoos.png" id="main-image" />
         </div>
         <div class="navigation">
-            <img src="../../../assets/arrow-down-sign-to-navigate.svg" style="fill: rebeccapurple !important; height: 100%;">
+            <img src="../../../assets/arrow-down-sign-to-navigate.svg" (click)="fullpageApi.moveSectionDown()" />
         </div>
     </div>
-    
+
     <div class="section" (click)="fullpageApi.moveSectionDown()">
         <div class="second-page-container shadow">
-            <div style="margin: 10%;">
-                <div style="flex:2; color: white; height: 60px; display: flex; flex-direction: column;">
-                    <div style="color: white; font-size: 60px;">Our Mission</div>
-                    <div style="color: white; font-size: 40px; margin-top: 32px;">Democratise the Learning of Speaking</div>
-
+            <div class="page-content">
+                <div class="page-header">
+                    <div class="page-title">Our Mission</div>
+                    <div class="page-subtitle">Democratise the Learning of Speaking</div>
                 </div>
-                <div style="display: flex; justify-content: flex-end; flex:2; margin-top: 68px; width: 100%;">
-                    <div style="flex:1; color:white; font-size: 20px; width: 50%;">
-                        The idea of Cockatoos originates from my own struggle in softening my English accent.
-                        Hiring a speech coach could easily cost 200 pounds per hour, which is too expensive for most people.
-                        We hope our app can provide a platform that allows people to:
-                        <br>
+                <div class="page-body">
+                    <div class="page-body-text">
+                        The idea of Cockatoos originates from my own struggle in softening my English accent. Hiring a
+                        speech coach could easily cost 200 pounds per hour, which is too expensive for most people. We
+                        hope our app can provide a platform that allows people to:
+                        <br />
                         <ul>
                             <li>Practice speaking a new language using the Echo Method</li>
-                            <li>Get instant feedback on how their accent sounds like from our Machine Learning model</li>
+                            <li>
+                                Get instant feedback on how their accent sounds like from our Machine Learning model
+                            </li>
                             <li>Improve their speaking skills without spending a lot of money</li>
                         </ul>
-                        <br>
-                        Our target audiences are people such as language learners and actors who want to soften 
-                        their accent or pick up a new accent in a certain language.
+                        <br />
+                        Our target audiences are people such as language learners and actors who want to soften their
+                        accent or pick up a new accent in a certain language.
                     </div>
-                    <div style="flex:1; width: 50%;">
-                        <img src="../../../assets/mockuper.png" style="max-height: 50vh;">
+                    <div class="page-body-media">
+                        <img src="../../../assets/mockuper.png" style="max-height: 50vh" />
                     </div>
+                </div>
             </div>
-        </div>
         </div>
     </div>
 
     <div class="section" (click)="fullpageApi.moveSectionDown()">
         <div class="third-page-container shadow">
-            <div style="margin: 10%;">
-                <div style="flex:2; color: white; height: 60px; display: flex; flex-direction: column;">
-                    <div style="color: white; font-size: 60px;">Echo Method</div>
-                    <div style="color: white; font-size: 40px; margin-top: 32px;">What is it?</div>
-
+            <div class="page-content">
+                <div class="page-header">
+                    <div class="page-title">Echo Method</div>
+                    <div class="page-subtitle">What is it?</div>
                 </div>
-                <div style="display: flex; justify-content: flex-end; flex:2; margin-top: 68px; width: 100%;">
-                    <div style="flex:1; color:white; font-size: 20px; width: 50%;">
-                        The Echo Method is a language learning method proposed by Karen Chung, who is an Associate 
+                <div class="page-body">
+                    <div class="page-body-text">
+                        The Echo Method is a language learning method proposed by Karen Chung, who is an Associate
                         Professor of English and Linguistics in National Taiwan University....(WIP)
-
                     </div>
-                    <div style="flex:1; width: 50%;">
-                        <iframe src="https://www.youtube.com/embed/sQEWEPIHLzQ"
-                            width="560" height="315" frameborder="0" allowfullscreen></iframe>
+                    <div class="page-body-media">
+                        <iframe
+                            src="https://www.youtube.com/embed/sQEWEPIHLzQ"
+                            width="560"
+                            height="315"
+                            frameborder="0"
+                            allowfullscreen
+                        ></iframe>
                     </div>
+                </div>
             </div>
-        </div>
         </div>
     </div>
 
     <div class="section" (click)="fullpageApi.moveSectionDown()">
         <div class="fourth-page-container shadow">
-            <div style="margin: 10%;">
-                <div style="flex:2; color: white; height: 60px; display: flex; flex-direction: column;">
-                    <div style="color: white; font-size: 60px;">Machine Learing Model</div>
-                    <div style="color: white; font-size: 40px; margin-top: 32px;">How does it work?</div>
+            <div class="page-content">
+                <div class="page-header">
+                    <div class="page-title">Machine Learing Model</div>
+                    <div class="page-subtitle">How does it work?</div>
                 </div>
-                <div style="display: flex; flex:2; margin-top: 68px;">
-                    <div style="color:white; font-size: 20px; margin-right: 32px;">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut malesuada, dui porta rhoncus imperdiet, 
-                        dui leo lacinia lacus, et laoreet ante elit ac leo. Curabitur lorem risus, posuere quis neque in, 
-                        accumsan scelerisque arcu. Integer fringilla velit et accumsan vehicula. Donec nisi justo, finibus id 
-                        leo vitae, sagittis rutrum elit. Nam volutpat viverra vulputate. Maecenas interdum turpis ultricies 
-                        purus placerat venenatis non at lectus. Quisque eget lacinia odio.
+                <div class="page-body">
+                    <div class="page-body-text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut malesuada, dui porta rhoncus
+                        imperdiet, dui leo lacinia lacus, et laoreet ante elit ac leo. Curabitur lorem risus, posuere
+                        quis neque in, accumsan scelerisque arcu. Integer fringilla velit et accumsan vehicula. Donec
+                        nisi justo, finibus id leo vitae, sagittis rutrum elit. Nam volutpat viverra vulputate. Maecenas
+                        interdum turpis ultricies purus placerat venenatis non at lectus. Quisque eget lacinia odio.
                     </div>
+                </div>
             </div>
-        </div>
         </div>
     </div>
 
     <div class="section" (click)="fullpageApi.moveTo('firstPage', 0)">
         <div class="final-page-container shadow">
-            <div style="display: flex; justify-content: center; align-items: center; margin: auto; flex-direction: column;">
-                <span style="font-size: 32px; color: white;">Give it a try!</span>
+            <div class="call-for-action-container">
+                <span style="font-size: 32px; color: white">Give it a try!</span>
                 <a class="button-white" mat-button [routerLink]="'/app'"> Get Started </a>
             </div>
-                
         </div>
     </div>
-
-
 </div>
