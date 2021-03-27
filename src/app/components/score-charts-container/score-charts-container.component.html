@@ -1,19 +1,34 @@
-<div class="info-container">
-  <div class="info-column">
-    <app-score-chart
-      [historicalData]="testAccentData"
-      [currentValue]="77"
-      label="Accent"    
-    ></app-score-chart>
+<div class="container">
+
+  <div class="badges-container">
+    <span class="label-text">Badges:</span>
+    <img id="badges" src="assets/badges.png">
+  </div>
+  
+  <div class="gap-container">
   </div>
 
-
-  <div class="info-column">
-    <app-score-chart
-    [historicalData]="testClarityData"
-    [currentValue]="67"
-    label="Clarity"    
-  ></app-score-chart>
+  <div class="details-container">
+    <div class="goals-container">
+      <div class="label-text">Daily Goal:</div>
+      <img id="daily-progress" src="assets/daily-progress.png">
+    </div>
+    <div class="label-text" id="scores-heading">Scores:</div>
+    <div class="charts-container">
+      <div class="info-column accent-score">
+        <app-score-chart
+          [historicalData]="testAccentData"
+          [currentValue]="77"
+          label="Accent">
+        </app-score-chart>
+      </div>
+      <div class="info-column clarity-score">
+        <app-score-chart
+          [historicalData]="testClarityData"
+          [currentValue]="67"
+          label="Clarity">
+        </app-score-chart>
+      </div>
+    </div>
   </div>
-
 </div>
