@@ -7,11 +7,11 @@
 
   <div class="details-container">
     <div class="goals-container">
-      <span class="label-text">Daily Goal:</span>
+      <div class="label-text">Daily Goal:</div>
       <img id="daily-progress" src="assets/daily-progress.png">
     </div>
+    <div class="label-text" id="scores-heading">Scores:</div>
     <div class="charts-container">
-      <span class="label-text">Scores:</span>
       <div class="info-column accent-score">
         <app-score-chart
           [historicalData]="testAccentData"
@@ -19,7 +19,6 @@
           label="Accent">
         </app-score-chart>
       </div>
-      <div class="small-spacer"></div>
       <div class="info-column clarity-score">
         <app-score-chart
           [historicalData]="testClarityData"
