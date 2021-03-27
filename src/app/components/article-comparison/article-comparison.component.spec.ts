@@ -4,6 +4,7 @@ import { TEST_ARTICLE } from "@testing/testing-article-data";
 import { provideMockStore, MockStore } from "@ngrx/store/testing";
 import { ArticleComparisonService } from "@services/article-comparison.service";
 import { UserInformationService } from "@services/user-information.service";
+import { HttpClient } from "@angular/common/http";
 
 describe("ArticleComparisonComponent", () => {
     let component: ArticleComparisonComponent;
@@ -16,6 +17,7 @@ describe("ArticleComparisonComponent", () => {
             status: "UNINITIALISED",
             clarityScores: [],
         },
+        phraseLevel: {},
     };
 
     beforeEach(async () => {
@@ -32,6 +34,10 @@ describe("ArticleComparisonComponent", () => {
                 },
                 {
                     provide: UserInformationService,
+                    useValue: {},
+                },
+                {
+                    provide: HttpClient,
                     useValue: {},
                 },
                 provideMockStore({ initialState }),

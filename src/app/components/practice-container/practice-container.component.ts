@@ -12,7 +12,7 @@ import {
     selectPracticeContainerLevelStatus,
 } from "@state/selectors/practice-container-level.selectors";
 import { Article } from "app/models/article.model";
-import { Observable } from "rxjs";
+import { Observable, of } from "rxjs";
 
 @Component({
     selector: "app-practice-container",

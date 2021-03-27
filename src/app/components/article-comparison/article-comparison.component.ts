@@ -24,10 +24,17 @@ import {
     selectIsSpeaking,
     selectPhraseNum,
 } from "@state/selectors/article-level.selectors";
-import { selectPhraseLevelStatus, selectTranscript } from "@state/selectors/phrase-level.selectors";
+import {
+    selectPhraseLevelStatus,
+    selectRecordingEncoding,
+    selectTranscript,
+} from "@state/selectors/phrase-level.selectors";
 import { ArticleComparisonService } from "@services/article-comparison.service";
 import { ClarityScore, clarityScoreFromEdits } from "@models/clarity-score.model";
 import { sumBy } from "lodash";
+
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { environment } from "environments/environment";
 
 @Component({
     selector: "app-article-comparison",
@@ -56,9 +63,16 @@ export class ArticleComparisonComponent implements OnInit, OnChanges, OnDestroy 
     private clarityScores$: Observable<ClarityScore[]>;
     articleClarityScore$: Observable<ClarityScore>;
 
-    private subscription: Subscription;
+    // Base64 encoding of the user's recording.
+    recordingEncoding$: Observable<string>;
 
-    constructor(private store: Store<AppState>, private articleComparisonService: ArticleComparisonService) {
+    private subscriptions: Subscription[];
+
+    constructor(
+        private store: Store<AppState>,
+        private articleComparisonService: ArticleComparisonService,
+        private http: HttpClient
+    ) {
         this.articleLevelStatus$ = store.select(selectArticleLevelStatus);
         this.phraseNum$ = store.select(selectPhraseNum);
         this.phraseLevelStatus$ = store.select(selectPhraseLevelStatus);
@@ -67,7 +81,9 @@ export class ArticleComparisonComponent implements OnInit, OnChanges, OnDestroy 
         this.clarityScores$ = store.select(selectClarityScores);
         this.articleClarityScore$ = store.select(selectArticleClarityScore);
 
-        this.subscription = this.clarityScores$.subscribe((clarityScores) => {
+        
+        
+        const clarityScoreListener =  this.clarityScores$.subscribe((clarityScores) => {
             if (clarityScores.length === 0) {
                 return;
             }
@@ -90,6 +106,27 @@ export class ArticleComparisonComponent implements OnInit, OnChanges, OnDestroy 
                 );
             }
         });
+
+        this.recordingEncoding$ = store.select(selectRecordingEncoding);
+
+        const recordingEncodingListener = this.recordingEncoding$.subscribe((base64Encoding) => {
+            if (base64Encoding === undefined) {
+                return;
+            }
+
+            this.http
+                .post(environment.convertApiUrl, { blob: base64Encoding }, { responseType: "text" })
+                .subscribe((res) => {
+                    console.log(res);
+                });
+            // TODO: clean-up
+            console.log(base64Encoding);
+        });
+
+        this.subscriptions = [
+            clarityScoreListener,
+            recordingEncodingListener,
+        ];
     }
 
     ngOnInit(): void {
@@ -105,7 +142,7 @@ export class ArticleComparisonComponent implements OnInit, OnChanges, OnDestroy 
     }
 
     ngOnDestroy(): void {
-        this.subscription.unsubscribe();
+        this.subscriptions.forEach(listener => listener.unsubscribe());
     }
 
     /**
