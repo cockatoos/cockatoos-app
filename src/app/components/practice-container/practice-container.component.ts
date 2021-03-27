@@ -20,8 +20,13 @@ import { Observable, of } from "rxjs";
     styleUrls: ["./practice-container.component.sass"],
 })
 export class PracticeContainerComponent implements OnInit {
+    // Component status, e.g. INIT|READY|ERROR.
     status$: Observable<Status>;
+
+    // The current article to be used by the user.
     article$: Observable<Article>;
+
+    // Boolean flag, true iff there are no more articles to read.
     noMoreArticles$: Observable<boolean>;
 
     constructor(public dialog: MatDialog, public articlesService: ArticlesService, private store: Store<AppState>) {
@@ -30,15 +35,16 @@ export class PracticeContainerComponent implements OnInit {
         this.noMoreArticles$ = store.select(noMoreArticles);
     }
 
-    nextArticle(): void {
-        this.store.dispatch(nextArticle());
-    }
-
     ngOnInit(): void {
         this.store.dispatch(initialise());
     }
 
-    public openDialog(): void {
+    nextArticle(): void {
+        this.store.dispatch(nextArticle());
+    }
+
+    // Opens the 'Analyse' dialog.
+    openDialog(): void {
         const dialogRef = this.dialog.open(AnalyseDialogComponent);
         // dialogRef.afterClosed().subscribe(result => {
         //   console.log(`Dialog result: ${result}`);

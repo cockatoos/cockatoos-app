@@ -17,7 +17,6 @@ import { ScoreChartsContainerComponent } from "./components/score-charts-contain
 import { PracticeContainerComponent } from "./components/practice-container/practice-container.component";
 import { AnalyseDialogComponent } from "./components/analyse-dialog/analyse-dialog.component";
 import { HighlightPhraseComponent } from "@components/highlight-phrase/highlight-phrase.component";
-import { DataConnectorComponent } from "./components/data-connector/data-connector.component";
 
 /// material
 import { MatCardModule } from "@angular/material/card";
@@ -45,12 +44,12 @@ import { PhraseLevelEffects } from "@state/effects/phrase-level.effects";
 import { practiceContainerLevelReducer } from "@state/reducers/practice-container-level.reducer";
 import { PracticeContainerLevelEffects } from "@state/effects/practice-container-level.effects";
 
-// full page
+/// full page
 import { AngularFullpageModule } from "@fullpage/angular-fullpage";
 import { HomePageContainerComponent } from "@components/home-page-container/home-page-container.component";
 import { MainAppContainerComponent } from "./components/main-app-container/main-app-container.component";
 
-// HTTP
+/// HTTP
 import { HttpClientModule } from "@angular/common/http";
 
 @NgModule({
@@ -64,9 +63,7 @@ import { HttpClientModule } from "@angular/common/http";
         AnalyseDialogComponent,
         HomePageContainerComponent,
         MainAppContainerComponent,
-        DataConnectorComponent,
         HighlightPhraseComponent,
-        DataConnectorComponent,
     ],
     imports: [
         BrowserModule,

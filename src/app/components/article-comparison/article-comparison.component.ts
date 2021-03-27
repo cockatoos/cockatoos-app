@@ -1,9 +1,18 @@
+/// angular
 import { Component, OnInit, Input, OnChanges, SimpleChanges, OnDestroy } from "@angular/core";
+
+/// rxjs
 import { Observable, Subscription } from "rxjs";
 import { first, map } from "rxjs/operators";
 
-import { Article, Phrase } from "@models/article.model";
+/// services
+import { ArticleComparisonService } from "@services/article-comparison.service";
 
+/// models
+import { Article, Phrase } from "@models/article.model";
+import { ClarityScore, clarityScoreFromEdits } from "@models/clarity-score.model";
+
+/// ngrx
 import { Store } from "@ngrx/store";
 import { AppState } from "@state/app.state";
 import {
@@ -29,12 +38,13 @@ import {
     selectRecordingEncoding,
     selectTranscript,
 } from "@state/selectors/phrase-level.selectors";
-import { ArticleComparisonService } from "@services/article-comparison.service";
-import { ClarityScore, clarityScoreFromEdits } from "@models/clarity-score.model";
-import { sumBy } from "lodash";
 
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+/// http
+import { HttpClient } from "@angular/common/http";
 import { environment } from "environments/environment";
+
+/// utils
+import { sumBy } from "lodash";
 
 @Component({
     selector: "app-article-comparison",
@@ -73,6 +83,7 @@ export class ArticleComparisonComponent implements OnInit, OnChanges, OnDestroy 
         private articleComparisonService: ArticleComparisonService,
         private http: HttpClient
     ) {
+        // Listen to stateful content in the ngrx store.
         this.articleLevelStatus$ = store.select(selectArticleLevelStatus);
         this.phraseNum$ = store.select(selectPhraseNum);
         this.phraseLevelStatus$ = store.select(selectPhraseLevelStatus);
@@ -80,10 +91,11 @@ export class ArticleComparisonComponent implements OnInit, OnChanges, OnDestroy 
         this.isSpeaking$ = store.select(selectIsSpeaking);
         this.clarityScores$ = store.select(selectClarityScores);
         this.articleClarityScore$ = store.select(selectArticleClarityScore);
+        this.recordingEncoding$ = store.select(selectRecordingEncoding);
 
-
-
-        const clarityScoreListener =  this.clarityScores$.subscribe((clarityScores) => {
+        // Listen to the clarity score for each phrase: save clarity score to database when
+        // user has finished reading all phrases.
+        const clarityScoreListener = this.clarityScores$.subscribe((clarityScores) => {
             if (clarityScores.length === 0) {
                 return;
             }
@@ -107,26 +119,24 @@ export class ArticleComparisonComponent implements OnInit, OnChanges, OnDestroy 
             }
         });
 
-        this.recordingEncoding$ = store.select(selectRecordingEncoding);
-
+        // Listen and post new recording encodings.
         const recordingEncodingListener = this.recordingEncoding$.subscribe((base64Encoding) => {
             if (base64Encoding === undefined) {
                 return;
             }
+            console.log(base64Encoding);
 
             this.http
                 .post(environment.convertApiUrl, { blob: base64Encoding }, { responseType: "text" })
                 .subscribe((res) => {
                     console.log(res);
+
+                    // TODO (Anson): snackbar notification
                 });
-            // TODO: clean-up
-            console.log(base64Encoding);
+            // TODO (Anson): handle error case
         });
 
-        this.subscriptions = [
-            clarityScoreListener,
-            recordingEncodingListener,
-        ];
+        this.subscriptions = [clarityScoreListener, recordingEncodingListener];
     }
 
     ngOnInit(): void {
@@ -136,13 +146,14 @@ export class ArticleComparisonComponent implements OnInit, OnChanges, OnDestroy 
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.article) {
+            // Change article and reset the phrase-level UI for a new article.
             this.store.dispatch(changeArticle({ article: changes.article.currentValue }));
             this.store.dispatch(reset());
         }
     }
 
     ngOnDestroy(): void {
-        this.subscriptions.forEach(listener => listener.unsubscribe());
+        this.subscriptions.forEach((listener) => listener.unsubscribe());
     }
 
     /**
