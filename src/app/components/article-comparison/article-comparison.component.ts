@@ -81,8 +81,8 @@ export class ArticleComparisonComponent implements OnInit, OnChanges, OnDestroy 
         this.clarityScores$ = store.select(selectClarityScores);
         this.articleClarityScore$ = store.select(selectArticleClarityScore);
 
-        
-        
+
+
         const clarityScoreListener =  this.clarityScores$.subscribe((clarityScores) => {
             if (clarityScores.length === 0) {
                 return;
