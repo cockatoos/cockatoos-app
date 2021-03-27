@@ -1,10 +1,12 @@
 <mat-toolbar color="primary">
-    <span mat-button [routerLink]="'/home'">Cockatoos</span>
-    <span class="example-spacer"></span>
-    <div>
-      <a mat-button [routerLink]="'/app/scores'"> Scores </a>
-      <a mat-button [routerLink]="'/app//practice'"> Practice </a>
-    </div>
+  <img id="app-icon" src="assets/app-icon.png">
+  <span class="small-spacer"></span>
+  <span mat-button class="title-text" [routerLink]="'/home'">Cockatoos</span>
+  <span class="large-spacer"></span>
+  <div>
+    <a mat-button [routerLink]="'/home'">PROGRESS </a>
+    <a mat-button [routerLink]="'/practice'"> PRACTICE </a>
+  </div>
   </mat-toolbar>
   
   <router-outlet></router-outlet>
