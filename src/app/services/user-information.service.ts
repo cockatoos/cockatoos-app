@@ -30,14 +30,6 @@ export class UserInformationService {
     private userId = "testUser";
 
     constructor(private afs: AngularFirestore) {
-        // this.getClarityScores().subscribe((clarityScores) => {
-        //     console.log("Clarity Scores");
-        //     console.log(clarityScores);
-        // });
-        // this.getAccentScores().subscribe((accentScores) => {
-        //     console.log("Accent Scores");
-        //     console.log(accentScores);
-        // });
     }
 
     saveClarityScore(clarityScore: ClarityScore): Observable<boolean> {
