@@ -108,16 +108,6 @@
             <div *ngIf="articleClarityScore$ | async; let articleClarityScore">
                 Score: {{ articleClarityScore.numCorrectWords }} of {{ articleClarityScore.numTotalWords }}
             </div>
-
-            <div *ngIf="(articleLevelStatus$ | async) == 'SAVING'">
-                <mat-spinner diameter="20"></mat-spinner> Saving...
-            </div>
-
-            <div *ngIf="(articleLevelStatus$ | async) == 'SCORES_SAVED'">
-                Saved!
-            </div>
-
-            <div *ngIf="(articleLevelStatus$ | async) == 'ERROR'">Error!</div>
         </div>
     </section>
 </ng-container>

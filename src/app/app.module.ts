@@ -27,6 +27,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
 
 /// firestore
 import { AngularFireModule } from "@angular/fire";
@@ -84,6 +85,7 @@ import { HttpClientModule } from "@angular/common/http";
         MatIconModule,
         MatDialogModule,
         MatSidenavModule,
+        MatSnackBarModule,
         AngularFireModule.initializeApp(environment.firebase),
         AngularFireAnalyticsModule,
         AngularFirestoreModule,
