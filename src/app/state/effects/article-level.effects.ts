@@ -1,11 +1,12 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { RecordedSpeechToTextService } from "@services/recorded-speech-to-text.service";
-import { catchError, filter, map, mergeMap, switchMap } from "rxjs/operators";
+import { catchError, map, mergeMap, switchMap } from "rxjs/operators";
 
 import * as ArticleLevelActions from "@state/actions/article-level.actions";
 import { EMPTY } from "rxjs";
 import { TextToSpeechService } from "@services/text-to-speech.service";
+import { UserInformationService } from "@services/user-information.service";
 
 @Injectable()
 export class ArticleLevelEffects {
@@ -40,9 +41,32 @@ export class ArticleLevelEffects {
         )
     );
 
+    saveClarityScore$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType("[Article] Save Clarity Score"),
+            switchMap(({ correctWords, totalWords }) => {
+                return this.userInformationService
+                    .saveClarityScore({
+                        numCorrectWords: correctWords,
+                        numTotalWords: totalWords,
+                    })
+                    .pipe(
+                        map((success) => {
+                            if (success) {
+                                return ArticleLevelActions.scoresSaved();
+                            } else {
+                                return ArticleLevelActions.error({ errorMessage: "Unable to save clarity score." });
+                            }
+                        })
+                    );
+            })
+        )
+    );
+
     constructor(
         private actions$: Actions,
         private textToSpeechService: TextToSpeechService,
-        private recordedSpeechToTextService: RecordedSpeechToTextService
+        private recordedSpeechToTextService: RecordedSpeechToTextService,
+        private userInformationService: UserInformationService
     ) {}
 }

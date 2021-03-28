@@ -6,6 +6,7 @@ import { identity, Observable } from "rxjs";
 import { first, map, mergeMap } from "rxjs/operators";
 
 interface FirestoreArticle {
+    name: string;
     text: string;
     phrases: number[];
 }
@@ -20,7 +21,7 @@ export class ArticlesService {
     constructor(private afs: AngularFirestore) {
         this.articlesCollection = afs.collection<FirestoreArticle>("articles");
         this.articles$ = this.articlesCollection
-            .valueChanges()
+            .valueChanges({ idField: "name" })
             .pipe(map((firestoreArticles) => firestoreArticles.map(this.parseFirestoreArticle)));
     }
 
@@ -37,9 +38,9 @@ export class ArticlesService {
      * and this needs to be converted into a list of start/end indexes for each phrase.
      */
     private parseFirestoreArticle(firestoreArticle: FirestoreArticle): Article {
-        const { text, phrases: startIndexes } = firestoreArticle;
+        const { name, text, phrases: startIndexes } = firestoreArticle;
         const endIndexes = startIndexes.slice(1).concat(text.length);
         const phrases = zipWith(startIndexes, endIndexes, (startIndex, endIndex) => ({ startIndex, endIndex }));
-        return { text, phrases };
+        return { name, text, phrases };
     }
 }

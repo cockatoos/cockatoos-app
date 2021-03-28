@@ -5,8 +5,6 @@ import { TEST_ARTICLE } from "@testing/testing-article-data";
 import { ArticleComparisonComponent } from "@components/article-comparison/article-comparison.component";
 import { PhraseDiffComponent } from "@components/phrase-diff/phrase-diff.component";
 
-import { TextToSpeechService } from "@services/text-to-speech.service";
-
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
@@ -16,11 +14,12 @@ import { phraseLevelReducer } from "@state/reducers/phrase-level.reducer";
 import { EffectsModule } from "@ngrx/effects";
 import { ArticleLevelEffects } from "@state/effects/article-level.effects";
 import { PhraseLevelEffects } from "@state/effects/phrase-level.effects";
+import { ArticleComparisonService } from "@services/article-comparison.service";
 import { HighlightPhraseComponent } from "@components/highlight-phrase/highlight-phrase.component";
 
-class MockTextToSpeechService {
-    available = false;
-}
+const mockArticleComparisonService = {
+    compare: () => false,
+};
 
 const declarations = [PhraseDiffComponent, HighlightPhraseComponent];
 
@@ -39,8 +38,8 @@ const disableTextToSpeechMixin = {
     providers: [
         PhraseDiffComponent,
         {
-            provide: TextToSpeechService,
-            useClass: MockTextToSpeechService,
+            provide: ArticleComparisonService,
+            useValue: mockArticleComparisonService,
         },
     ],
 };

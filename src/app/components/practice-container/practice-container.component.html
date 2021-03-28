@@ -1,4 +1,4 @@
-<div class="practice-container">
+<div class="practice-container" *ngIf="(status$ | async) == 'READY'">
     <mat-card>
         <div class="recording-container" *ngIf="article$ | async; let article">
             <app-article-comparison [article]="article"></app-article-comparison>
@@ -8,6 +8,12 @@
     <div class="button-container">
         <button mat-raised-button color="primary" (click)="openDialog()">Analyse</button>
 
-        <button mat-raised-button color="secondary" style="margin: 16px" (click)="openDialog()">Practice More</button>
+        <button
+            mat-raised-button
+            color="secondary"
+            style="margin: 16px"
+            (click)="nextArticle()"
+            disabled="{{ noMoreArticles$ | async}}"
+            >Practice More</button>
     </div>
 </div>

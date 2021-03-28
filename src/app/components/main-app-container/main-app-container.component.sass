@@ -6,7 +6,8 @@
   top: 0
   right: 0
   background-color: #fff6f6
-
+  height: 100vh
+  overflow: auto
 
 #app-icon
   height: 45px
@@ -23,3 +24,15 @@
   font-size: 1.5rem
   font-weight: bold
   color: var(--accent-lighter-color)
+
+.current
+  background-color: var(--accent-lighter-color)
+  color: var(--primary-darker-color)
+
+a
+  margin-right: 1rem 
+  
+  &:hover
+    transition: background-color 0.25s
+    background-color: #eee
+    color: var(--primary-darker-color)

@@ -1,21 +1,21 @@
 import { Score } from "@components/score-chart/score-chart.component";
 
 /*
-* dummy data to test the scoer chart component
-* the data is an array of {date, accent score, clarity score}
-*/
+ * dummy data to test the scoer chart component
+ * the data is an array of {date, accent score, clarity score}
+ */
 export const TestAccentScoreData: Score[] = [
-    { date: '2020-01-01', score: 50 },
-    { date: '2020-01-02', score: 60},
-    { date: '2020-01-03', score: 55},
-    { date: '2020-01-05', score: 70},
-    { date: '2020-01-07', score: 80}
+    { date: new Date(2020, 1, 1), score: 0.5 },
+    { date: new Date(2020, 1, 2), score: 0.6 },
+    { date: new Date(2020, 1, 3), score: 0.55 },
+    { date: new Date(2020, 1, 5), score: 0.7 },
+    { date: new Date(2020, 1, 7), score: 0.8 },
 ];
 
-export const TestClarityScoreData: any = [
-    { date: '2020-01-01', score: 20 },
-    { date: '2020-01-02', score: 30},
-    { date: '2020-01-03', score: 45},
-    { date: '2020-01-05', score: 40},
-    { date: '2020-01-07', score: 60}
+export const TestClarityScoreData: Score[] = [
+    { date: new Date(2020, 1, 1), score: 0.2 },
+    { date: new Date(2020, 1, 2), score: 0.3 },
+    { date: new Date(2020, 1, 3), score: 0.45 },
+    { date: new Date(2020, 1, 5), score: 0.4 },
+    { date: new Date(2020, 1, 7), score: 0.6 },
 ];
