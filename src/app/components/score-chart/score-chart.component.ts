@@ -64,7 +64,7 @@ export class ScoreChartComponent implements OnChanges, OnInit {
             type: "datetime",
             labels: {
                 formatter(): string {
-                    return Highcharts.dateFormat("%d/%m/%y", this.value);
+                    return Highcharts.dateFormat("%d/%m", this.value);
                 },
             },
         },
@@ -86,6 +86,7 @@ export class ScoreChartComponent implements OnChanges, OnInit {
         },
         series: [],
         chart: {
+            type: 'column',
             reflow: true,
             width: 350,
             height: 300,
@@ -102,7 +103,7 @@ export class ScoreChartComponent implements OnChanges, OnInit {
             this.chartOptions.series = [
                 {
                     name: `${this.label} Scores`,
-                    type: "line",
+                    type: "column",
                     data: changes.historicalData.currentValue.map(({ date, score }: Score) => [date.getTime(), score]),
                 },
             ];
