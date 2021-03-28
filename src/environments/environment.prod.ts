@@ -11,5 +11,5 @@ export const environment = {
     appId: "1:876828085281:web:cdc06b092da6441a606760",
     measurementId: "G-36KJQ3V7EG",
   },
-  convertApiUrl: "https://conversiontest.azurewebsites.net/api/httptrigger1"
+  convertApiUrl: "https://conversiontest2.azurewebsites.net/api/httptrigger1",
 };
