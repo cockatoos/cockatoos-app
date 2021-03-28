@@ -281,13 +281,31 @@ Apache-2.0
 @firebase/component
 Apache-2.0
 
+@firebase/database
+Apache-2.0
+
 @firebase/firestore
+Apache-2.0
+
+@firebase/functions
 Apache-2.0
 
 @firebase/installations
 Apache-2.0
 
 @firebase/logger
+Apache-2.0
+
+@firebase/messaging
+Apache-2.0
+
+@firebase/performance
+Apache-2.0
+
+@firebase/remote-config
+Apache-2.0
+
+@firebase/storage
 Apache-2.0
 
 @firebase/util
@@ -329,15 +347,8 @@ MIT
 @ngrx/store
 MIT
 
-date-fns
-MIT
-Copyright (C) 2020 Sasha Koss and Lesha Koss
-
-# License
-
-date-fns is licensed under the [MIT license](http://kossnocorp.mit-license.org).
-Read more about MIT at [TLDRLegal](https://tldrlegal.com/license/mit-license).
-
+firebase
+Apache-2.0
 
 firebase/analytics
 
