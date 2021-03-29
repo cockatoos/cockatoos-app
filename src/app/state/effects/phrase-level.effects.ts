@@ -49,9 +49,6 @@ export class PhraseLevelEffects {
         this.actions$.pipe(
             ofType("[Phrase] Blob Available"),
             switchMap(({ blob }: { blob: Blob}) => {
-                // For debugging purposes
-                console.log(blob, blob.type);
-
                 //// Uncomment to download the audio file...
                 // const url = URL.createObjectURL(blob);
                 // const a = document.createElement("a");

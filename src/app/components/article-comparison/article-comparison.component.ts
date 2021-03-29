@@ -2,8 +2,8 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges, OnDestroy } from "@angular/core";
 
 /// rxjs
-import { Observable, Subscription } from "rxjs";
-import { first, map } from "rxjs/operators";
+import { Observable, Subscription, throwError } from "rxjs";
+import { catchError, first, map } from "rxjs/operators";
 
 /// services
 import { ArticleComparisonService } from "@services/article-comparison.service";
@@ -40,8 +40,11 @@ import {
 } from "@state/selectors/phrase-level.selectors";
 
 /// http
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { environment } from "environments/environment";
+
+/// material
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 /// utils
 import { sumBy } from "lodash";
@@ -81,7 +84,8 @@ export class ArticleComparisonComponent implements OnInit, OnChanges, OnDestroy 
     constructor(
         private store: Store<AppState>,
         private articleComparisonService: ArticleComparisonService,
-        private http: HttpClient
+        private http: HttpClient,
+        private notificationSnackbar: MatSnackBar
     ) {
         // Listen to stateful content in the ngrx store.
         this.articleLevelStatus$ = store.select(selectArticleLevelStatus);
@@ -119,24 +123,54 @@ export class ArticleComparisonComponent implements OnInit, OnChanges, OnDestroy 
             }
         });
 
+        const statusListener = this.articleLevelStatus$.subscribe((status) => {
+            switch (status) {
+                case "SCORES_SAVED":
+                    this.showNotification("SUCCESS", "Clarity scores saved.");
+                    break;
+                case "ERROR":
+                    this.showNotification("ERROR", "An error has occurred.");
+                    break;
+            }
+        });
+
         // Listen and post new recording encodings.
         const recordingEncodingListener = this.recordingEncoding$.subscribe((base64Encoding) => {
             if (base64Encoding === undefined) {
                 return;
             }
-            console.log(base64Encoding);
 
             this.http
                 .post(environment.convertApiUrl, { blob: base64Encoding }, { responseType: "text" })
-                .subscribe((res) => {
-                    console.log(res);
-
-                    // TODO (Anson): snackbar notification
-                });
-            // TODO (Anson): handle error case
+                .pipe(
+                    catchError((errorResponse: HttpErrorResponse) => {
+                        if (errorResponse.error instanceof ErrorEvent) {
+                            // A client-side or network error occurred. Handle it accordingly.
+                            console.error("An error occurred:", errorResponse.error.message);
+                        } else {
+                            // The backend returned an unsuccessful response code.
+                            // The response body may contain clues as to what went wrong.
+                            console.error(
+                                `Backend returned code ${errorResponse.status}, ` +
+                                    `body was: ${JSON.stringify(errorResponse.error)}`
+                            );
+                        }
+                        // Return an observable with a user-facing error message.
+                        return throwError("Unable to process audio recording.");
+                    })
+                )
+                .subscribe(
+                    (res) => {
+                        console.log(res);
+                        this.showNotification("SUCCESS", "Recording has been processed.");
+                    },
+                    (error) => {
+                        this.showNotification("ERROR", error);
+                    }
+                );
         });
 
-        this.subscriptions = [clarityScoreListener, recordingEncodingListener];
+        this.subscriptions = [statusListener, clarityScoreListener, recordingEncodingListener];
     }
 
     ngOnInit(): void {
@@ -194,5 +228,12 @@ export class ArticleComparisonComponent implements OnInit, OnChanges, OnDestroy 
 
     nextPhrase(): void {
         this.store.dispatch(nextPhrase());
+    }
+
+    private showNotification(type: "SUCCESS" | "ERROR", message: string, closeInMilliseconds = 2000): void {
+        const prefix = type === "SUCCESS" ? "✅" : "⚠";
+        this.notificationSnackbar.open(`${prefix} ${message}`, "Close", {
+            duration: closeInMilliseconds,
+        });
     }
 }

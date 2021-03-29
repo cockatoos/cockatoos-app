@@ -5,6 +5,7 @@ import { provideMockStore, MockStore } from "@ngrx/store/testing";
 import { ArticleComparisonService } from "@services/article-comparison.service";
 import { UserInformationService } from "@services/user-information.service";
 import { HttpClient } from "@angular/common/http";
+import { MatSnackBar, MatSnackBarModule } from "@angular/material/snack-bar";
 
 describe("ArticleComparisonComponent", () => {
     let component: ArticleComparisonComponent;
@@ -26,8 +27,10 @@ describe("ArticleComparisonComponent", () => {
         };
         await TestBed.configureTestingModule({
             declarations: [ArticleComparisonComponent],
+            imports: [MatSnackBarModule],
             providers: [
                 ArticleComparisonComponent,
+                MatSnackBar,
                 {
                     provide: ArticleComparisonService,
                     useValue: mockArticleComparisonService,
