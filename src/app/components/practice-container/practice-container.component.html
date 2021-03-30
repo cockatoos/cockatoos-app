@@ -1,9 +1,7 @@
 <div class="practice-container">
-    <mat-card>
-        <div class="recording-container" *ngIf="article$ | async; let article">
-            <app-article-comparison [article]="article"></app-article-comparison>
-        </div>
-    </mat-card>
+    <div class="recording-container" *ngIf="article$ | async; let article">
+        <app-article-comparison [article]="article"></app-article-comparison>
+    </div>
 
     <div class="button-container">
         <button mat-raised-button color="primary" [routerLink]="'/app'">Finish Today's Practice</button>
