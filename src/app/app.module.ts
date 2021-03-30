@@ -15,9 +15,7 @@ import { ArticleComparisonComponent } from "@components/article-comparison/artic
 import { PhraseDiffComponent } from "@components/phrase-diff/phrase-diff.component";
 import { ScoreChartsContainerComponent } from "./components/score-charts-container/score-charts-container.component";
 import { PracticeContainerComponent } from "./components/practice-container/practice-container.component";
-import { AnalyseDialogComponent } from "./components/analyse-dialog/analyse-dialog.component";
 import { HighlightPhraseComponent } from "@components/highlight-phrase/highlight-phrase.component";
-import { DataConnectorComponent } from "./components/data-connector/data-connector.component";
 
 /// material
 import { MatCardModule } from "@angular/material/card";
@@ -28,6 +26,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
 
 /// firestore
 import { AngularFireModule } from "@angular/fire";
@@ -42,13 +41,15 @@ import { articleLevelReducer } from "@state/reducers/article-level.reducer";
 import { phraseLevelReducer } from "@state/reducers/phrase-level.reducer";
 import { ArticleLevelEffects } from "@state/effects/article-level.effects";
 import { PhraseLevelEffects } from "@state/effects/phrase-level.effects";
+import { practiceContainerLevelReducer } from "@state/reducers/practice-container-level.reducer";
+import { PracticeContainerLevelEffects } from "@state/effects/practice-container-level.effects";
+
+/// full page
+import { AngularFullpageModule } from "@fullpage/angular-fullpage";
 import { HomePageContainerComponent } from "@components/home-page-container/home-page-container.component";
 import { MainAppContainerComponent } from "./components/main-app-container/main-app-container.component";
 
-// full page
-import { AngularFullpageModule } from "@fullpage/angular-fullpage";
-
-// HTTP
+/// HTTP
 import { HttpClientModule } from "@angular/common/http";
 
 @NgModule({
@@ -59,12 +60,9 @@ import { HttpClientModule } from "@angular/common/http";
         ArticleComparisonComponent,
         ScoreChartsContainerComponent,
         PracticeContainerComponent,
-        AnalyseDialogComponent,
         HomePageContainerComponent,
         MainAppContainerComponent,
-        DataConnectorComponent,
         HighlightPhraseComponent,
-        DataConnectorComponent,
     ],
     imports: [
         BrowserModule,
@@ -77,13 +75,15 @@ import { HttpClientModule } from "@angular/common/http";
         StoreModule.forRoot({
             articleLevel: articleLevelReducer,
             phraseLevel: phraseLevelReducer,
+            practiceContainerLevel: practiceContainerLevelReducer,
         }),
-        EffectsModule.forRoot([ArticleLevelEffects, PhraseLevelEffects]),
+        EffectsModule.forRoot([ArticleLevelEffects, PhraseLevelEffects, PracticeContainerLevelEffects]),
         MatButtonModule,
         MatToolbarModule,
         MatIconModule,
         MatDialogModule,
         MatSidenavModule,
+        MatSnackBarModule,
         AngularFireModule.initializeApp(environment.firebase),
         AngularFireAnalyticsModule,
         AngularFirestoreModule,

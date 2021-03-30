@@ -5,8 +5,8 @@
   <span mat-button class="title-text" [routerLink]="'/home'">Cockatoos</span>
   <span class="large-spacer"></span>
   <div>
-    <a mat-button [routerLink]="'/app/scores'">PROGRESS </a>
-    <a mat-button [routerLink]="'/app/practice'"> PRACTICE </a>
+    <a mat-button [routerLinkActive]="'current'" [routerLink]="'/app/scores'">PROGRESS </a>
+    <a mat-button [routerLinkActive]="'current'" [routerLink]="'/app/practice'"> PRACTICE </a>
   </div>
   </mat-toolbar>
 

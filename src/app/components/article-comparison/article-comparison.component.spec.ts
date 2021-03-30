@@ -1,34 +1,43 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { TextToSpeechService } from "@services/text-to-speech.service";
 import { ArticleComparisonComponent } from "@components/article-comparison/article-comparison.component";
 import { TEST_ARTICLE } from "@testing/testing-article-data";
 import { provideMockStore, MockStore } from "@ngrx/store/testing";
+import { ArticleComparisonService } from "@services/article-comparison.service";
+import { UserInformationService } from "@services/user-information.service";
 import { HttpClient } from "@angular/common/http";
+import { MatSnackBar, MatSnackBarModule } from "@angular/material/snack-bar";
 
 describe("ArticleComparisonComponent", () => {
     let component: ArticleComparisonComponent;
     let fixture: ComponentFixture<ArticleComparisonComponent>;
     let store: MockStore;
-    let mockTextToSpeechService: any;
+    let mockArticleComparisonService: any;
 
     const initialState = {
         articleLevel: {
             status: "UNINITIALISED",
+            clarityScores: [],
         },
         phraseLevel: {},
     };
 
     beforeEach(async () => {
-        mockTextToSpeechService = jasmine.createSpyObj("TextToSpeechService", ["speak"], {
-            available: true,
-        });
+        mockArticleComparisonService = {
+            compare: jasmine.createSpy("compare").and.returnValue(true),
+        };
         await TestBed.configureTestingModule({
             declarations: [ArticleComparisonComponent],
+            imports: [MatSnackBarModule],
             providers: [
                 ArticleComparisonComponent,
+                MatSnackBar,
                 {
-                    provide: TextToSpeechService,
-                    useValue: mockTextToSpeechService,
+                    provide: ArticleComparisonService,
+                    useValue: mockArticleComparisonService,
+                },
+                {
+                    provide: UserInformationService,
+                    useValue: {},
                 },
                 {
                     provide: HttpClient,

@@ -1,6 +1,7 @@
 import { createReducer, on } from "@ngrx/store";
 import { Article } from "@models/article.model";
 import * as ArticleLevelActions from "@state/actions/article-level.actions";
+import { ClarityScore } from "@models/clarity-score.model";
 
 export enum Status {
     UNINITIALISED = "UNINITIALISED",
@@ -8,39 +9,54 @@ export enum Status {
     // Ready for user to record.
     READY = "READY",
 
-    // User is on the last phrase.
-    DONE = "DONE",
-
     // Web Speech API is unsupported by the browser.
     UNSUPPORTED = "UNSUPPORTED",
+
+    // In the process of saving the clarity score.
+    SAVING_SCORES = "SAVING",
+
+    // Successfully saved clarity score.
+    SCORES_SAVED = "SCORES_SAVED",
+
+    // Error case.
+    ERROR = "ERROR",
 }
 
-const emptyArticle: Article = {
-    text: "",
-    phrases: [],
-};
+export interface State {
+    status: Status;
+    article: Article;
+    phraseNum: number;
+    isSpeaking: boolean;
+    clarityScores: ClarityScore[];
+    errorMessage?: string;
+    articleClarityScore?: ClarityScore;
+}
 
-export const initialState = {
+export const initialState: State = {
     status: Status.UNINITIALISED,
-    article: emptyArticle,
+    article: undefined,
     phraseNum: 0,
     isSpeaking: false,
+    clarityScores: [],
 };
-
-export type State = typeof initialState;
 
 export const articleLevelReducer = createReducer(
     initialState,
-    on(ArticleLevelActions.initialise, (state, { article }) => ({
+    on(ArticleLevelActions.changeArticle, (state, { article }) => ({
         ...state,
         article,
+        phraseNum: 0,
+        clarityScores: [],
+        articleClarityScore: undefined,
+    })),
+    on(ArticleLevelActions.addClarityScore, (state, { clarityScore }) => ({
+        ...state,
+        clarityScores: [...state.clarityScores, clarityScore],
     })),
     on(ArticleLevelActions.nextPhrase, (state) => {
         const phraseNum = state.phraseNum + 1;
-        const status = phraseNum + 1 === state.article.phrases.length ? Status.DONE : state.status;
         return {
             ...state,
-            status,
             phraseNum,
         };
     }),
@@ -55,5 +71,22 @@ export const articleLevelReducer = createReducer(
     on(ArticleLevelActions.speakingStateChange, (state, { isSpeaking }) => ({
         ...state,
         isSpeaking,
-    }))
+    })),
+    on(ArticleLevelActions.saveClarityScore, (state, { correctWords, totalWords }) => ({
+        ...state,
+        status: Status.SAVING_SCORES,
+        articleClarityScore: {
+            numCorrectWords: correctWords,
+            numTotalWords: totalWords,
+        }
+    })),
+    on(ArticleLevelActions.scoresSaved, (state) => ({
+        ...state,
+        status: Status.SCORES_SAVED,
+    })),
+    on(ArticleLevelActions.error, (state, { errorMessage }) => ({
+        ...state,
+        status: Status.ERROR,
+        errorMessage,
+    })),
 );

@@ -29,7 +29,6 @@ export const phraseLevelReducer = createReducer(
         status: Status.DONE,
     })),
     on(PhraseLevelActions.liveTranscript, (state, { transcript }) => {
-        // console.log("LIVE TRANSCRIPT", transcript);
         return {
             ...state,
             transcript,
@@ -44,5 +43,6 @@ export const phraseLevelReducer = createReducer(
     on(PhraseLevelActions.reset, (state) => ({
         ...state,
         status: Status.READY,
+        transcript: "",
     }))
 );

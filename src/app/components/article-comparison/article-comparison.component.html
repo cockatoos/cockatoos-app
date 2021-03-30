@@ -19,14 +19,14 @@
             <mat-card class="full-document">
                 <mat-card-header>
                     <mat-card-title>Document</mat-card-title>
-                    <mat-card-subtitle>TODO: create HighlightDiff component</mat-card-subtitle>
+                    <mat-card-subtitle>{{ article.name }}</mat-card-subtitle>
                 </mat-card-header>
                 <mat-card-content class="document-content">
-                    <h1>
+                    <h1 *ngIf="targetPhraseIndex$ | async; let targetPhraseIndex">
                         <app-highlight-phrase
                             [text]="article.text"
-                            [startIndex]="(targetPhraseIndex$ | async).startIndex"
-                            [endIndex]="(targetPhraseIndex$ | async).endIndex"
+                            [startIndex]="targetPhraseIndex.startIndex"
+                            [endIndex]="targetPhraseIndex.endIndex"
                         >
                         </app-highlight-phrase>
                     </h1>
@@ -76,7 +76,7 @@
                 <button
                     mat-raised-button
                     (click)="nextPhrase()"
-                    [disabled]="(phraseLevelStatus$ | async) !== 'DONE' || (articleLevelStatus$ | async) === 'DONE'"
+                    [disabled]="(phraseLevelStatus$ | async) !== 'DONE' || (articleLevelStatus$ | async) !== 'READY'"
                 >
                     Next Phrase
                 </button>

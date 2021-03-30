@@ -11,31 +11,45 @@ HighchartsBoost(Highcharts);
 HCSoldGauge(Highcharts);
 
 export interface Score {
-  date: string;
-  score: number;
+    date: Date;
+    score: number;
 }
 
 @Component({
-  selector: 'app-score-chart',
-  templateUrl: './score-chart.component.html',
-  styleUrls: ['./score-chart.component.sass']
+    selector: "app-score-chart",
+    templateUrl: "./score-chart.component.html",
+    styleUrls: ["./score-chart.component.sass"],
 })
 export class ScoreChartComponent implements OnChanges {
+    @Input()
+    public historicalData: Score[];
 
-  @Input()
-  public historicalData: Score[];
+    @Input()
+    public label: string;
 
-  @Input()
-  public label: string;
+    public Highcharts: typeof Highcharts = Highcharts;
+    public height: number;
+    public width: number;
 
-  @Input()
-  public currentValue?: number;
+    get averageValue(): string {
+        return this.historicalData ? mean(this.historicalData.map(({ score }) => score * 100)).toFixed() : null;
+    }
 
-  public Highcharts: typeof Highcharts = Highcharts;
+    get currentValue(): number {
+        const today = new Date();
+        const todayScore = this.historicalData.filter(
+            ({ date }) =>
+                date.getDate() === today.getDate() &&
+                date.getMonth() === today.getMonth() &&
+                date.getFullYear() === today.getFullYear()
+        );
 
-  get averageValue(): number {
-    return this.historicalData ? mean(this.historicalData.map((score: Score) => score.score)) : null;
-  }
+        if (todayScore.length !== 1) {
+            return null;
+        }
+
+        return todayScore[0].score * 100;
+    }
 
   public gaugeOptions: Highcharts.Options = {
     title: {
@@ -104,64 +118,75 @@ export class ScoreChartComponent implements OnChanges {
 
   };
 
-  public chartOptions: Highcharts.Options =
-    {
-      title: {
-        text: ''
-      },
+    public chartOptions: Highcharts.Options = {
+        title: {
+            text: "",
+        },
 
-      yAxis: {
-          title: {
-              text: ``
-          }
-      },
-
-      xAxis: {
-        type: "datetime",
-        labels: {
-          formatter(): string {
-            return Highcharts.dateFormat('%e/%d/%y', this.value);
-          }
-        }
-      },
-      responsive: {
-        rules: [{
-            condition: {
-                maxWidth: 500
+        yAxis: {
+            title: {
+                text: `Score`,
             },
-            chartOptions: {
-                legend: {
-                    layout: 'horizontal',
-                    align: 'center',
-                    verticalAlign: 'bottom'
-                }
-            }
-        }]
-    },
-    series: [],
-    chart: {
-      reflow: true,
-      width: 320,
-      height: 320
-    },
-    plotOptions: {
-      series: {
-        marker: {
-          enabled: true,
-          symbol: 'circle',
-          radius: 8
-      }
-      }
-    }
-  };
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes && changes.historicalData) {
-      this.chartOptions.series = [{
-        name: `${this.label} Scores`,
-        type: "line",
-        color: "#f24405",
-        data: changes.historicalData.currentValue.map((score: Score) => [parseISO(score.date).getTime, score.score])}];
+        },
+
+        xAxis: {
+            type: "datetime",
+            labels: {
+                formatter(): string {
+                    return Highcharts.dateFormat("%d/%m", this.value);
+                },
+            },
+        },
+        responsive: {
+            rules: [
+                {
+                    condition: {
+                        maxWidth: 500,
+                    },
+                    chartOptions: {
+                        legend: {
+                            layout: "horizontal",
+                            align: "center",
+                            verticalAlign: "bottom",
+                        },
+                    },
+                },
+            ],
+        },
+        series: [],
+        chart: {
+            type: 'column',
+            reflow: true,
+            width: 350,
+            height: 300,
+        },
+        plotOptions: {
+            series: {
+              marker: {
+                enabled: true,
+                symbol: 'circle',
+                radius: 8
+            }
+            }
+        }
+    };
+
+    ngOnInit(): void {
+        this.height = 20;
+        this.width = 20;
     }
-  }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes && changes.historicalData) {
+            this.chartOptions.series = [
+                {
+                    name: `${this.label} Scores`,
+                    type: "line",
+                    color: "#f24405",
+                    data: changes.historicalData.currentValue.map(({ date, score }: Score) => [date.getTime(), score * 100]),
+                },
+            ];
+        }
+    }
 }
