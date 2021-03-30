@@ -20,11 +20,4 @@ export class PracticeContainerComponent implements OnInit {
     }
 
     ngOnInit(): void {}
-
-    public openDialog(): void {
-        const dialogRef = this.dialog.open(AnalyseDialogComponent);
-        // dialogRef.afterClosed().subscribe(result => {
-        //   console.log(`Dialog result: ${result}`);
-        // });
-    }
 }

@@ -1,15 +1,41 @@
-.score-card-content
-    display: flex
-    padding: 32px
+#average-value
+    font-size: 30px
+    font-weight: 900
+    text-align: center
+    color: var(--primary-color)
 
+.score-chart-container
+    display: flex
+    flex-direction: column
+    height: 100%
+    width: 100%
+
+    .title
+        font-size: 32px
+        font-weight: 600
+        margin: 32px
+        color: var(--accent-lighter-color)
+
+    
+.score-card-content
+    margin-bottom: 32px
+    display: flex
+    padding: 42px
+    height: 100%
+    width: 100%
 
 .score-chart-number-column
     flex: 1
     display: flex
     flex-direction: column
-    // justify-content: center
-
+    gap: 32px
 
 .score-chart-highcharts-column
-    flex: 2
+    flex-flow: 1
     margin-left: 32px
+    display: flex
+
+.gauge-number
+    font-size: 72px
+    font-weight: 700
+    min-height: 72px

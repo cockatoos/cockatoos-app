@@ -1,19 +1,11 @@
-.container
-    display: flex
-    width: 90%
-    margin: auto
-    padding-top:32px
-    padding-bottom: 50px
-    overflow-y: hidden
-    height: 100%
-    max-height: 100%
-
 @media screen and ( min-width: 1080px )
     .container
+        display: flex
         width: 85%
+        height: 100%
         margin: auto
-    
-.goals-container
+        padding-top: 80px
+        padding-bottom: 120px
 
 .badges-container
     flex: 1
@@ -26,18 +18,23 @@
 
 .details-container
     flex: 3
-    max-width: 100%
+    display: flex
+    flex-direction: column
 
 .charts-container
-    height: 100%
-    width: 100%
+    flex-grow: 1
+    max-width: 100%
     display: flex
     padding-top:32px
     gap: 1rem
 
 .info-column
-    display: flex
-    justify-content: center
+    flex: 1
+    background-color: white
+    border-radius: 30px
+    height: 100%
+    // display: flex
+    // justify-content: center
 
 #scores-heading
     padding-top: 60px
@@ -49,9 +46,6 @@
 #daily-progress
     padding-top: 12px
     border-radius: 15px/30px
-
-    // max-height: 100%
-    // width: 100%
     max-width: 100%
 
 #badges
