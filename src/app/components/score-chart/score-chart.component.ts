@@ -161,7 +161,7 @@ export class ScoreChartComponent implements OnChanges {
         name: `${this.label} Scores`,
         type: "line",
         color: "#f24405",
-        data: changes.historicalData.currentValue.map((score: Score) => [parseISO(score.date).getTime, score.score])}];    
+        data: changes.historicalData.currentValue.map((score: Score) => [parseISO(score.date).getTime, score.score])}];
     }
   }
 }
