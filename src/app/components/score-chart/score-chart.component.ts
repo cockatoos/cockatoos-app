@@ -21,6 +21,10 @@ export interface Score {
     styleUrls: ["./score-chart.component.sass"],
 })
 export class ScoreChartComponent implements OnChanges {
+
+    get averageValue(): string {
+        return this.historicalData ? mean(this.historicalData.map(({ score }) => score * 100)).toFixed() : null;
+    }
     @Input()
     public historicalData: Score[];
 
@@ -30,26 +34,6 @@ export class ScoreChartComponent implements OnChanges {
     public Highcharts: typeof Highcharts = Highcharts;
     public height: number;
     public width: number;
-
-    get averageValue(): string {
-        return this.historicalData ? mean(this.historicalData.map(({ score }) => score * 100)).toFixed() : null;
-    }
-
-    get currentValue(): number {
-        const today = new Date();
-        const todayScore = this.historicalData.filter(
-            ({ date }) =>
-                date.getDate() === today.getDate() &&
-                date.getMonth() === today.getMonth() &&
-                date.getFullYear() === today.getFullYear()
-        );
-
-        if (todayScore.length !== 1) {
-            return null;
-        }
-
-        return todayScore[0].score * 100;
-    }
 
     public gaugeOptions: Highcharts.Options = {
         title: {
@@ -96,22 +80,7 @@ export class ScoreChartComponent implements OnChanges {
                 },
             ],
         },
-        series: [
-            {
-                type: "solidgauge",
-                radius: "62%",
-                innerRadius: "38%",
-                data: [20],
-                dataLabels: {
-                    format:
-                        '<div style="text-align:center;">' +
-                        '<span style="font-size:40px;font-weight: 700; color: #304d86">{y}</span><br/>' +
-                        "</div>",
-                    x: 0,
-                    y: -30,
-                },
-            },
-        ],
+        series: [],
         tooltip: {
             enabled: false,
         },
@@ -175,6 +144,26 @@ export class ScoreChartComponent implements OnChanges {
         },
     };
 
+    /**
+     * Compute today's current value from the @param historicalData,
+     * which is possibly null.
+     */
+    currentValueFrom(historicalData: Score[]): number | null {
+        const today = new Date();
+        const todayScore = historicalData.filter(
+            ({ date }) =>
+                date.getDate() === today.getDate() &&
+                date.getMonth() === today.getMonth() &&
+                date.getFullYear() === today.getFullYear()
+        );
+
+        if (todayScore.length !== 1) {
+            return null;
+        }
+
+        return todayScore[0].score * 100;
+    }
+
     ngOnChanges(changes: SimpleChanges): void {
         if (changes && changes.historicalData) {
             this.chartOptions.series = [
@@ -186,6 +175,23 @@ export class ScoreChartComponent implements OnChanges {
                         date.getTime(),
                         score * 100,
                     ]),
+                },
+            ];
+
+            this.gaugeOptions.series = [
+                {
+                    type: "solidgauge",
+                    radius: "62%",
+                    innerRadius: "38%",
+                    data: [this.currentValueFrom(changes.historicalData.currentValue)],
+                    dataLabels: {
+                        format:
+                            '<div style="text-align:center;">' +
+                            '<span style="font-size:40px;font-weight: 700; color: #304d86">{y}</span><br/>' +
+                            "</div>",
+                        x: 0,
+                        y: -30,
+                    },
                 },
             ];
         }

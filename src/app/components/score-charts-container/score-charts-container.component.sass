@@ -1,11 +1,27 @@
-@media screen and ( min-width: 1080px )
-    .container
+.container
+    display: flex
+    width: 85%
+    height: 100%
+    margin: auto
+    padding-top: 80px
+    padding-bottom: 120px
+    
+
+#warning
+    display: none
+    width: 85%
+    height: 100%
+    margin: auto
+
+// Too small!
+@media screen and ( max-width: 1700px )
+    #warning
         display: flex
-        width: 85%
-        height: 100%
-        margin: auto
-        padding-top: 80px
-        padding-bottom: 120px
+        justify-content: center
+        align-items: center
+
+    .container
+        display: none
 
 .badges-container
     flex: 1

@@ -1,25 +1,16 @@
 <div class="score-chart-container">
-  <div class="title">
-    {{ label }} Score
-  </div>
-  <div class="score-card-content">
-    <div class="score-chart-number-column">
-      <highcharts-chart
-        [Highcharts]="Highcharts"
-        [options]="gaugeOptions"
-      >
-      </highcharts-chart>
-      <span id="average-value">
-        Ave. {{ (averageValue !== null && averageValue !== undefined) ? averageValue : '--' }}
-      </span>
-    </div>
+    <div class="title">{{ label }} Score</div>
+    <div class="score-card-content">
+        <div class="score-chart-number-column">
+            <!-- TODO: add "daily" subtitle -->
+            <highcharts-chart [Highcharts]="Highcharts" [options]="gaugeOptions"> </highcharts-chart>
+            <span id="average-value">
+                Ave. {{ averageValue !== null && averageValue !== undefined ? averageValue : "--" }}
+            </span>
+        </div>
 
-    <div class="score-chart-highcharts-column">
-      <highcharts-chart
-        [Highcharts]="Highcharts"
-        [options]="chartOptions"
-      >
-      </highcharts-chart>
+        <div class="score-chart-highcharts-column">
+            <highcharts-chart [Highcharts]="Highcharts" [options]="chartOptions"> </highcharts-chart>
+        </div>
     </div>
-  </div>
 </div>
