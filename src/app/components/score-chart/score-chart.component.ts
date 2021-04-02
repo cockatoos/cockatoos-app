@@ -38,7 +38,7 @@ export class ScoreChartComponent implements OnChanges {
     public gaugeOptions: Highcharts.Options = {
         title: {
             text: "Daily Score",
-            style: { "color": "#304d86", "fontSize": "20px" }
+            style: { color: "#304d86", fontSize: "20px" }
         },
         yAxis: {
             stops: [
@@ -195,6 +195,6 @@ export class ScoreChartComponent implements OnChanges {
                     },
                 },
             ];
-        } 
+        }
     }
 }
