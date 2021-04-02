@@ -37,7 +37,8 @@ export class ScoreChartComponent implements OnChanges {
 
     public gaugeOptions: Highcharts.Options = {
         title: {
-            text: undefined,
+            text: "Daily Score",
+            style: { "color": "#304d86", "fontSize": "20px" }
         },
         yAxis: {
             stops: [
@@ -67,7 +68,7 @@ export class ScoreChartComponent implements OnChanges {
         },
         pane: {
             center: ["50%", "50%"],
-            size: "160%",
+            size: "180%",
             startAngle: -90,
             endAngle: 270,
             background: [
@@ -194,6 +195,6 @@ export class ScoreChartComponent implements OnChanges {
                     },
                 },
             ];
-        }
+        } 
     }
 }

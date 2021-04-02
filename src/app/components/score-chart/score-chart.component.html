@@ -2,10 +2,9 @@
     <div class="title">{{ label }} Score</div>
     <div class="score-card-content">
         <div class="score-chart-number-column">
-            <!-- TODO: add "daily" subtitle -->
             <highcharts-chart [Highcharts]="Highcharts" [options]="gaugeOptions"> </highcharts-chart>
             <span id="average-value">
-                Ave. {{ averageValue !== null && averageValue !== undefined ? averageValue : "--" }}
+                All Time Ave. {{ averageValue !== null && averageValue !== undefined ? averageValue : "--" }}
             </span>
         </div>
 
