@@ -53,12 +53,29 @@ export class ArticleLevelEffects {
                     .pipe(
                         map((success) => {
                             if (success) {
-                                return ArticleLevelActions.scoresSaved();
+                                return ArticleLevelActions.clarityScoreSaved();
                             } else {
                                 return ArticleLevelActions.error({ errorMessage: "Unable to save clarity score." });
                             }
                         })
                     );
+            })
+        )
+    );
+
+    saveAccentScore$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType("[Article] Save Accent Score"),
+            switchMap(({ score }) => {
+                return this.userInformationService.saveAccentScore(score).pipe(
+                    map((success) => {
+                        if (success) {
+                            return ArticleLevelActions.accentScoreSaved();
+                        } else {
+                            return ArticleLevelActions.error({ errorMessage: "Unable to save accent score." });
+                        }
+                    })
+                );
             })
         )
     );
