@@ -1,7 +1,6 @@
 import { Component } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { MatDialogModule } from "@angular/material/dialog";
-import { AnalyseDialogComponent } from "@components/analyse-dialog/analyse-dialog.component";
 import { provideMockStore } from "@ngrx/store/testing";
 import { ArticlesService } from "@services/articles.service";
 import { of } from "rxjs";
@@ -26,7 +25,7 @@ describe("PracticeContainerComponent", () => {
             getDocument: jasmine.createSpy("getDocument").and.returnValue(of(data)),
         };
         await TestBed.configureTestingModule({
-            declarations: [PracticeContainerComponent, AnalyseDialogComponent, MockArticleComparisonComponent],
+            declarations: [PracticeContainerComponent, MockArticleComparisonComponent],
             imports: [MatDialogModule],
             providers: [
                 PracticeContainerComponent,

@@ -2,7 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import { Score } from "@components/score-chart/score-chart.component";
 import { OfflineUserInformationService } from "@services/offline-user-information.service";
 import { UserInformationService } from "@services/user-information.service";
-import { TestAccentScoreData, TestClarityScoreData } from "@testing/testing-historical-score-data";
 import { Observable } from "rxjs";
 
 @Component({

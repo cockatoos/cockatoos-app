@@ -1,24 +1,15 @@
-<mat-card>
-  <mat-card-title>
-    {{ label }} Score
-  </mat-card-title>
-  <mat-card-content class="score-card-content">
-    <div class="score-chart-number-column">
-      <span class="mat-display-3">
-        {{ (currentValue !== null && currentValue !== undefined) ? currentValue : '--' }}
-      </span>
-      <span>
-        Ave. {{ (averageValue !== null && averageValue !== undefined) ? averageValue : '--' }}
-      </span>
-    </div>
+<div class="score-chart-container">
+    <div class="title">{{ label }} Score</div>
+    <div class="score-card-content">
+        <div class="score-chart-number-column">
+            <highcharts-chart [Highcharts]="Highcharts" [options]="gaugeOptions"> </highcharts-chart>
+            <span id="average-value">
+                All Time Ave. {{ averageValue !== null && averageValue !== undefined ? averageValue : "--" }}
+            </span>
+        </div>
 
-    <div class="score-chart-highcharts-column">
-      <highcharts-chart
-        [Highcharts]="Highcharts"
-        [options]="chartOptions"
-      >
-      </highcharts-chart>
+        <div class="score-chart-highcharts-column">
+            <highcharts-chart [Highcharts]="Highcharts" [options]="chartOptions"> </highcharts-chart>
+        </div>
     </div>
-  </mat-card-content>
-</mat-card>
-  
+</div>

@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
-import { AnalyseDialogComponent } from "@components/analyse-dialog/analyse-dialog.component";
 import { Store } from "@ngrx/store";
 import { ArticlesService } from "@services/articles.service";
 import { initialise, nextArticle } from "@state/actions/practice-container-level.actions";
@@ -41,13 +40,5 @@ export class PracticeContainerComponent implements OnInit {
 
     nextArticle(): void {
         this.store.dispatch(nextArticle());
-    }
-
-    // Opens the 'Analyse' dialog.
-    openDialog(): void {
-        const dialogRef = this.dialog.open(AnalyseDialogComponent);
-        // dialogRef.afterClosed().subscribe(result => {
-        //   console.log(`Dialog result: ${result}`);
-        // });
     }
 }

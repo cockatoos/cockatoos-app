@@ -1,18 +1,14 @@
-:host
-  display: block
-  position: absolute
-  width: 100vw
-  vertical-align: top
-  top: 0
-  right: 0
-  background-color: #fff6f6
-  height: 100vh
-  overflow: auto
-
 #app-icon
   height: 45px
   width: 45px
   margin: 10px
+
+.app-container
+  display: flex
+  flex-direction: column
+  width: 100vw
+  height: 100vh
+  background-color: #fff6f6
 
 .small-spacer
   flex: 0.01
@@ -24,6 +20,9 @@
   font-size: 1.5rem
   font-weight: bold
   color: var(--accent-lighter-color)
+
+.app-content
+  flex-grow: 1
 
 .current
   background-color: var(--accent-lighter-color)

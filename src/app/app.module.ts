@@ -15,7 +15,6 @@ import { ArticleComparisonComponent } from "@components/article-comparison/artic
 import { PhraseDiffComponent } from "@components/phrase-diff/phrase-diff.component";
 import { ScoreChartsContainerComponent } from "./components/score-charts-container/score-charts-container.component";
 import { PracticeContainerComponent } from "./components/practice-container/practice-container.component";
-import { AnalyseDialogComponent } from "./components/analyse-dialog/analyse-dialog.component";
 import { HighlightPhraseComponent } from "@components/highlight-phrase/highlight-phrase.component";
 
 /// material
@@ -61,7 +60,6 @@ import { HttpClientModule } from "@angular/common/http";
         ArticleComparisonComponent,
         ScoreChartsContainerComponent,
         PracticeContainerComponent,
-        AnalyseDialogComponent,
         HomePageContainerComponent,
         MainAppContainerComponent,
         HighlightPhraseComponent,

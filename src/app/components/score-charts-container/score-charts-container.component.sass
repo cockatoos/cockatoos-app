@@ -1,15 +1,28 @@
 .container
     display: flex
-    width: 90%
+    width: 85%
+    height: 100%
     margin: auto
-    padding-top:32px
+    padding-top: 50px
     padding-bottom: 50px
-
-@media screen and ( min-width: 1080px )
-    .container
-        width: 85%
-        margin: auto
     
+
+#warning
+    display: none
+    width: 85%
+    height: 100%
+    margin: auto
+
+// Too small!
+@media screen and ( max-width: 1080px )
+    #warning
+        display: flex
+        justify-content: center
+        align-items: center
+
+    .container
+        display: none
+
 .badges-container
     flex: 1
     max-width: 150px
@@ -21,17 +34,23 @@
 
 .details-container
     flex: 3
-    max-width: 100%
+    display: flex
+    flex-direction: column
 
 .charts-container
-    width: 100%
+    flex-grow: 1
+    max-width: 100%
     display: flex
     padding-top:32px
     gap: 1rem
 
 .info-column
-    display: flex
-    justify-content: center
+    flex: 1
+    background-color: white
+    border-radius: 30px
+    height: 100%
+    // display: flex
+    // justify-content: center
 
 #scores-heading
     padding-top: 60px
