@@ -182,7 +182,7 @@ export class ScoreChartComponent implements OnChanges {
                     type: "solidgauge",
                     radius: "62%",
                     innerRadius: "38%",
-                    data: [this.currentValueFrom(latestHistoricalData)],
+                    data: [Math.round(this.currentValueFrom(latestHistoricalData))],
                     dataLabels: {
                         format:
                             '<div style="text-align:center;">' +
