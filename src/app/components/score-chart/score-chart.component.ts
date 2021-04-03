@@ -21,7 +21,6 @@ export interface Score {
     styleUrls: ["./score-chart.component.sass"],
 })
 export class ScoreChartComponent implements OnChanges {
-
     get averageValue(): string {
         return this.historicalData ? mean(this.historicalData.map(({ score }) => score * 100)).toFixed() : null;
     }
@@ -38,7 +37,7 @@ export class ScoreChartComponent implements OnChanges {
     public gaugeOptions: Highcharts.Options = {
         title: {
             text: "Daily Score",
-            style: { color: "#304d86", fontSize: "20px" }
+            style: { color: "#304d86", fontSize: "20px" },
         },
         yAxis: {
             stops: [
@@ -101,6 +100,7 @@ export class ScoreChartComponent implements OnChanges {
             title: {
                 text: `Score`,
             },
+            max: 100,
         },
 
         xAxis: {
@@ -166,16 +166,14 @@ export class ScoreChartComponent implements OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes && changes.historicalData) {
+        if (changes?.historicalData) {
+            const latestHistoricalData = changes.historicalData.currentValue;
             this.chartOptions.series = [
                 {
                     name: `${this.label} Scores`,
                     type: "line",
                     color: "#f24405",
-                    data: changes.historicalData.currentValue.map(({ date, score }: Score) => [
-                        date.getTime(),
-                        score * 100,
-                    ]),
+                    data: latestHistoricalData.map(({ date, score }: Score) => [date.getTime(), score * 100]),
                 },
             ];
 
@@ -184,7 +182,7 @@ export class ScoreChartComponent implements OnChanges {
                     type: "solidgauge",
                     radius: "62%",
                     innerRadius: "38%",
-                    data: [80],
+                    data: [this.currentValueFrom(latestHistoricalData)],
                     dataLabels: {
                         format:
                             '<div style="text-align:center;">' +
