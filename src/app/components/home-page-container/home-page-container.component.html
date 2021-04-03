@@ -9,7 +9,7 @@
             <img src="./assets/cockatoos.png" id="main-image" />
         </div>
         <div class="navigation">
-            <img src="/assets/arrow-down-sign-to-navigate.svg" (click)="fullpageApi.moveSectionDown()" />
+            <img src="./assets/arrow-down-sign-to-navigate.svg" (click)="fullpageApi.moveSectionDown()" />
         </div>
     </div>
 
@@ -17,28 +17,17 @@
         <div class="second-page-container shadow">
             <div class="page-content">
                 <div class="page-header">
-                    <div class="page-title">Our Mission</div>
-                    <div class="page-subtitle">Democratise the Learning of Speaking</div>
+                    <div class="page-title">The Problem Statement</div>
                 </div>
                 <div class="page-body">
                     <div class="page-body-text">
-                        The idea of Cockatoos originates from my own struggle in softening my English accent. Hiring a
-                        speech coach could easily cost 200 pounds per hour, which is too expensive for most people. We
-                        hope our app can provide a platform that allows people to:
-                        <br />
-                        <ul>
-                            <li>Practice speaking a new language using the Echo Method</li>
-                            <li>
-                                Get instant feedback on how their accent sounds like from our Machine Learning model
-                            </li>
-                            <li>Improve their speaking skills without spending a lot of money</li>
-                        </ul>
-                        <br />
-                        Our target audiences are people such as language learners and actors who want to soften their
-                        accent or pick up a new accent in a certain language.
+                        Like many non-native English speakers, I struggle with certain English pronunciation. 
+                        There is no existing platform that allows me to practice my speaking by providing feedback 
+                        on how understandable I sound and pointing out the nuances in my pronunciation. Furthermore, 
+                        hiring a speech coach for speech training can easily cost up to 200 pounds per hour.
                     </div>
                     <div class="page-body-media">
-                        <img src="/assets/mockuper.png" style="max-height: 50vh" />
+                        <img src="./assets/language-learning.jpg" style="max-width: 100%" />
                     </div>
                 </div>
             </div>
@@ -46,6 +35,31 @@
     </div>
 
     <div class="section" (click)="fullpageApi.moveSectionDown()">
+        <div class="fourth-page-container shadow">
+            <div class="page-content">
+                <div class="page-header">
+                    <div class="page-title">Our Solution</div>
+                    <!-- <div class="page-subtitle"></div> -->
+                </div>
+                <div class="page-body">
+                    <div class="page-body-text">
+                        Cockatoos is an intuitive speech training platform that gives instant feedback on a user's vocal delivery. 
+                        The two aspects we chose to focus on: 
+                        <ul>
+                            <li>Pronunciation - the correctness in how letters sound</li>
+                            <li>Articulation - the clarity of sounds produced</li>
+                        </ul>
+                        With these tools, a user can build confidence in speaking and improve their ability to be understood.
+                    </div>
+                    <div class="page-body-media">
+                        <img src="./assets/mockup.png" style="max-width: 100%;" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="section" (click)="fullpageApi.moveSectionDown()">
         <div class="third-page-container shadow">
             <div class="page-content">
                 <div class="page-header">
@@ -69,9 +83,9 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
-    <div class="section" (click)="fullpageApi.moveSectionDown()">
+    <!-- <div class="section" (click)="fullpageApi.moveSectionDown()">
         <div class="fourth-page-container shadow">
             <div class="page-content">
                 <div class="page-header">
@@ -89,7 +103,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <div class="section" (click)="fullpageApi.moveTo('firstPage', 0)">
         <div class="final-page-container shadow">
