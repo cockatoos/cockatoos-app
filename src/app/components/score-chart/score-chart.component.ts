@@ -49,7 +49,7 @@ export class ScoreChartComponent implements OnChanges {
             lineWidth: 0,
             tickWidth: 0,
             minorTickInterval: null,
-            tickAmount: 2,
+            tickPositions: [],
             min: 0,
             max: 100,
             title: {
@@ -68,7 +68,7 @@ export class ScoreChartComponent implements OnChanges {
         },
         pane: {
             center: ["50%", "50%"],
-            size: "180%",
+            size: "160%",
             startAngle: -90,
             endAngle: 270,
             background: [
@@ -87,8 +87,8 @@ export class ScoreChartComponent implements OnChanges {
         },
         chart: {
             reflow: true,
-            height: 220,
-            width: 220,
+            height: 200,
+            width: 200,
         },
     };
 
@@ -131,7 +131,7 @@ export class ScoreChartComponent implements OnChanges {
         chart: {
             type: "column",
             reflow: true,
-            width: 350,
+            width: 300,
             height: 300,
         },
         plotOptions: {
@@ -184,7 +184,7 @@ export class ScoreChartComponent implements OnChanges {
                     type: "solidgauge",
                     radius: "62%",
                     innerRadius: "38%",
-                    data: [this.currentValueFrom(changes.historicalData.currentValue)],
+                    data: [80],
                     dataLabels: {
                         format:
                             '<div style="text-align:center;">' +
