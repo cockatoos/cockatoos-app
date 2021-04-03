@@ -164,10 +164,16 @@ export class ArticleComparisonComponent implements OnInit, OnChanges, OnDestroy 
                     })
                 )
                 .subscribe(
-                    (accentScore) => {
-                        console.log(`Accent score: ${accentScore}`);
-                        this.showNotification("SUCCESS", "Recording has been processed.");
-                        this.store.dispatch(saveAccentScore({ score: Number(accentScore) }));
+                    (res: any) => {
+                        const parsedResult = JSON.parse(res);
+                        console.log(parsedResult);
+                        if (parsedResult.status === "success") {
+                            console.log(`Accent score: ${parsedResult.score}`);
+                            this.showNotification("SUCCESS", "Recording has been processed.");
+                            // this.store.dispatch(saveAccentScore({ score: res.score }));
+                        } else {
+                            this.showNotification("ERROR", parsedResult.reason);
+                        }
                     },
                     (error) => {
                         this.showNotification("ERROR", error);
