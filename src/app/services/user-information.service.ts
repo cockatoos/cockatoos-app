@@ -29,8 +29,7 @@ interface AFSAccentScore {
 export class UserInformationService {
     private userId = "testUser";
 
-    constructor(private afs: AngularFirestore) {
-    }
+    constructor(private afs: AngularFirestore) {}
 
     saveClarityScore(clarityScore: ClarityScore): Observable<boolean> {
         const payload: AFSClarityScore = {
@@ -43,6 +42,25 @@ export class UserInformationService {
         return new Observable((subscriber) => {
             this.afs
                 .collection<AFSClarityScore>("clarity_scores")
+                .add(payload)
+                .then(() => subscriber.next(true))
+                .catch((error) => {
+                    console.error(error);
+                    subscriber.next(false);
+                });
+        });
+    }
+
+    saveAccentScore(accentScore: number): Observable<boolean> {
+        const payload: AFSAccentScore = {
+            date: firebase.default.firestore.Timestamp.fromDate(new Date()),
+            score: accentScore,
+            userId: this.userId,
+        };
+
+        return new Observable((subscriber) => {
+            this.afs
+                .collection<AFSAccentScore>("accent_scores")
                 .add(payload)
                 .then(() => subscriber.next(true))
                 .catch((error) => {

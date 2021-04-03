@@ -1,7 +1,6 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core";
+import { Component, Input, OnChanges, SimpleChanges } from "@angular/core";
 import * as Highcharts from "highcharts";
 import more from "highcharts/highcharts-more";
-import { parseISO } from "date-fns";
 import { mean } from "lodash";
 import HighchartsBoost from "highcharts/modules/boost";
 import HCSoldGauge from "highcharts/modules/solid-gauge";
@@ -21,18 +20,19 @@ export interface Score {
     styleUrls: ["./score-chart.component.sass"],
 })
 export class ScoreChartComponent implements OnChanges {
+    @Input()
+    historicalData: Score[];
+
+    @Input()
+    label: string;
+
+    Highcharts: typeof Highcharts = Highcharts;
+    height: number;
+    width: number;
+
     get averageValue(): string {
         return this.historicalData ? mean(this.historicalData.map(({ score }) => score * 100)).toFixed() : null;
     }
-    @Input()
-    public historicalData: Score[];
-
-    @Input()
-    public label: string;
-
-    public Highcharts: typeof Highcharts = Highcharts;
-    public height: number;
-    public width: number;
 
     public gaugeOptions: Highcharts.Options = {
         title: {
@@ -131,8 +131,8 @@ export class ScoreChartComponent implements OnChanges {
         chart: {
             type: "column",
             reflow: true,
-            width: 300,
-            height: 300,
+            // width: 500,
+            // height: 500,
         },
         plotOptions: {
             series: {

@@ -16,7 +16,10 @@ export enum Status {
     SAVING_SCORES = "SAVING",
 
     // Successfully saved clarity score.
-    SCORES_SAVED = "SCORES_SAVED",
+    CLARITY_SCORE_SAVED = "CLARITY_SCORE_SAVED",
+
+    // Successfully saved clarity score.
+    ACCENT_SCORE_SAVED = "ACCENT_SCORE_SAVED",
 
     // Error case.
     ERROR = "ERROR",
@@ -78,15 +81,19 @@ export const articleLevelReducer = createReducer(
         articleClarityScore: {
             numCorrectWords: correctWords,
             numTotalWords: totalWords,
-        }
+        },
     })),
-    on(ArticleLevelActions.scoresSaved, (state) => ({
+    on(ArticleLevelActions.clarityScoreSaved, (state) => ({
         ...state,
-        status: Status.SCORES_SAVED,
+        status: Status.CLARITY_SCORE_SAVED,
+    })),
+    on(ArticleLevelActions.accentScoreSaved, (state) => ({
+        ...state,
+        status: Status.ACCENT_SCORE_SAVED,
     })),
     on(ArticleLevelActions.error, (state, { errorMessage }) => ({
         ...state,
         status: Status.ERROR,
         errorMessage,
-    })),
+    }))
 );
