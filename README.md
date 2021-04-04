@@ -1,4 +1,5 @@
 # :owl: Cockatoos App [![Linter](https://github.com/cockatoos/cockatoos-app/actions/workflows/lint.yml/badge.svg)](https://github.com/cockatoos/cockatoos-app/actions/workflows/lint.yml) [![Tests](https://github.com/cockatoos/cockatoos-app/actions/workflows/test.yml/badge.svg)](https://github.com/cockatoos/cockatoos-app/actions/workflows/test.yml) [![Build and Deploy](https://github.com/cockatoos/cockatoos-app/actions/workflows/deploy.yml/badge.svg)](https://github.com/cockatoos/cockatoos-app/actions/workflows/deploy.yml)
+<a name="top"></a>
 
 > ## _Making speech training more accessible_
 
@@ -35,7 +36,7 @@ It also provides instant feedback on users pronunciation and articulation, and a
 ## 🎬 _Cockatoos_ In Action
 
 <center>
-<a href="#">🔝</a> 
+<a href="#top">🔝</a> 
 </center>
 
 ---
@@ -64,13 +65,13 @@ We also keep track of 'no-op' edits, which carry zero weight in the Levenshtein 
 Thus, the clarity score is the number of no-op edits divided by the number of total edits.
 
 <center>
-<a href="#">🔝</a> 
+<a href="#top">🔝</a> 
 </center>
 
 # <a name="challenges"></a> 3️⃣ Challenges
 
 <center>
-<a href="#">🔝</a> 
+<a href="#top">🔝</a> 
 </center>
 
 ---
@@ -78,7 +79,7 @@ Thus, the clarity score is the number of no-op edits divided by the number of to
 # <a name="accomplishments"></a> 4️⃣ Accomplishments
 
 <center>
-<a href="#">🔝</a> 
+<a href="#top">🔝</a> 
 </center>
 
 ---
@@ -87,7 +88,7 @@ Thus, the clarity score is the number of no-op edits divided by the number of to
 
 
 <center>
-<a href="#">🔝</a> 
+<a href="#top">🔝</a> 
 </center>
 
 ---
@@ -125,7 +126,7 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 
 <center>
-<a href="#">🔝</a> 
+<a href="#top">🔝</a> 
 </center>
 
 ---
