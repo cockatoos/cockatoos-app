@@ -1,5 +1,6 @@
-# :owl: Cockatoos App [![Linter](https://github.com/cockatoos/cockatoos-app/actions/workflows/lint.yml/badge.svg)](https://github.com/cockatoos/cockatoos-app/actions/workflows/lint.yml) [![Tests](https://github.com/cockatoos/cockatoos-app/actions/workflows/test.yml/badge.svg)](https://github.com/cockatoos/cockatoos-app/actions/workflows/test.yml) [![Build and Deploy](https://github.com/cockatoos/cockatoos-app/actions/workflows/deploy.yml/badge.svg)](https://github.com/cockatoos/cockatoos-app/actions/workflows/deploy.yml)
 <a name="top"></a>
+
+# :owl: Cockatoos App [![Linter](https://github.com/cockatoos/cockatoos-app/actions/workflows/lint.yml/badge.svg)](https://github.com/cockatoos/cockatoos-app/actions/workflows/lint.yml) [![Tests](https://github.com/cockatoos/cockatoos-app/actions/workflows/test.yml/badge.svg)](https://github.com/cockatoos/cockatoos-app/actions/workflows/test.yml) [![Build and Deploy](https://github.com/cockatoos/cockatoos-app/actions/workflows/deploy.yml/badge.svg)](https://github.com/cockatoos/cockatoos-app/actions/workflows/deploy.yml)
 
 > ## _Making speech training more accessible_
 
