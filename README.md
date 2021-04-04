@@ -5,13 +5,13 @@
 > ## _Making speech training more accessible_
 
 1. <a href="#intro">Introducing Cockatoos</a>
-    * Our Vision
-    * Cockatoos In Action
+    * <a href="#vision">Our Vision</a>
+    * <a href="#in-action">Cockatoos In Action</a>
         * Practice
         * Feedback and Progress Tracking
 2. <a href="#architecture">Architecture</a>
-    * Sentence Phrasing
-    * Scoring Model
+    * <a href="#spacy">Sentence Phrasing</a>
+    * <a href="#model">Scoring Model</a>
         * Accent Score
         * Clarity Score
 2. <a href="#challenges">Challenges</a>
@@ -24,9 +24,9 @@
 
 # <a name="intro"></a> 1️⃣ Introducing Cockatoos
 
-> ## _Cockatoos_ provides an intuitive accent training platform that empowers language learners to improve their speaking using the Echo Method.
+> _Cockatoos_ provides an intuitive accent training platform that empowers language learners to improve their speaking using the Echo Method.
 
-## 🔮 Our Vision
+## <a name="vision"></a> 🔮 Our Vision
 
 Like many non-native English speakers, some of our team members struggle with certain English pronunciation.
 There is no existing platform that allows English learners to practice their speaking by providing feedback on how understandable they sound and pointing out the nuances in their pronunciation.
@@ -36,7 +36,7 @@ Our team built _Cockatoos_ with a goal to make speech training easier and more a
 _Cockatoos_ is an intuitive speech training platform powered by an NLP model that provides an easy way for language learners to practice their speaking.
 It also provides instant feedback on users pronunciation and articulation, and allows the users to track their progress over time.
 
-## 🎬 _Cockatoos_ In Action
+## <a name="in-action"></a> 🎬 _Cockatoos_ In Action
 
 ### 👉 Practice
 
@@ -73,20 +73,55 @@ Once they finish practicing, the user can go back to the progress dashboard to c
 
 # <a name="architecture"></a> 2️⃣ Architecture
 
-## 🔧 Sentence Phrasing
+## <a name="spacy"></a> 🔧 Sentence Phrasing
 
 The practice articles must be broken into readable and logical phrases to make it easier for users to read.
 
 We built a phrasing tool utilising the SpaCy NLP (Natural Language Processing) API to divide long sentences into smaller chunks while being aware of punctuation, parts of speech, and word dependencies. 
 
-## 🔧 Scoring Model
+## <a name="model"></a> 🔧 Scoring Model
 
-Cockatoos evaluates vocal delivery on two main components:
+_Cockatoos_ evaluates vocal delivery on two main components:
 ***articulation*** and ***pronunciation***.
 
 ### 👉 Accent Score
 
-![](./media/mfcc.png)
+_Cockatoos_ implements an accent scoring system for users who wish to learn more native-like rhythm in speech.
+We implement this feature by constructing out own model using ***Azure ML***.
+
+Using approximately 10,000 of Mozilla Common Voice data<sup>[<a href="#cite-mozilla">3</a>]</sup>, we chopped the audio file into 1-second segments. Then we filtered out segments with low volumes to avoid using void sound files. The chopped audiofiles are then converted into MFCCs. MFCCs describe frequency level based on *human ear perception* rather than the raw frequency, which enable us to implement a CNN model to distinguish accents. 
+
+![Difference between general frequency format (left) of audiofile and MFCC frequency format (right). Image from [2]](./media/mfcc.png)
+
+_Difference between general frequency format (left) of audiofile and MFCC frequency format (right). <sup>[<a href="#cite-paper">2</a>]</sup>_
+
+We built the following model based on this work<sup>[<a href="#cite-paper">2</a>]</sup>:
+
+```python
+  (0): Conv2d(3, 32, kernel_size=(3, 3), stride=(1, 1))
+  (1): ReLU()
+  (2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (3): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+  (4): Conv2d(32, 64, kernel_size=(3, 3), stride=(1, 1))
+  (5): ReLU()
+  (6): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (7): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+  (8): Dropout(p=0.5, inplace=False)
+  (9): Flatten(start_dim=1, end_dim=3)
+  (10): Linear(in_features=6336, out_features=256, bias=True)
+  (11): Dropout(p=0.5, inplace=False)
+  (12): Linear(in_features=256, out_features=1, bias=True)
+  (13): Sigmoid()
+```
+
+Using 10-fold cross validation, we trained the model to achieve 65-75% testing accuracy on detecting native British/American depending on different sets of data. 
+
+_Cockatoos_ provides the user with accent score by preprocessing the user recordings into 1-second segmented MFCC file and forwarding it to this model.
+The model outputs the probability in which each segment is the accent of a native English speaker, then outputs the average of this possibility as the score.
+
+We utilised _Azure ML_ to make the acces of the large scale data (12GB) easy among our teammates.
+Then we trained our model by submitting experiments to AzureML, and stored and deployed trained model to the Azure regitstered model.
+This model service is used for predicting our user's accent by provideing forward prediction to the Azure Function which connects to the UI.
 
 ### 👉 Clarity Score
 
@@ -198,5 +233,4 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 <a name="cite-paper"></a> <sup>[2]</sup> Sheng, Leon Mak An, and Mok Wei Xiong Edmund. <a href="http://cs229.stanford.edu/proj2017/final-reports/5244230.pdf">"Deep Learning Approach to Accent Classification."</a> <em>Project Report, Stanford University, Stanford, CA</em> (2017).
 
-
-<sup>[3]</sup>
+<a name="cite-mozilla"></a> <sup>[3]</sup> Common Voice. Mozilla. https://commonvoice.mozilla.org/en
