@@ -35,9 +35,9 @@ It also provides instant feedback on users pronunciation and articulation, and a
 
 ## 🎬 _Cockatoos_ In Action
 
-<center>
+<p align="center">
 <a href="#top">🔝</a> 
-</center>
+</p>
 
 ---
 
@@ -64,32 +64,32 @@ We adapt this to compute the minimum edits on a *word* level to transform the re
 We also keep track of 'no-op' edits, which carry zero weight in the Levenshtein distance, but contribute to the edit count.
 Thus, the clarity score is the number of no-op edits divided by the number of total edits.
 
-<center>
+<p align="center">
 <a href="#top">🔝</a> 
-</center>
+</p>
 
 # <a name="challenges"></a> 3️⃣ Challenges
 
-<center>
+<p align="center">
 <a href="#top">🔝</a> 
-</center>
+</p>
 
 ---
 
 # <a name="accomplishments"></a> 4️⃣ Accomplishments
 
-<center>
+<p align="center">
 <a href="#top">🔝</a> 
-</center>
+</p>
 
 ---
 
 # <a name="future"></a> 5️⃣ Future Extensions
 
 
-<center>
+<p align="center">
 <a href="#top">🔝</a> 
-</center>
+</p>
 
 ---
 
@@ -125,9 +125,9 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 
-<center>
+<p align="center">
 <a href="#top">🔝</a> 
-</center>
+</p>
 
 ---
 ---
