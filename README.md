@@ -167,12 +167,9 @@ Thus, the clarity score is the number of no-op edits divided by the number of to
 
 ## ⚠️ Azure ML
 
-Yejin Seo (Amelie) 
-> Working with AzureML had a steep learning curve.
->It always seemed like an easier way to run training on my own laptop rather than establishing a pieline.
-> Having to establish our own docker settings for our packages was another challenge.
-> However, after we've established our pipeline, collaborating became so much easier as none of us have to download data or run training overnight on our laptops.
-> This improved my sleeping quality as I was suffering from helicopter sounds from my laptop every night.
+Working with AzureML had a steep learning curve. It always seemed like an easier way to run training on my own laptop rather than establishing a pipeline through Azure. Having to establish our own docker settings for our packages was another challenge. 
+
+However, after we've established our pipeline, collaborating became so much easier as none of us have to download data or run training overnight on our laptops. This improved my sleeping quality as I was suffering from helicopter sounds from my laptop everynight.
 
 ## ⚠️ Architecture
 
