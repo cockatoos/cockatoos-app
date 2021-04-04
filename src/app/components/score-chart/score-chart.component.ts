@@ -168,6 +168,8 @@ export class ScoreChartComponent implements OnChanges {
     ngOnChanges(changes: SimpleChanges): void {
         if (changes?.historicalData) {
             const latestHistoricalData = changes.historicalData.currentValue;
+            console.log(this.label, latestHistoricalData);
+
             this.chartOptions.series = [
                 {
                     name: `${this.label} Scores`,

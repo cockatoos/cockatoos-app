@@ -114,10 +114,12 @@ export class UserInformationService {
 
         return Array.from(aggregatedEntries.entries())
             .sort(([date1, scores1], [date2, scores2]) => date1 - date2)
-            .map(([date, scores]) => ({
-                date: new Date(date),
-                score: sum(scores) / scores.length,
-            }));
+            .map(([date, scores]) => {
+                return {
+                    date: new Date(date),
+                    score: sum(scores) / scores.length,
+                };
+            });
     }
 
     getClarityScores(): Observable<Score[]> {

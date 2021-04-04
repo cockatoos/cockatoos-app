@@ -24,6 +24,7 @@ import {
     saveClarityScore,
     saveAccentScore,
     clearArticleState,
+    isReady,
 } from "@state/actions/article-level.actions";
 import { reset, startRecording, stopRecording } from "@state/actions/phrase-level.actions";
 import { Status as ArticleLevelStatus } from "@state/reducers/article-level.reducer";
@@ -106,9 +107,11 @@ export class ArticleComparisonComponent implements OnInit, OnChanges, OnDestroy 
             switch (status) {
                 case "CLARITY_SCORE_SAVED":
                     this.showNotification("SUCCESS", "Clarity scores saved.");
+                    this.store.dispatch(isReady());
                     break;
                 case "ACCENT_SCORE_SAVED":
                     this.showNotification("SUCCESS", "Accent scores saved.");
+                    this.store.dispatch(isReady());
                     break;
                 case "ERROR":
                     this.showNotification("ERROR", "An error has occurred.");
@@ -174,7 +177,7 @@ export class ArticleComparisonComponent implements OnInit, OnChanges, OnDestroy 
                         if (parsedResult.status === "success") {
                             console.log(`Accent score: ${parsedResult.score}`);
                             this.showNotification("SUCCESS", "Recording has been processed.");
-                            this.store.dispatch(saveAccentScore({ score: parsedResult.score }));
+                            this.store.dispatch(saveAccentScore({ score: Number(parsedResult.score) }));
                         } else {
                             this.showNotification("ERROR", parsedResult.reason);
                         }

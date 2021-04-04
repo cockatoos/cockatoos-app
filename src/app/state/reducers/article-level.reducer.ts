@@ -91,13 +91,15 @@ export const articleLevelReducer = createReducer(
         ...state,
         status: Status.ACCENT_SCORE_SAVED,
     })),
-    on(ArticleLevelActions.clearArticleState, (state) => ({
-        ...state,
-        status: Status.UNINITIALISED,
-        phraseNum: 0,
-        clarityScores: [],
-        articleClarityScore: undefined,
-    })),
+    on(ArticleLevelActions.clearArticleState, (state) => {
+        return {
+            ...state,
+            status: Status.READY,
+            phraseNum: 0,
+            clarityScores: [],
+            articleClarityScore: undefined,
+        };
+    }),
     on(ArticleLevelActions.error, (state, { errorMessage }) => ({
         ...state,
         status: Status.ERROR,
