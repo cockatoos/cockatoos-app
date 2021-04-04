@@ -171,6 +171,18 @@ Working with AzureML had a steep learning curve. It always seemed like an easier
 
 However, after we've established our pipeline, collaborating became so much easier as none of us have to download data or run training overnight on our laptops. This improved my sleeping quality as I was suffering from helicopter sounds from my laptop everynight.
 
+## NLP Model
+
+The main issue faced with regard to the pre-processing was the chunking of the audio files.
+The ideal scenario is to split each audio file into its constituent words and perform analysis on those.
+However, an efficient out of the box solution was not available leading to different approaches needing to be tested in order to get the desired data.
+
+The data being used consisted of a variety of different speakers saying a range of different phrases which made model convergence more difficult compared to the work this was based on where a smaller number of speakers were saying a set number of clearly spoken words.
+
+Data management also required careful consideration due to the large number of files as the audio was chunked and the different datasets that were experimented on.
+There was a large imbalance in the number of original data files with the majority being for American accents, so analysis had to be done on the corresponding meta data file to split the data into well balanced portions.
+The standardised MFCC data was stored in large batches across a smaller number of files to ensure that the time taken to load the data was minimal.
+
 ## ⚠️ Architecture
 
 Some preprocessing libraries require a Linux package that cannot be installed in the default container provided by Azure Function.
