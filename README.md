@@ -71,6 +71,15 @@ Once they finish practicing, the user can go back to the progress dashboard to c
 
 ### 👉 <A name="feedback"></a> Feedback and Progress Tracking
 
+After the user finishes practicing,
+we calculate the articulation and pronunciation  scores(as mentioned in the <a href="#model">Scoring Model</a> section).
+The users can see their daily scores, as well as historical trends, on the progress dashboard. 
+
+The clarity score is calculated from a word-level comparison between the original text from the articles, and the text generated from the user's recordings.
+Using the _Levenshtein distance_, we award a score out of 100 based on the differences in text, with 100 being an exact match in words, and 0 being a complete mismatch. 
+
+The pronunciation score is calculated by our model adapted from the paper _Deep Learning Approach to Accent Classification_<sup>[<a href="#cite-paper">2</a>]</sup>. Since this problem is a bit more abstract, our approach was to use machine learning to compare the user's delivery to that of a native speaker. We chose to draw a comparison to the Standard American accent, since it had the most data and resources to support our model.
+
 ![Progress Interface](./media/feedback.png)
 
 <p align="center">
@@ -80,6 +89,8 @@ Once they finish practicing, the user can go back to the progress dashboard to c
 ---
 
 # <a name="architecture"></a> 2️⃣ Architecture
+
+![Application Infrastructure](./media/infrastructure.png)
 
 ## <a name="spacy"></a> 🔧 Sentence Phrasing
 
@@ -154,6 +165,8 @@ Thus, the clarity score is the number of no-op edits divided by the number of to
 
 # <a name="challenges"></a> 3️⃣ Challenges
 
+## ⚠️ Azure ML
+
 Yejin Seo (Amelie) 
 > Working with AzureML had a steep learning curve.
 >It always seemed like an easier way to run training on my own laptop rather than establishing a pieline.
@@ -161,7 +174,7 @@ Yejin Seo (Amelie)
 > However, after we've established our pipeline, collaborating became so much easier as none of us have to download data or run training overnight on our laptops.
 > This improved my sleeping quality as I was suffering from helicopter sounds from my laptop every night.
 
-## Architecture
+## ⚠️ Architecture
 
 Some preprocessing libraries require a Linux package that cannot be installed in the default container provided by Azure Function.
 We decided to use a Docker container to host our function.
@@ -171,7 +184,7 @@ A similar issue has been discussed on GitHub [(Azure/azure-functions-host#50590)
 
 As a result, we had to test our implementation by pushing the Docker image, and interact with the deployed function. This slowed down our development and debugging process.
 
-## Synchronising Web Speech API with MediaRecorder
+## ⚠️ Synchronising Web Speech API with MediaRecorder
 
 Our frontend application is required to perform speech recognition
 and capture the audio recording as an audio blob simultaneously.
