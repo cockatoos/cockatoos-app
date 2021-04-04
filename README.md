@@ -87,7 +87,7 @@ _Cockatoos_ evaluates vocal delivery on two main components:
 ### 👉 <a name="accent-score"></a> Accent Score
 
 _Cockatoos_ implements an accent scoring system for users who wish to learn more native-like rhythm in speech.
-We implement this feature by constructing out own model using ***Azure ML***.
+We implement this feature by constructing our own model using ***Azure ML***.
 
 Using approximately 10,000 of Mozilla Common Voice data<sup>[<a href="#cite-mozilla">3</a>]</sup>, we chopped the audio file into 1-second segments. Then we filtered out segments with low volumes to avoid using void sound files. The chopped audiofiles are then converted into MFCCs. MFCCs describe frequency level based on *human ear perception* rather than the raw frequency, which enable us to implement a CNN model to distinguish accents. 
 
@@ -121,7 +121,7 @@ The model outputs the probability in which each segment is the accent of a nativ
 
 We utilised _Azure ML_ to make the acces of the large scale data (12GB) easy among our teammates.
 Then we trained our model by submitting experiments to AzureML, and stored and deployed trained model to the Azure regitstered model.
-This model service is used for predicting our user's accent by provideing forward prediction to the Azure Function which connects to the UI.
+This model is used in Azure Function that collects the user input, pre-process and forward feed it to return the accent score results to UI.
 
 ### 👉 <a name="clarity-score"></a> Clarity Score
 
@@ -145,7 +145,8 @@ Thus, the clarity score is the number of no-op edits divided by the number of to
 ---
 
 # <a name="challenges"></a> 3️⃣ Challenges
-
+Yejin Seo(Amelie) 
+> Working with AzureML had a steep learning curve. It always seemed like an easier way to run training on my own laptop rather than establishing a pieline. Having to establish our own docker settings for our packages was another challenge. However, after we've established our pipeline, collaborating became so much easier as none of us have to download data or run training overnight, suffering from helicopter noise from our laptops. 
 <p align="center">
 <a href="#top">🔝</a> 
 </p>
