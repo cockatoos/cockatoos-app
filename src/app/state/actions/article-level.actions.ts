@@ -41,5 +41,8 @@ export const clarityScoreSaved = createAction("[Article] Clarity Scores Saved");
 // Signal that the accent scores have been saved onto the database.
 export const accentScoreSaved = createAction("[Article] Accent Scores Saved");
 
+// Clear state.
+export const clearArticleState = createAction("[Article] Clear Article State");
+
 // Error case.
 export const error = createAction("[Article] Error", props<{ errorMessage: string }>());

@@ -23,6 +23,7 @@ import {
     changeArticle,
     saveClarityScore,
     saveAccentScore,
+    clearArticleState,
 } from "@state/actions/article-level.actions";
 import { reset, startRecording, stopRecording } from "@state/actions/phrase-level.actions";
 import { Status as ArticleLevelStatus } from "@state/reducers/article-level.reducer";
@@ -97,6 +98,23 @@ export class ArticleComparisonComponent implements OnInit, OnChanges, OnDestroy 
         this.clarityScores$ = store.select(selectClarityScores);
         this.articleClarityScore$ = store.select(selectArticleClarityScore);
         this.recordingEncoding$ = store.select(selectRecordingEncoding);
+    }
+
+    ngOnInit(): void {
+        // Setup subscriptions to listeners.
+        const statusListener = this.articleLevelStatus$.subscribe((status) => {
+            switch (status) {
+                case "CLARITY_SCORE_SAVED":
+                    this.showNotification("SUCCESS", "Clarity scores saved.");
+                    break;
+                case "ACCENT_SCORE_SAVED":
+                    this.showNotification("SUCCESS", "Accent scores saved.");
+                    break;
+                case "ERROR":
+                    this.showNotification("ERROR", "An error has occurred.");
+                    break;
+            }
+        });
 
         // Listen to the clarity score for each phrase: save clarity score to database when
         // user has finished reading all phrases.
@@ -121,20 +139,6 @@ export class ArticleComparisonComponent implements OnInit, OnChanges, OnDestroy 
                         totalWords,
                     })
                 );
-            }
-        });
-
-        const statusListener = this.articleLevelStatus$.subscribe((status) => {
-            switch (status) {
-                case "CLARITY_SCORE_SAVED":
-                    this.showNotification("SUCCESS", "Clarity scores saved.");
-                    break;
-                case "ACCENT_SCORE_SAVED":
-                    this.showNotification("SUCCESS", "Accent scores saved.");
-                    break;
-                case "ERROR":
-                    this.showNotification("ERROR", "An error has occurred.");
-                    break;
             }
         });
 
@@ -170,7 +174,7 @@ export class ArticleComparisonComponent implements OnInit, OnChanges, OnDestroy 
                         if (parsedResult.status === "success") {
                             console.log(`Accent score: ${parsedResult.score}`);
                             this.showNotification("SUCCESS", "Recording has been processed.");
-                            // this.store.dispatch(saveAccentScore({ score: res.score }));
+                            this.store.dispatch(saveAccentScore({ score: parsedResult.score }));
                         } else {
                             this.showNotification("ERROR", parsedResult.reason);
                         }
@@ -181,10 +185,8 @@ export class ArticleComparisonComponent implements OnInit, OnChanges, OnDestroy 
                 );
         });
 
-        this.subscriptions = [statusListener, clarityScoreListener, recordingEncodingListener];
-    }
+        this.subscriptions = [statusListener, recordingEncodingListener, clarityScoreListener];
 
-    ngOnInit(): void {
         // Initialise state with the current article.
         this.store.dispatch(initialise());
     }
@@ -198,6 +200,8 @@ export class ArticleComparisonComponent implements OnInit, OnChanges, OnDestroy 
     }
 
     ngOnDestroy(): void {
+        this.store.dispatch(clearArticleState());
+        this.store.dispatch(reset());
         this.subscriptions.forEach((listener) => listener.unsubscribe());
     }
 

@@ -44,5 +44,6 @@ export const phraseLevelReducer = createReducer(
         ...state,
         status: Status.READY,
         transcript: "",
+        recordingEncoding: undefined,
     }))
 );
