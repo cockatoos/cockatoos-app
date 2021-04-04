@@ -7,13 +7,13 @@
 1. <a href="#intro">Introducing Cockatoos</a>
     * <a href="#vision">Our Vision</a>
     * <a href="#in-action">Cockatoos In Action</a>
-        * Practice
-        * Feedback and Progress Tracking
+        * <a href="#practice">Practice</a>
+        * <a href="#feedback">Feedback and Progress Tracking</a>
 2. <a href="#architecture">Architecture</a>
     * <a href="#spacy">Sentence Phrasing</a>
     * <a href="#model">Scoring Model</a>
-        * Accent Score
-        * Clarity Score
+        * <a href="#accent-score">Accent Score</a>
+        * <a href="#clarity-score">Clarity Score</a>
 2. <a href="#challenges">Challenges</a>
 3. <a href="#accomplishments">Accomplishments</a>
 5. <a href="#future">Future Extensions</a>
@@ -38,7 +38,7 @@ It also provides instant feedback on users pronunciation and articulation, and a
 
 ## <a name="in-action"></a> 🎬 _Cockatoos_ In Action
 
-### 👉 Practice
+### 👉 <a name="practice"></a> Practice
 
 _Cockatoos_ provides an interface for users to practice their speaking using the Echo Method.
 Specifically, the user will firstly listen to a recording of a phrase, and then try to mimic that recording as closely as they can.
@@ -61,9 +61,9 @@ Afterwards, the user moves on to the next phrase by pressing next, and they'll k
 
 Once they finish practicing, the user can go back to the progress dashboard to check their daily scores.
 
-### 👉 Feedback and Progress Tracking
+### 👉 <A name="feedback"></a> Feedback and Progress Tracking
 
-![](./media/feedback.png)
+![Progress Interface](./media/feedback.png)
 
 <p align="center">
 <a href="#top">🔝</a> 
@@ -84,7 +84,7 @@ We built a phrasing tool utilising the SpaCy NLP (Natural Language Processing) A
 _Cockatoos_ evaluates vocal delivery on two main components:
 ***articulation*** and ***pronunciation***.
 
-### 👉 Accent Score
+### 👉 <a name="accent-score"></a> Accent Score
 
 _Cockatoos_ implements an accent scoring system for users who wish to learn more native-like rhythm in speech.
 We implement this feature by constructing out own model using ***Azure ML***.
@@ -123,7 +123,7 @@ We utilised _Azure ML_ to make the acces of the large scale data (12GB) easy amo
 Then we trained our model by submitting experiments to AzureML, and stored and deployed trained model to the Azure regitstered model.
 This model service is used for predicting our user's accent by provideing forward prediction to the Azure Function which connects to the UI.
 
-### 👉 Clarity Score
+### 👉 <a name="clarity-score"></a> Clarity Score
 
 The clarity score represents how clearly the user's English speaking is perceived by a native English speaker.
 _Cockatoos_ approximates this behaviour by measuring how accurately the user has pronounced the words in the given article, using the Speech Recognition API available in the standard Web Speech API.
