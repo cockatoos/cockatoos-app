@@ -19,6 +19,14 @@
 5. <a href="#future">Future Extensions</a>
 6. <a href="#getting-started">Getting Started</a>
 
+## 💻 See also
+
+Repo | Description
+---|---
+[cockatoos/accent_scoring](https://github.com/cockatoos/accent_scoring) | Accent scoring using Azure AI
+[cockatoos/azure-function-accent-scoring](https://github.com/cockatoos/azure-function-accent-scoring) | Middleware to interface between Azure AI model and client application
+[cockatoos/phrase-chunker](https://github.com/cockatoos/phrase-chunker) | NLP utility to break down article into suitable-size phrases
+
 ---
 ---
 
@@ -145,8 +153,32 @@ Thus, the clarity score is the number of no-op edits divided by the number of to
 ---
 
 # <a name="challenges"></a> 3️⃣ Challenges
-Yejin Seo(Amelie) 
-> Working with AzureML had a steep learning curve. It always seemed like an easier way to run training on my own laptop rather than establishing a pieline. Having to establish our own docker settings for our packages was another challenge. However, after we've established our pipeline, collaborating became so much easier as none of us have to download data or run training overnight on our laptops. This improved my sleeping quality as I was suffering from helicopter sounds from my laptop everynight.
+
+Yejin Seo (Amelie) 
+> Working with AzureML had a steep learning curve.
+>It always seemed like an easier way to run training on my own laptop rather than establishing a pieline.
+> Having to establish our own docker settings for our packages was another challenge.
+> However, after we've established our pipeline, collaborating became so much easier as none of us have to download data or run training overnight on our laptops.
+> This improved my sleeping quality as I was suffering from helicopter sounds from my laptop every night.
+
+## Architecture
+
+Some preprocessing libraries require a Linux package that cannot be installed in the default container provided by Azure Function.
+We decided to use a Docker container to host our function.
+However, we ran into a CORS error when testing the HTTP triggers locally.
+We found that CORS cannot be enabled for local development, as the Docker image ignores the local.settings.json file that can be used for such configuration.
+A similar issue has been discussed on GitHub [(Azure/azure-functions-host#50590)](https://github.com/Azure/azure-functions-host/issues/5090).
+
+As a result, we had to test our implementation by pushing the Docker image, and interact with the deployed function. This slowed down our development and debugging process.
+
+## Synchronising Web Speech API with MediaRecorder
+
+Our frontend application is required to perform speech recognition
+and capture the audio recording as an audio blob simultaneously.
+Because the Speech Recognition API does not expose the audio blob, the latter could not be achieved solely via the Web Speech API.
+
+We addressed this by delegating the audio recording responsibility to the MediaRecorder API, also built into the browser. We implmeented an Angular service with `start/stop` APIs that act as a fascade to the Speech Recognition API and MediaRecorder, and synchronises the operations invoked on the two web APIs accordingly.
+
 <p align="center">
 <a href="#top">🔝</a> 
 </p>
@@ -163,6 +195,10 @@ Yejin Seo(Amelie)
 
 # <a name="future"></a> 5️⃣ Future Extensions
 
+
+1. Save and categorise misspoken phrases
+2. Give advice on how to pronunce the phrase more accurately
+3. Use a more sophisticated speech to text API so users can have a wider selection of target accents
 
 <p align="center">
 <a href="#top">🔝</a> 
