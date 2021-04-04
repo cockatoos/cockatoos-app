@@ -1,0 +1,38 @@
+#app-icon
+  height: 45px
+  width: 45px
+  margin: 10px
+
+.app-container
+  display: flex
+  flex-direction: column
+  width: 100vw
+  min-height: 100vh
+  height: 100%
+  background-color: #fff6f6
+
+.small-spacer
+  flex: 0.01
+
+.large-spacer
+  flex: 0.05 
+ 
+.title-text
+  font-size: 1.5rem
+  font-weight: bold
+  color: var(--accent-lighter-color)
+
+.app-content
+  flex-grow: 1
+
+.current
+  background-color: var(--accent-lighter-color)
+  color: var(--primary-darker-color)
+
+a
+  margin-right: 1rem 
+  
+  &:hover
+    transition: background-color 0.25s
+    background-color: #eee
+    color: var(--primary-darker-color)

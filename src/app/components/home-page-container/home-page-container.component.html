@@ -1,0 +1,116 @@
+<div fullpage id="fullpage" [options]="config" (ref)="getRef($event)">
+    <div class="section">
+        <div class="home-page-container shadow">
+            <div class="home-page-title">
+                <div class="header">Cockatoos</div>
+                <div class="subheader">Your 24/7 Speech Coach.</div>
+                <a class="button" mat-button [routerLink]="'/app'"> Get Started </a>
+            </div>
+            <img src="assets/cockatoos.png" id="main-image" />
+        </div>
+        <div class="navigation">
+            <img src="assets/arrow-down-sign-to-navigate.svg" (click)="fullpageApi.moveSectionDown()" />
+        </div>
+    </div>
+
+    <div class="section" (click)="fullpageApi.moveSectionDown()">
+        <div class="second-page-container shadow">
+            <div class="page-content">
+                <div class="page-header">
+                    <div class="page-title">The Problem Statement</div>
+                </div>
+                <div class="page-body">
+                    <div class="page-body-text">
+                        Like many non-native English speakers, I struggle with certain English pronunciation. 
+                        There is no existing platform that allows me to practice my speaking by providing feedback 
+                        on how understandable I sound and pointing out the nuances in my pronunciation. Furthermore, 
+                        hiring a speech coach for speech training can easily cost up to 200 pounds per hour.
+                    </div>
+                    <div class="page-body-media">
+                        <img src="assets/language-learning.jpg" style="max-width: 100%" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section" (click)="fullpageApi.moveSectionDown()">
+        <div class="fourth-page-container shadow">
+            <div class="page-content">
+                <div class="page-header">
+                    <div class="page-title">Our Solution</div>
+                    <!-- <div class="page-subtitle"></div> -->
+                </div>
+                <div class="page-body">
+                    <div class="page-body-text">
+                        Cockatoos is an intuitive speech training platform that gives instant feedback on a user's vocal delivery. 
+                        The two aspects we chose to focus on: 
+                        <ul>
+                            <li>Pronunciation - the correctness in how letters sound</li>
+                            <li>Articulation - the clarity of sounds produced</li>
+                        </ul>
+                        With these tools, a user can build confidence in speaking and improve their ability to be understood.
+                    </div>
+                    <div class="page-body-media">
+                        <img src="assets/mockup.png" style="max-width: 100%;" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="section" (click)="fullpageApi.moveSectionDown()">
+        <div class="third-page-container shadow">
+            <div class="page-content">
+                <div class="page-header">
+                    <div class="page-title">Echo Method</div>
+                    <div class="page-subtitle">What is it?</div>
+                </div>
+                <div class="page-body">
+                    <div class="page-body-text">
+                        The Echo Method is a language learning method proposed by Karen Chung, who is an Associate
+                        Professor of English and Linguistics in National Taiwan University....(WIP)
+                    </div>
+                    <div class="page-body-media">
+                        <iframe
+                            src="https://www.youtube.com/embed/sQEWEPIHLzQ"
+                            width="560"
+                            height="315"
+                            frameborder="0"
+                            allowfullscreen
+                        ></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- <div class="section" (click)="fullpageApi.moveSectionDown()">
+        <div class="fourth-page-container shadow">
+            <div class="page-content">
+                <div class="page-header">
+                    <div class="page-title">Machine Learing Model</div>
+                    <div class="page-subtitle">How does it work?</div>
+                </div>
+                <div class="page-body">
+                    <div class="page-body-text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut malesuada, dui porta rhoncus
+                        imperdiet, dui leo lacinia lacus, et laoreet ante elit ac leo. Curabitur lorem risus, posuere
+                        quis neque in, accumsan scelerisque arcu. Integer fringilla velit et accumsan vehicula. Donec
+                        nisi justo, finibus id leo vitae, sagittis rutrum elit. Nam volutpat viverra vulputate. Maecenas
+                        interdum turpis ultricies purus placerat venenatis non at lectus. Quisque eget lacinia odio.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <div class="section" (click)="fullpageApi.moveTo('firstPage', 0)">
+        <div class="final-page-container shadow">
+            <div class="call-for-action-container">
+                <span style="font-size: 32px; color: white">Give it a try!</span>
+                <a class="button-white" mat-button [routerLink]="'/app'"> Get Started </a>
+            </div>
+        </div>
+    </div>
+</div>

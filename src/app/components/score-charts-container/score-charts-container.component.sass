@@ -1,14 +1,54 @@
-.info-container
-    height: 100%
-    width: 100%
+.container
     display: flex
-    justify-content: center
+    width: 85%
+    height: 100%
+    margin: auto
+    padding-top: 50px
+    padding-bottom: 50px
+    gap: 25px
+    
+
+#warning
+    display: none
+    width: 85%
+    height: 100%
+    margin: auto
+
+// Too small!
+@media screen and ( max-width: 950px )
+    #warning
+        display: flex
+        justify-content: center
+        align-items: center
+
+    .container
+        display: none
+
+.badges-container
+    max-width: 150px
+
+.details-container
+    flex: 1
+    display: flex
+    flex-direction: column
+
+.charts-container
+    display: flex
+    padding-top:32px
+    gap: 1rem
+
+@media screen and ( max-width: 1600px )
+    .charts-container
+        flex-direction: column
 
 .info-column
     flex: 1
-    display: flex
-    justify-content: center
-    margin-top: 32px
+    background-color: white
+    border-radius: 30px
+    height: 100%
+
+#scores-heading
+    padding-top: 2rem
     
 .centered-tour-element 
     position: fixed
@@ -16,3 +56,17 @@
     top: 50%
     transform: translate(-140px, -86px)
     
+.label-text
+    font-size: 30px
+    color: var(--primary-lighter-color)
+
+#daily-progress
+    padding-top: 12px
+    border-radius: 15px/30px
+    width: 100%
+    max-width: 950px
+
+#badges
+    padding-top: 12px
+    border-radius: 30px
+    max-width: 100%

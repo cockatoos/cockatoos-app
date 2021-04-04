@@ -1,6 +1,9 @@
 .article-comparison-view
     display: flex
-    height: 70vh
+    justify-items: center
+    align-items: center
+    height: 100%
+    width: 100%
 
 .document-section
     margin-left: 15px
@@ -10,21 +13,35 @@
     align-items: center
     justify-content: center
     height: 100%
+    max-width: 400px
+
+    .full-document
+        height: 100%
+
+    .document-content
+        
+        height: 100%
 
 .user-section
-    margin-left: 15px
-    margin-right: 15px
     flex: 1
     display: flex
     flex-direction: column
-    justify-content: space-evenly
     text-align: center
+    height: 100%
+    width: 100%
+
+    .ground-truth-phrase
+        flex-grow: 1
+
+    .recorded-phrase
+        flex-grow: 1
 
 .controls .mat-button-base
-  margin: 8px 8px 8px 0
+  margin: 16px 8px 8px 0
 
 mat-spinner
     margin: auto
 
 .recorded-phrase
     margin-top: 15px
+

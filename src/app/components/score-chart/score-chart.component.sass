@@ -1,15 +1,38 @@
-.score-card-content
-    display: flex
-    padding: 32px
+highcharts-chart::ng-deep
+    .highcharts-container, .highcharts-container svg
+        width: 100% !important
+        height: 100% !important
+        max-height: 40vh
+    
+#average-value
+    font-size: 24px
+    font-weight: 900
+    text-align: center
+    color: var(--primary-color)
 
-
-.score-chart-number-column
-    flex: 1
+.score-chart-container
     display: flex
     flex-direction: column
-    justify-content: center
 
+    .title
+        font-size: 32px
+        font-weight: 600
+        margin: 32px
+        color: var(--accent-lighter-color)
+
+    
+.score-card-content
+    display: flex
+
+.score-chart-number-column
+    width: 200px
+    display: flex
+    flex-direction: column
 
 .score-chart-highcharts-column
-    flex: 2
-    margin-left: 32px
+    flex: 1
+
+.gauge-number
+    font-size: 72px
+    font-weight: 700
+    min-height: 72px

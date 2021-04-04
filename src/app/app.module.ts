@@ -13,11 +13,9 @@ import { AppComponent } from "./app.component";
 import { ScoreChartComponent } from "@components/score-chart/score-chart.component";
 import { ArticleComparisonComponent } from "@components/article-comparison/article-comparison.component";
 import { PhraseDiffComponent } from "@components/phrase-diff/phrase-diff.component";
-import { ScoreChartsContainerComponent } from './components/score-charts-container/score-charts-container.component';
-import { PracticeContainerComponent } from './components/practice-container/practice-container.component';
-import { AnalyseDialogComponent } from './components/analyse-dialog/analyse-dialog.component';
-import { HighlightPhraseComponent } from '@components/highlight-phrase/highlight-phrase.component';
-import { DataConnectorComponent } from './components/data-connector/data-connector.component';
+import { ScoreChartsContainerComponent } from "./components/score-charts-container/score-charts-container.component";
+import { PracticeContainerComponent } from "./components/practice-container/practice-container.component";
+import { HighlightPhraseComponent } from "@components/highlight-phrase/highlight-phrase.component";
 
 /// material
 import { MatCardModule } from "@angular/material/card";
@@ -25,15 +23,16 @@ import { MatGridListModule } from "@angular/material/grid-list";
 import { MatButtonModule } from "@angular/material/button";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatIconModule } from "@angular/material/icon";
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule } from "@angular/material/dialog";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
 
 /// firestore
-import { AngularFireModule } from '@angular/fire';
-import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { environment } from '../environments/environment';
+import { AngularFireModule } from "@angular/fire";
+import { AngularFireAnalyticsModule } from "@angular/fire/analytics";
+import { AngularFirestoreModule } from "@angular/fire/firestore";
+import { environment } from "../environments/environment";
 
 /// ngrx
 import { StoreModule } from "@ngrx/store";
@@ -42,14 +41,21 @@ import { articleLevelReducer } from "@state/reducers/article-level.reducer";
 import { phraseLevelReducer } from "@state/reducers/phrase-level.reducer";
 import { ArticleLevelEffects } from "@state/effects/article-level.effects";
 import { PhraseLevelEffects } from "@state/effects/phrase-level.effects";
+import { practiceContainerLevelReducer } from "@state/reducers/practice-container-level.reducer";
+import { PracticeContainerLevelEffects } from "@state/effects/practice-container-level.effects";
 
-/// HTTP
-import { HttpClientModule } from "@angular/common/http";
-
+/// tour
 import { RouterModule } from "@angular/router";
 import { TourMatMenuModule } from "ngx-tour-md-menu";
 import { TourService } from "ngx-tour-core";
 
+/// full page
+import { AngularFullpageModule } from "@fullpage/angular-fullpage";
+import { HomePageContainerComponent } from "@components/home-page-container/home-page-container.component";
+import { MainAppContainerComponent } from "./components/main-app-container/main-app-container.component";
+
+/// HTTP
+import { HttpClientModule } from "@angular/common/http";
 
 @NgModule({
     declarations: [
@@ -59,9 +65,9 @@ import { TourService } from "ngx-tour-core";
         ArticleComparisonComponent,
         ScoreChartsContainerComponent,
         PracticeContainerComponent,
-        AnalyseDialogComponent,
+        HomePageContainerComponent,
+        MainAppContainerComponent,
         HighlightPhraseComponent,
-        DataConnectorComponent,
     ],
     imports: [
         BrowserModule,
@@ -74,24 +80,24 @@ import { TourService } from "ngx-tour-core";
         StoreModule.forRoot({
             articleLevel: articleLevelReducer,
             phraseLevel: phraseLevelReducer,
+            practiceContainerLevel: practiceContainerLevelReducer,
         }),
-        EffectsModule.forRoot([ArticleLevelEffects, PhraseLevelEffects]),
+        EffectsModule.forRoot([ArticleLevelEffects, PhraseLevelEffects, PracticeContainerLevelEffects]),
         MatButtonModule,
         MatToolbarModule,
         MatIconModule,
         MatDialogModule,
         MatSidenavModule,
+        MatSnackBarModule,
         AngularFireModule.initializeApp(environment.firebase),
         AngularFireAnalyticsModule,
         AngularFirestoreModule,
+        AngularFullpageModule,
         HttpClientModule,
         RouterModule.forRoot([]),
-        TourMatMenuModule.forRoot()
+        TourMatMenuModule.forRoot(),
     ],
-    providers: [
-        HttpClientModule,
-        TourService
-    ],
+    providers: [HttpClientModule, TourService],
     bootstrap: [AppComponent],
 })
 export class AppModule {}
