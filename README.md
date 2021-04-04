@@ -7,6 +7,8 @@
 1. <a href="#intro">Introducing Cockatoos</a>
     * Our Vision
     * Cockatoos In Action
+        * Practice
+        * Feedback and Progress Tracking
 2. <a href="#architecture">Architecture</a>
     * Sentence Phrasing
     * Scoring Model
@@ -36,6 +38,33 @@ It also provides instant feedback on users pronunciation and articulation, and a
 
 ## 🎬 _Cockatoos_ In Action
 
+### 👉 Practice
+
+_Cockatoos_ provides an interface for users to practice their speaking using the Echo Method.
+Specifically, the user will firstly listen to a recording of a phrase, and then try to mimic that recording as closely as they can.
+
+> We leverage the built-in Web Speech API to implement this workflow
+> natively on the user's web browser:
+>
+> * `SpeechSynthesizer` - text-to-speech, generates the recording that
+> the user listens to;
+> * `SpeechRecognition` - speech-to-text, generates the transcript based
+> on the user's speech recording;
+> * `MediaRecorder` - records the user's speech
+
+![Overview of User Practice Area](./media/workflow_1a.png)
+
+We then compared the user's speech to the original text, and highlight any misunderstood or missing words.
+Afterwards, the user moves on to the next phrase by pressing next, and they'll keep repeating this cycle until they're done with this article. If they want to continue practising, they can press "Practice More" to retrieve a new article from the database.
+
+![Comparing User Recording with Ground Truth](./media/workflow_1b.png)
+
+Once they finish practicing, the user can go back to the progress dashboard to check their daily scores.
+
+### 👉 Feedback and Progress Tracking
+
+![](./media/feedback.png)
+
 <p align="center">
 <a href="#top">🔝</a> 
 </p>
@@ -46,9 +75,18 @@ It also provides instant feedback on users pronunciation and articulation, and a
 
 ## 🔧 Sentence Phrasing
 
+The practice articles must be broken into readable and logical phrases to make it easier for users to read.
+
+We built a phrasing tool utilising the SpaCy NLP (Natural Language Processing) API to divide long sentences into smaller chunks while being aware of punctuation, parts of speech, and word dependencies. 
+
 ## 🔧 Scoring Model
 
+Cockatoos evaluates vocal delivery on two main components:
+***articulation*** and ***pronunciation***.
+
 ### 👉 Accent Score
+
+![](./media/mfcc.png)
 
 ### 👉 Clarity Score
 
@@ -68,6 +106,8 @@ Thus, the clarity score is the number of no-op edits divided by the number of to
 <p align="center">
 <a href="#top">🔝</a> 
 </p>
+
+---
 
 # <a name="challenges"></a> 3️⃣ Challenges
 
@@ -98,17 +138,27 @@ Thus, the clarity score is the number of no-op edits divided by the number of to
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.2.
 
+## Prerequisites
+
+* `nodejs`
+* `npm`
+
+```bash
+$ cd /path/to/cockatoos-app
+
+# Install dependencies
+$ npm i
+```
+
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+```bash
+$ cd /path/to/cockatoos-app
+$ npm start
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+# Navigate to http://localhost:4200/.
+# The app will automatically reload if you change any of the source files.
+```
 
 ## Testing with Storybook
 
@@ -116,11 +166,22 @@ Run `npm run storybook` to test the component in an isolated environment. An sto
 
 ## Fixing linting errors
 
-Run `npm run lint` to identify linting errors, then `npm run fix` to _try_ fixing them.
+```bash
+$ cd /path/to/cockatoos-app
+
+# Identify linting errors
+$ npm run lint
+
+# Attempt to fix
+$ npm run fix
+```
 
 ## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```bash
+$ cd /path/to/cockatoos-app
+$ npm test
+```
 
 ## Further help
 
@@ -135,6 +196,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 <a name="cite-accent"></a> <sup>[1]</sup> Accent Reduction & Softening Classes in London | London Speech Workshop. https://www.londonspeechworkshop.com/our-courses/accent-softening/
 
-<sup>[2]</sup>
+<a name="cite-paper"></a> <sup>[2]</sup> Sheng, Leon Mak An, and Mok Wei Xiong Edmund. <a href="http://cs229.stanford.edu/proj2017/final-reports/5244230.pdf">"Deep Learning Approach to Accent Classification."</a> <em>Project Report, Stanford University, Stanford, CA</em> (2017).
+
 
 <sup>[3]</sup>
