@@ -178,24 +178,24 @@ export class ScoreChartComponent implements OnChanges {
             ];
 
             const todayScore = this.currentValueFrom(latestHistoricalData);
-            if (todayScore !== null) {
-                this.gaugeOptions.series = [
-                    {
-                        type: "solidgauge",
-                        radius: "62%",
-                        innerRadius: "38%",
-                        data: [Math.round(todayScore)],
-                        dataLabels: {
-                            format:
-                                '<div style="text-align:center;">' +
-                                '<span style="font-size:40px;font-weight: 700; color: #304d86">{y}</span><br/>' +
-                                "</div>",
-                            x: 0,
-                            y: -30,
-                        },
+            const formatString = todayScore === null ? "--" : "{y}";
+            this.gaugeOptions.series = [
+                {
+                    type: "solidgauge",
+                    radius: "62%",
+                    innerRadius: "38%",
+                    data: [Math.round(todayScore)],
+                    dataLabels: {
+                        format: `
+                            <div style="text-align:center;">
+                                <span style="font-size:40px;font-weight: 700; color: #304d86">${formatString}</span><br/>
+                            </div>
+                        `,
+                        x: 0,
+                        y: -30,
                     },
-                ];
-            }
+                },
+            ];
         }
     }
 }
