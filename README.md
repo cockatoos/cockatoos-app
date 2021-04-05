@@ -15,7 +15,6 @@
         * <a href="#accent-score">Accent Score</a>
         * <a href="#clarity-score">Clarity Score</a>
 2. <a href="#challenges">Challenges</a>
-3. <a href="#accomplishments">Accomplishments</a>
 5. <a href="#future">Future Extensions</a>
 6. <a href="#getting-started">Getting Started</a>
 
@@ -207,15 +206,7 @@ We addressed this by delegating the audio recording responsibility to the MediaR
 
 ---
 
-# <a name="accomplishments"></a> 4️⃣ Accomplishments
-
-<p align="center">
-<a href="#top">🔝</a> 
-</p>
-
----
-
-# <a name="future"></a> 5️⃣ Future Extensions
+# <a name="future"></a> 4️⃣ Future Extensions
 
 
 1. Save and categorise misspoken phrases
@@ -228,7 +219,7 @@ We addressed this by delegating the audio recording responsibility to the MediaR
 
 ---
 
-# <a name="getting-started"></a> 6️⃣ Getting Started
+# <a name="getting-started"></a> 5️⃣ Getting Started
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.2.
 
